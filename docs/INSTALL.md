@@ -17,8 +17,7 @@ Gli argomenti che verranno trattati in questo file sono:
 ### Node.js
 
 Il sito ufficiale [https://nodejs.org/en](https://nodejs.org/en) permette il download dell'eseguibile appropriato in base al proprio sistema operativo.
-
-![image](https://github.com/xrenegade100/TeraWare/assets/11615441/9b9959b4-4cd3-4913-853c-946b54774c83)
+![291660582-9b9959b4-4cd3-4913-853c-946b54774c83](https://github.com/xrenegade100/sustainer/assets/11615441/6af97bbc-b5d9-4c33-8d31-3bd24e164389)
 
 _Scegliamo di utilizzare la versione indicata come LTS (Latest Stable Release) in quanto è l'ultima versione stabile disponibile rilasciata ovvero 20.10.0 LTS_
 Inclusa con questa versione di Node c'è `npm` versione 10.2.3.
@@ -35,8 +34,8 @@ Il link della API reference per questa versione di Node é: https://nodejs.org/e
 
     -   Per le distro Linux l'installazione di MySQL risulta essere leggermente più articolata, ma possono essere trovati vari modi di installazione attraverso il link sul sito ufficiale: https://dev.mysql.com/doc/refman/8.0/en/linux-installation.html
 
-    ![image](https://github.com/xrenegade100/TeraWare/assets/11615441/65d710de-c4af-4de2-84dd-c04ac3cacd24)
     _L'ultima versione disponibile al momento della stesura di questo file risulta essere la vesione 8.0.35_ quindi adottiamo come convenzione l'utlizzo di questa versione.
+![291668848-65d710de-c4af-4de2-84dd-c04ac3cacd24](https://github.com/xrenegade100/sustainer/assets/11615441/8d900647-b0a4-4664-9a42-020389dbec8b)
 
 ### Estensioni VSCode
 
@@ -80,3 +79,16 @@ Tuttavia sono raccomandate sulla base degli strumenti che abbiamo scelto di util
 
 -   Esegue il controllo di alcune regole di SonarCloud in locale nell'editor.
 -   https://marketplace.visualstudio.com/items?itemName=SonarSource.sonarlint-vscode
+
+## Verifica dell'ambiente installato
+Di seguito sono listati una serie di comandi da eseguire nel terminale con l'output previsto per verificare che gli eseguibili e le versioni corrette siano installate:
+* Node.js
+  * ```bash
+    $ node -v
+    $ v20.10.0
+    ```
+* npm
+  * ```bash
+    $ npm -v
+    $ 10.2.3
+    ```
