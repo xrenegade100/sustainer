@@ -9,7 +9,7 @@ const connection = mysql.createConnection({
   insecureAuth: true,
 });
 
-connection.connect((err: any) => {
+connection.connect((err) => {
   if (err) {
     console.error('Errore di connessione al database:', err);
     throw err;
@@ -20,3 +20,21 @@ connection.connect((err: any) => {
 // Resto del codice per il tuo DAO...
 
 module.exports = connection;
+
+connection.query(
+  'SELECT * FROM utente',
+  (err, results, fields) => {
+    if (err) {
+      // Gestisci gli errori qui
+      console.error(err);
+      return;
+    }
+
+    // Accesso ai valori nei risultati
+    results.forEach((row) => {
+      console.log('Utente_id:', row.id_utente);
+      console.log('Nome:', row.nome);
+      console.log('Cognome:', row.cognome);
+    });
+  },
+);
