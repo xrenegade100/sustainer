@@ -11,7 +11,11 @@ connessioneDB.query(
 
     // Accesso ai valori nei risultati
     results.forEach((row) => {
-      console.log('Identificativo modello:', row.id_comunicazione);
+      console.log('Identificativo comunicazione:', row.id_comunicazione);
+      console.log('Identificativo utente:', row.id_utente);
+      console.log('Identificativo amministratore:', row.id_amministratore);
+      console.log('Data e ora:', row.data_ora);
+      console.log('Messaggio:', row.messaggio);
     });
   },
 );
