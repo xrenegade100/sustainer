@@ -11,7 +11,10 @@ connessioneDB.query(
 
     // Accesso ai valori nei risultati
     results.forEach((row) => {
-      console.log('Identificativo modello:', row.id_amministratore);
+      console.log('Identificativo amministratore:', row.id_amministratore);
+      console.log('Nome:', row.nome);
+      console.log('Cognome:', row.cognome);
+      console.log('Email:', row.email);
     });
   },
 );
