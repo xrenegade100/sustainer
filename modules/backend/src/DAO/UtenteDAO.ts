@@ -14,6 +14,7 @@ connessioneDB.query(
       console.log('Utente_id:', row.id_utente);
       console.log('Nome:', row.nome);
       console.log('Cognome:', row.cognome);
+      console.log('Email:', row.email);
     });
   },
 );
