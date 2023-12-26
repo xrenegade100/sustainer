@@ -5,7 +5,6 @@ import { Provider as StyletronProvider } from 'styletron-react';
 import { LightTheme, BaseProvider } from 'baseui';
 
 import App from './App';
-import './index.css';
 
 const engine = new Styletron();
 

@@ -1,20 +1,21 @@
-const mysql = require('mysql2');
+import mysql from 'mysql2/promise';
 
-const connection = mysql.createConnection({
-  host: '127.0.0.1',
-  user: 'root',
-  password: 'admin',
-  database: 'susdb',
-  port: 3006,
-  insecureAuth: true,
-});
+let conn: mysql.Connection | null = null;
 
-connection.connect((err) => {
-  if (err) {
-    console.error('Errore di connessione al database:', err);
-    throw err;
+const initConnection = async () => {
+  if (!conn) {
+    conn = await mysql.createConnection({
+      host: '127.0.0.1',
+      user: 'root',
+      password: 'admin',
+      database: 'susdb',
+      port: 3006,
+      insecureAuth: true,
+    });
+
+    await conn.connect();
   }
-  console.log('Connesso al database MySQL!');
-});
+  return conn;
+};
 
-module.exports.connessioneDB = connection;
+export default initConnection;

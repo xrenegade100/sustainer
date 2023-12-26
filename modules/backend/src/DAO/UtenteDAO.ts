@@ -1,20 +1,27 @@
-const { connessioneDB } = require('../db/poolDB.ts');
+import { RowDataPacket } from 'mysql2/promise';
+import db from '../db/poolDB';
 
-connessioneDB.query(
-  'SELECT * FROM utente',
-  (err, results, fields) => {
-    if (err) {
-      // Gestisci gli errori qui
-      console.error(err);
-      return;
-    }
+const getAllUtenti = async () => {
+  const connection = await db();
+  const users = await connection.query('SELECT * FROM utente');
 
-    // Accesso ai valori nei risultati
-    results.forEach((row) => {
-      console.log('Utente_id:', row.id_utente);
-      console.log('Nome:', row.nome);
-      console.log('Cognome:', row.cognome);
-      console.log('Email:', row.email);
-    });
-  },
-);
+  return (users[0] as RowDataPacket[]);
+};
+
+/*
+const getUtenteByMail = async (mail: string) => {
+  const connection = await db();
+  const user = await connection.query('SELECT * FROM utente WHERE mail = ?', mail);
+  return (await user).map((user: any) => ({
+    id: user.id,
+    nome: user.nome,
+    cognome: user.cognome,
+    mail: user.mail,
+    password: user.password,
+    data_nascita: user.data_nascita,
+    data_registrazione: user.data_registrazione,
+    is_admin: user.is_admin,);
+};
+*/
+
+export { getAllUtenti };
