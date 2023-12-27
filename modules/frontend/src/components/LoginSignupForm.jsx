@@ -1,9 +1,12 @@
+import { Link } from 'react-router-dom';
+
 import React, { useState } from 'react';
 import '../styles/LoginSignupForm.css';
 import { Tabs, Tab, FILL } from 'baseui/tabs-motion';
 import { Checkbox, STYLE_TYPE, LABEL_PLACEMENT } from 'baseui/checkbox';
 import { Input } from 'baseui/input';
 import { Button, SIZE } from 'baseui/button';
+import RegisterForm from './RegisterForm';
 
 const LoginSignupForm = ({ onSubmit }) => {
   const [activeKey, setActiveKey] = useState('0');
@@ -25,7 +28,7 @@ const LoginSignupForm = ({ onSubmit }) => {
         password,
       }),
     });
-
+  
     setIsLoading(false);
     if (!response.ok) {
       alert('Credeziali errate');
@@ -116,7 +119,9 @@ const LoginSignupForm = ({ onSubmit }) => {
                 </Button>
               </div>
             </Tab>
-            <Tab title="Registrati">Registrati</Tab>
+            <Tab title="Registrati">
+              <RegisterForm />  
+            </Tab>
           </Tabs>
         </div>
       </div>
