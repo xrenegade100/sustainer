@@ -2,9 +2,7 @@ import express, { Request, Response } from 'express';
 import morgan from 'morgan';
 import helmet from 'helmet';
 import cors from 'cors';
-import { getUtenteByMail } from './dao/UtenteDAO';
-
-import apiV1 from './api/v1';
+import account from './account/service/serviziUtente';
 
 const server = express();
 
@@ -17,25 +15,6 @@ server.use(helmet());
 server.use(cors());
 server.use(express.json());
 
-server.get('/', (_: Request, res: Response) => {
-  res.json({
-    message: '🦄🌈✨👋🌎🌍🌏✨🌈🦄',
-  });
-});
-
-server.use('/api/v1', apiV1);
-
-server.post('/trovaUtente', async (req: Request, res: Response) => {
-  console.log(req.body);
-  const { email } = req.body;
-
-  const user = await getUtenteByMail(email);
- 
-
-  if (user) {
-    return res.status(200).json({ user: user });
-  }
-  return res.status(403).json({ message: 'utente non trovato' });
-});
+server.use('/login', account);
 
 export default server;
