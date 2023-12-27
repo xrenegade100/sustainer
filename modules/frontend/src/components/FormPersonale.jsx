@@ -3,35 +3,38 @@ import React, { useState } from 'react';
 import { Input } from 'baseui/input';
 import { Button } from 'baseui/button';
 
-function Form() {
-  async function inviaForm() {
-    const r = await fetch('/trovautente', {
+const Form = () => {
+  const [email, setEmail] = useState('');
+
+  const checkEmail = async () => {
+    const response = await fetch('http://localhost:5000/trovaUtente', { 
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
+      body: JSON.stringify({ email }),
     });
 
-    if (!r.ok) {
-      console.error('Errore nella richiesta');
-      return;
+    const data = await response.json();
+
+    
+    if (data.exists) {
+      alert('Email exists in the database');
+    } else {
+      alert('Email does not exist in the database');
     }
 
-    const data = await r.json();
-    console.log(data);
+    alert(response);
+  };
 
-    return (
-      <div>
-        <Input
-          value={value}
-          onChange={(e) => setValue(e.target.value)}
-          placeholder="Controlled Input"
-          clearOnEscape
-        />
-        <Button onClick={() => setValue('email')}>Trova Utente</Button>
-        {value}
-      </div>
-    );
-  }
-}
+
+
+  return (
+    <div>
+      <input type="email" value={email} onChange={e => setEmail(e.target.value)} />
+      <Button onClick={checkEmail}>Trova Utente</Button>
+    </div>
+  );
+};
+
 export default Form;
