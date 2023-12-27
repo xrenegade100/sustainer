@@ -7,31 +7,33 @@ const Form = () => {
   const [email, setEmail] = useState('');
 
   const checkEmail = async () => {
-    const response = await fetch('http://localhost:5000/trovaUtente', { 
+    const response = await fetch('http://localhost:5000/trovaUtente', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({ email }),
     });
+    const content = await response.json();
+    const { user } = content;
 
-    const data = await response.json();
+    alert('User: ' + user.email);
+    //const data = await response.json();
 
-    
     if (data.exists) {
       alert('Email exists in the database');
     } else {
       alert('Email does not exist in the database');
     }
-
-    alert(response);
   };
-
-
 
   return (
     <div>
-      <input type="email" value={email} onChange={e => setEmail(e.target.value)} />
+      <input
+        type="email"
+        value={email}
+        onChange={(e) => setEmail(e.target.value)}
+      />
       <Button onClick={checkEmail}>Trova Utente</Button>
     </div>
   );
