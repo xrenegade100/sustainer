@@ -2,7 +2,7 @@ import express, { Request, Response } from 'express';
 import morgan from 'morgan';
 import helmet from 'helmet';
 import cors from 'cors';
-import { getAllUtenti } from './dao/UtenteDAO';
+import { getUtenteByMail } from './dao/UtenteDAO';
 
 import apiV1 from './api/v1';
 
@@ -26,13 +26,14 @@ server.get('/', (_: Request, res: Response) => {
 server.use('/api/v1', apiV1);
 
 server.post('/trovaUtente', async (req: Request, res: Response) => {
+  console.log(req.body);
   const { email } = req.body;
 
-  const users = await getAllUtenti();
-  const u = users.find((user) => user.email === email);
+  const user = await getUtenteByMail(email);
+ 
 
-  if (u) {
-    return res.status(200).json({ user: u });
+  if (user) {
+    return res.status(200).json({ user: user });
   }
   return res.status(403).json({ message: 'utente non trovato' });
 });

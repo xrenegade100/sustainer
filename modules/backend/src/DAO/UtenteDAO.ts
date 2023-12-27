@@ -8,20 +8,25 @@ const getAllUtenti = async () => {
   return (users[0] as RowDataPacket[]);
 };
 
-/*
-const getUtenteByMail = async (mail: string) => {
+
+const getUtenteByMail = async (email: string) => {
+  console.log(email); 
+
   const connection = await db();
-  const user = await connection.query('SELECT * FROM utente WHERE mail = ?', mail);
-  return (await user).map((user: any) => ({
+  const user = await connection.query('SELECT * FROM utente WHERE email = ?', email) as RowDataPacket[];
+  console.log(user[0][0]);
+  return (user[0][0]);
+  /* const result = (await user).map((user: any) => ({
     id: user.id,
     nome: user.nome,
     cognome: user.cognome,
-    mail: user.mail,
+    email: user.email,
     password: user.password,
     data_nascita: user.data_nascita,
     data_registrazione: user.data_registrazione,
-    is_admin: user.is_admin,);
+    is_admin: user.is_admin, 
+  })); */
 };
-*/
 
-export { getAllUtenti };
+
+export { getUtenteByMail };
