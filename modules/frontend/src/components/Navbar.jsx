@@ -6,23 +6,27 @@ const Navbar = () => {
   return (
     <nav className="navbar">
       <ul>
+        <img className="img-file" src="/Logo.png" alt="" />
         <li>
-          <Link to="/">Home</Link>
+          <img className="img-avatar" src="/Avatar.png" alt="" />
         </li>
         <li>
-          <Link to="/piani">Piani</Link>
-        </li>
-        <li>
-          <Link to="/addestra">Addestra</Link>
-        </li>
-        <li>
-          <Link to="/storico">Storico</Link>
+          <Link to="/community">Community</Link>
         </li>
         <li>
           <Link to="/cloud">Cloud</Link>
         </li>
         <li>
-          <Link to="/community">Community</Link>
+          <Link to="/storico">Storico</Link>
+        </li>
+        <li>
+          <Link to="/addestra">Addestra</Link>
+        </li>
+        <li>
+          <Link to="/piani">Piani</Link>
+        </li>
+        <li>
+          <Link to="/">Home</Link>
         </li>
       </ul>
     </nav>

@@ -1,0 +1,86 @@
+.img-logoblue {
+  margin-top: 6%;
+  margin-left: 17%;
+  width: 60%;
+  height: 60%;
+}
+
+.img-scritta {
+  margin-top: 3%;
+  margin-left: 25%;
+}
+
+.tasto-au {
+  font-size: 1.5em;
+  margin-top: 5%;
+  height: 100%;
+  background-color: #2467d1;
+  color: #ffffff;
+  display: flex;
+  justify-content: center;
+  border: none;
+  border-radius: 6px 6px 6px 6px;
+  margin-left: 45%;
+  padding-top: 0.2%;
+  padding-left: 4%;
+  padding-right: 4%;
+  padding-bottom: 0.2%;
+}
+
+.sez-testo {
+  margin-top: 5%;
+  background-color: #2467d1;
+}
+
+.img-loghihome {
+  margin-left: 8%;
+}
+
+.paragrafi {
+  color: #ffffff;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10%;
+  margin-left: 1%;
+  padding: 1%;
+  font-family: 'Lato';
+  font-size: 1.2em;
+}
+
+.about-sup {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 7%;
+  margin-left: 1%;
+  padding: 1%;
+  font-family: 'Lato';
+  font-size: 1em;
+}
+
+.sin {
+  margin-top: 10%;
+  display: grid;
+  grid-template-columns: repeat(2, 0fr 70%);
+  gap: 4%;
+}
+
+.des {
+  margin-top: 50%;
+  display: grid;
+  grid-template-columns: repeat(2, 0fr 70%);
+  gap: 4%;
+}
+
+.cen {
+  margin-top: 50%;
+  display: grid;
+  grid-template-columns: repeat(2, 0fr 70%);
+  gap: 4%;
+  margin-left: 0%;
+}
+
+.colonna {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
