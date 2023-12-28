@@ -1,64 +1,70 @@
 import { RowDataPacket } from 'mysql2/promise';
 import db from '../db/poolDB';
+import Utente from '../account/domain/Utente';
 
-const getAllUtenti = async () => {
-  const connection = await db();
-  const users = await connection.query('SELECT * FROM utente');
+class UtenteDAO {
+  // creo il metodo per la registrazione
+  static async registrazione(
+    nome: string,
+    cognome: string,
+    email: string,
+    password: string,
+  ) {
+    const conn = await db();
 
-  return users[0] as RowDataPacket[];
-};
+    const utente = await conn.query(
+      'INSERT INTO utente(nome, cognome, email, password) VALUES (?, ?, ?, ?)',
+      [nome, cognome, email, password],
+    );
 
-const getUtenteByMail = async (email: string) => {
-  console.log(email);
+    const id_piano = (await conn.query(
+      'SELECT id_piano FROM susdb.piano WHERE tipo = "Free"',
+    )) as RowDataPacket[];
 
-  const connection = await db();
-  const user = (await connection.query(
-    'SELECT * FROM utente WHERE email = ?',
-    email,
-  )) as RowDataPacket[];
-  console.log(user[0][0]);
-  return user[0][0];
-};
+    const id_utente = (await conn.query(
+      'SELECT id_utente FROM susdb.utente WHERE email = ?',
+      [email],
+    )) as RowDataPacket[];
 
-/*
-metodo che inserisce un utente nel database e gli assegna un piano free
-(preso dalla tabella piano con tipo free) e aggiunge
-un acquisto (nella tabella acquisto) con id_utente, id_piano e data_acquisto
-*/
-const setUtentiRegistrazione = async (
-  nome: string,
-  cognome: string,
-  email: string,
-  password: string,
-) => {
-  const connection = await db();
-  const user = (await connection.query(
-    'INSERT INTO utente (nome, cognome, email, password) VALUES (?, ?, ?, ?)',
-    [nome, cognome, email, password],
-  )) as RowDataPacket[];
+    const acquisto = await conn.query(
+      'INSERT INTO acquisto(id_utente, id_piano, data_acquisto) VALUES (?, ?, ?)',
+      [id_utente[0][0].id_utente, id_piano[0][0].id_piano, new Date()],
+    );
+  }
 
-  const piano = (await connection.query(
-    'SELECT id_piano FROM susdb.piano WHERE tipo="Free" ',
-  )) as RowDataPacket[];
+  // creo il metodo per il login
+  static async login(email: string, password: string): Promise<Utente | null> {
+    const conn = await db();
 
-  const id_utente = (await connection.query(
-    ' SELECT id_utente FROM susdb.utente where email=?',
-    [email],
-  )) as RowDataPacket[];
+    const [rows] = await conn.query(
+      'SELECT * FROM utente WHERE email = ? and password = ?',
+      [email, password],
+    );
+    const utente = rows as RowDataPacket;
+    if (utente.length > 0) {
+      const utenteLoggato = new Utente(
+        utente[0].nome,
+        utente[0].cognome,
+        utente[0].email,
+        utente[0].password,
+      );
+      utenteLoggato.set_id_utente(utente[0].id_utente);
+      return utenteLoggato;
+    }
+    return null;
+  }
 
-  const acquisto = await connection.query(
-    'INSERT INTO acquisto (id_utente, id_piano, data_acquisto) VALUES (?, ?, ?)',
-    [id_utente[0][0].id_utente, piano[0][0].id_piano, new Date()],
+  // creo il metodo per il ritorno di tutti gli utenti
+  static async getAllUtenti(): Promise<Utente[]> {
+    const conn = await db();
 
-    /*
-    id_utente[0][0].id_utente è l'id dell'utente appena registrato preso nella Query di id_utente
-    con [0][0] prendo il primo elemento della prima riga della tabella di tipo RowDataPacket
-    */
-  );
+    const [rows] = await conn.query('SELECT * FROM utente');
+    const utenti = rows as RowDataPacket[];
+    return utenti.map(
+      (utente) =>
+        new Utente(utente.nome, utente.cognome, utente.email, utente.password),
+    );
+  }
+}
 
-  return user;
-};
-
-export { getAllUtenti };
-export { getUtenteByMail };
-export { setUtentiRegistrazione };
+export default UtenteDAO;
