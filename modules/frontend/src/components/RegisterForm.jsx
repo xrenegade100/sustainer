@@ -10,9 +10,9 @@ const RegisterForm = ({ onSubmit }) => {
   const [passwordr, setPasswordr] = useState('');
   const [isLoading, setIsLoading] = useState(false);
 
-  const handleSubmit = async () => {
+  const handleSubmitR = async () => {
     setIsLoading(true);
-    const response = await fetch('http://localhost:5000/login/register', {
+    const response = await fetch('http://localhost:5000/register', {
       headers: {
         'Content-Type': 'application/json',
       },
@@ -27,7 +27,7 @@ const RegisterForm = ({ onSubmit }) => {
 
     setIsLoading(false);
     if (!response.ok) {
-      alert('Credeziali errate');
+      alert('Parametri errati');
       return;
     }
 
@@ -74,11 +74,7 @@ const RegisterForm = ({ onSubmit }) => {
         />
       </div>
       <div className="buttonsgupin">
-        <Button
-          isLoading={isLoading}
-          onClick={handleSubmit}
-          size={SIZE.large}
-        >
+        <Button isLoading={isLoading} onClick={handleSubmitR} size={SIZE.large}>
           Registrati
         </Button>
       </div>
