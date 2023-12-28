@@ -1,5 +1,3 @@
-import { Link } from 'react-router-dom';
-
 import React, { useState } from 'react';
 import '../styles/LoginSignupForm.css';
 import { Tabs, Tab, FILL } from 'baseui/tabs-motion';
@@ -8,8 +6,7 @@ import { Input } from 'baseui/input';
 import { Button, SIZE } from 'baseui/button';
 import RegisterForm from './RegisterForm';
 
-const LoginSignupForm = ({ onSubmit }) => {
-  const [activeKey, setActiveKey] = useState('0');
+const LoginTab = ({ setHeaderTitle }) => {
   const [checked, setChecked] = useState(false);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -39,11 +36,85 @@ const LoginSignupForm = ({ onSubmit }) => {
     alert(JSON.stringify(data));
   };
 
+  setHeaderTitle('Accedi a Sustainer');
+
+  return (
+    <div className="login">
+      <Checkbox
+        checked={checked}
+        checkmarkType={STYLE_TYPE.toggle_round}
+        onChange={(e) => setChecked(e.target.checked)}
+        labelPlacement={LABEL_PLACEMENT.right}
+        overrides={{
+          Toggle: {
+            style: () => ({
+              backgroundColor: checked ? '#2467d1' : '#fff',
+            }),
+          },
+        }}
+      >
+        Amministratore
+      </Checkbox>
+      <div className="email">
+        <Input
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          placeholder="mario@rossi.it"
+          clearable
+          type="email"
+        />
+      </div>
+      <div className="password">
+        <Input
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          clearable
+          type="password"
+        />
+      </div>
+      <Checkbox
+        checked={remember}
+        checkmarkType={STYLE_TYPE.toggle_round}
+        onChange={(e) => setRemember(e.target.checked)}
+        labelPlacement={LABEL_PLACEMENT.right}
+        overrides={{
+          Toggle: {
+            style: () => ({
+              backgroundColor: remember ? '#2467d1' : '#fff',
+            }),
+          },
+        }}
+      >
+        Ricordami
+      </Checkbox>
+      <div className="buttonsgupin">
+        <Button isLoading={isLoading} onClick={handleSubmit} size={SIZE.large}>
+          ACCEDI
+        </Button>
+      </div>
+    </div>
+  );
+};
+
+const RegisterTab = ({ setHeaderTitle }) => {
+  setHeaderTitle('Registrati a Sustainer');
+
+  return (
+    <div className="reg">
+      <RegisterForm />
+    </div>
+  );
+};
+
+const LoginSignupForm = () => {
+  const [activeKey, setActiveKey] = useState('0');
+  const [headerTitle, setHeaderTitle] = useState('Accedi a Sustainer');
+
   return (
     <div className="form">
       <div className="card">
         <div className="form-header">
-          <span className="form-header-title">Accedi a Sustainer</span>
+          <span className="form-header-title">{headerTitle}</span>
         </div>
         <div className="form-body">
           <Tabs
@@ -66,61 +137,10 @@ const LoginSignupForm = ({ onSubmit }) => {
             }}
           >
             <Tab title="Accedi">
-              <div className="login">
-                <Checkbox
-                  checked={checked}
-                  checkmarkType={STYLE_TYPE.toggle_round}
-                  onChange={(e) => setChecked(e.target.checked)}
-                  labelPlacement={LABEL_PLACEMENT.right}
-                  overrides={{
-                    Toggle: {
-                      style: () => ({
-                        backgroundColor: checked ? '#2467d1' : '#fff',
-                      }),
-                    },
-                  }}
-                >
-                  Amministratore
-                </Checkbox>
-                <Input
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  placeholder="mario@rossi.it"
-                  clearable
-                  type="email"
-                />
-                <Input
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  clearable
-                  type="password"
-                />
-                <Checkbox
-                  checked={remember}
-                  checkmarkType={STYLE_TYPE.toggle_round}
-                  onChange={(e) => setRemember(e.target.checked)}
-                  labelPlacement={LABEL_PLACEMENT.right}
-                  overrides={{
-                    Toggle: {
-                      style: () => ({
-                        backgroundColor: remember ? '#2467d1' : '#fff',
-                      }),
-                    },
-                  }}
-                >
-                  Ricordami
-                </Checkbox>
-                <Button
-                  isLoading={isLoading}
-                  onClick={handleSubmit}
-                  size={SIZE.large}
-                >
-                  ACCEDI
-                </Button>
-              </div>
+              <LoginTab setHeaderTitle={setHeaderTitle} />
             </Tab>
             <Tab title="Registrati">
-              <RegisterForm />  
+              <RegisterTab setHeaderTitle={setHeaderTitle} />
             </Tab>
           </Tabs>
         </div>
@@ -130,10 +150,6 @@ const LoginSignupForm = ({ onSubmit }) => {
       </div>
     </div>
   );
-};
-
-LoginSignupForm.propTypes = {
-  onSubmit: () => {},
 };
 
 export default LoginSignupForm;

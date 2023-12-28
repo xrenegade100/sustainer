@@ -1,33 +1,31 @@
 import React, { useState } from 'react';
 import '../styles/LoginSignupForm.css';
-import { Tabs, Tab, FILL } from 'baseui/tabs-motion';
 import { Input } from 'baseui/input';
 import { Button, SIZE } from 'baseui/button';
 
 const RegisterForm = ({ onSubmit }) => {
-    
-    const [nome, setNome] = useState('');   
-    const [cognome, setCognome] = useState('');
-    const [emailr, setEmailr] = useState('');
-    const [passwordr, setPasswordr] = useState('');
-    const [isLoading, setIsLoading] = useState(false);
+  const [nome, setNome] = useState('');
+  const [cognome, setCognome] = useState('');
+  const [emailr, setEmailr] = useState('');
+  const [passwordr, setPasswordr] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
 
-    const handleSubmit = async () => {
-        setIsLoading(true);
-        const response = await fetch('http://localhost:5000/login/register', {
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          method: 'POST',
-          body: JSON.stringify({
-            nome,
-            cognome,
-            emailr,
-            passwordr,
-          }),
-        });
+  const handleSubmit = async () => {
+    setIsLoading(true);
+    const response = await fetch('http://localhost:5000/login/register', {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      method: 'POST',
+      body: JSON.stringify({
+        nome,
+        cognome,
+        emailr,
+        passwordr,
+      }),
+    });
 
-        setIsLoading(false);
+    setIsLoading(false);
     if (!response.ok) {
       alert('Credeziali errate');
       return;
@@ -38,48 +36,57 @@ const RegisterForm = ({ onSubmit }) => {
   };
 
   return (
-    <div className="register">
-                <Input
-                  value={nome}
-                  onChange={(e) => setNome(e.target.value)}
-                  placeholder="Nome"
-                  clearable
-                  type="text"
-                />
-                <Input
-                  value={cognome}
-                  onChange={(e) => setCognome(e.target.value)}
-                  placeholder="Cognome"
-                  clearable
-                  type="text"
-                />
-                <Input
-                  value={emailr}
-                  onChange={(e) => setEmailr(e.target.value)}
-                  placeholder="mario@rossi.it"
-                  clearable
-                  type="email"
-                />
-                <Input
-                  value={passwordr}
-                  onChange={(e) => setPasswordr(e.target.value)}
-                  placeholder="password"
-                  clearable
-                  type="password"
-                />
-        
-                <Button
-                  isLoading={isLoading}
-                  onClick={handleSubmit}
-                  size={SIZE.large}
-                >
-                  Registrati
-                </Button>
-                </div>
+    <div className="login">
+      <div className="nome">
+        <Input
+          value={nome}
+          onChange={(e) => setNome(e.target.value)}
+          placeholder="Nome"
+          clearable
+          type="text"
+        />
+      </div>
+      <div className="cognome">
+        <Input
+          value={cognome}
+          onChange={(e) => setCognome(e.target.value)}
+          placeholder="Cognome"
+          clearable
+          type="text"
+        />
+      </div>
+      <div className="emailr">
+        <Input
+          value={emailr}
+          onChange={(e) => setEmailr(e.target.value)}
+          placeholder="mario@rossi.it"
+          clearable
+          type="email"
+        />
+      </div>
+      <div className="passwordr">
+        <Input
+          value={passwordr}
+          onChange={(e) => setPasswordr(e.target.value)}
+          placeholder="password"
+          clearable
+          type="password"
+        />
+      </div>
+      <div className="buttonsgupin">
+        <Button
+          isLoading={isLoading}
+          onClick={handleSubmit}
+          size={SIZE.large}
+        >
+          Registrati
+        </Button>
+      </div>
+    </div>
   );
 };
 RegisterForm.propTypes = {
-    onSubmit: () => {},
-  };
-  
-  export default RegisterForm;
+  onSubmit: () => {},
+};
+
+export default RegisterForm;
