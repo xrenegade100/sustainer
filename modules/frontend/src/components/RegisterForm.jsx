@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import '../styles/LoginSignupForm.css';
 import { Input } from 'baseui/input';
 import { Button, SIZE } from 'baseui/button';
+import SHA256 from 'crypto-js/sha256';
 
 const RegisterForm = ({ onSubmit }) => {
   const [nome, setNome] = useState('');
@@ -47,6 +48,8 @@ const RegisterForm = ({ onSubmit }) => {
       return;
     }
 
+    const hashValue = SHA256(passwordr).toString();
+
     const response = await fetch('http://localhost:5000/register', {
       headers: {
         'Content-Type': 'application/json',
@@ -56,7 +59,7 @@ const RegisterForm = ({ onSubmit }) => {
         nome,
         cognome,
         emailr,
-        passwordr,
+        passwordr: hashValue,
       }),
     });
 

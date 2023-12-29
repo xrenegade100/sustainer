@@ -4,6 +4,7 @@ import { Tabs, Tab, FILL } from 'baseui/tabs-motion';
 import { Checkbox, STYLE_TYPE, LABEL_PLACEMENT } from 'baseui/checkbox';
 import { Input } from 'baseui/input';
 import { Button, SIZE } from 'baseui/button';
+import SHA256 from 'crypto-js/sha256';
 import RegisterForm from './RegisterForm';
 
 const LoginTab = ({ setHeaderTitle }) => {
@@ -15,6 +16,9 @@ const LoginTab = ({ setHeaderTitle }) => {
 
   const handleSubmit = async () => {
     setIsLoading(true);
+
+    const hashValue = SHA256(password).toString();
+
     const response = await fetch('http://localhost:5000/login', {
       headers: {
         'Content-Type': 'application/json',
@@ -22,7 +26,7 @@ const LoginTab = ({ setHeaderTitle }) => {
       method: 'POST',
       body: JSON.stringify({
         email,
-        password,
+        password: hashValue,
       }),
     });
 
