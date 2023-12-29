@@ -12,6 +12,41 @@ const RegisterForm = ({ onSubmit }) => {
 
   const handleSubmitR = async () => {
     setIsLoading(true);
+    const nomeRegex = /^[a-zA-ZÀ-ÖØ-öø-ÿ\s']{1,100}$/;
+    if (!nomeRegex.test(nome)) {
+      alert(
+        'Il nome deve contenere solo lettere, non deve essere vuoto e non deve superare i 100 caratteri',
+      );
+      setIsLoading(false);
+      return;
+    }
+    const cognomeRegex = /^[a-zA-ZÀ-ÖØ-öø-ÿ\s']{1,100}$/;
+    if (!cognomeRegex.test(cognome)) {
+      alert(
+        'Il cognome deve contenere solo lettere, non deve essere vuoto e non deve superare i 100 caratteri',
+      );
+      setIsLoading(false);
+      return;
+    }
+
+    const emailRegex = /^[A-z0-9._%+-]+@[A-z0-9.-]+\.[A-z]{2,319}$/;
+    if (!emailRegex.test(emailr)) {
+      alert('Email non rispetta il formato corretto (es. mario@rossi.it)');
+      setIsLoading(false);
+      return;
+    }
+
+    // Password validation
+    const passwordRegex =
+      /^(?=.*[A-Z])(?=.*[!@#$%^&*()_+{}\[\]:;<>,.?~\\/-])[A-Za-z0-9!@#$%^&*()_+{}\[\]:;<>,.?~\\/-]{8,64}$/;
+    if (!passwordRegex.test(passwordr)) {
+      alert(
+        'La password deve contenere almeno 8 caratteri tra cui: \n1 lettera maisucola \n1 carattere speciale',
+      );
+      setIsLoading(false);
+      return;
+    }
+
     const response = await fetch('http://localhost:5000/register', {
       headers: {
         'Content-Type': 'application/json',
