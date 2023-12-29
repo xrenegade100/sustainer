@@ -1,3 +1,5 @@
+/* eslint-disable camelcase */
+/* eslint-disable no-unused-vars */
 import { RowDataPacket } from 'mysql2/promise';
 import db from '../db/poolDB';
 import Utente from '../account/domain/Utente';
@@ -61,8 +63,7 @@ class UtenteDAO {
     const [rows] = await conn.query('SELECT * FROM utente');
     const utenti = rows as RowDataPacket[];
     return utenti.map(
-      (utente) =>
-        new Utente(utente.nome, utente.cognome, utente.email, utente.password),
+      (utente) => new Utente(utente.nome, utente.cognome, utente.email, utente.password),
     );
   }
 }
