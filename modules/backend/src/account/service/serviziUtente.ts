@@ -1,5 +1,5 @@
+/* eslint-disable no-unused-vars */
 import Utente from '../domain/Utente';
-import UtenteDAO from '../../DAO/UtenteDAO';
 
 interface serviziUtente {}
 

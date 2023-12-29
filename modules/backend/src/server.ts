@@ -2,7 +2,7 @@ import express, { Request, Response } from 'express';
 import morgan from 'morgan';
 import helmet from 'helmet';
 import cors from 'cors';
-import serviziUtenteImpl from './account/service/serviziUtenteImpl';
+import UtenteController from './Controller/UtenteController';
 
 const server = express();
 
@@ -15,6 +15,6 @@ server.use(helmet());
 server.use(cors());
 server.use(express.json());
 
-server.use('/login', serviziUtenteImpl.loginIMP);
-server.use('/register', serviziUtenteImpl.registrazioneIMP);
+server.use('/login', UtenteController.loginIMP);
+server.use('/register', UtenteController.registrazioneIMP);
 export default server;
