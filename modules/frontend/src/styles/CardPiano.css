@@ -1,0 +1,87 @@
+.card {
+  width: 330px;
+  height: 410px;
+  border: 1px solid #ddd;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.title-card {
+  font-family: Lato;
+  font-size: 24px;
+  margin-bottom: 10px;
+}
+
+.subtitle {
+  font-family: Lato;
+  font-size: 18px;
+  color: #888;
+  margin-bottom: 10px;
+}
+
+.text {
+  font-family: Lato;
+  font-size: 16px;
+  line-height: 1.5;
+  color: #333;
+  text-align: center;
+}
+
+/* Card.css */
+
+.card {
+  width: 330px;
+  height: 410px;
+  border: 1px solid #ddd;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.title-card {
+  font-size: 24px;
+  margin-bottom: 10px;
+}
+
+.subtitle {
+  font-size: 18px;
+  color: #888;
+  margin-bottom: 10px;
+}
+
+.text {
+  font-size: 16px;
+  line-height: 1.5;
+  color: #333;
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+.phrase-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.phrase-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.icon {
+  margin-right: 8px;
+  color: #5cb85c; /* colore verde (puoi cambiare con quello desiderato) */
+}
+
+.phrase-text {
+  font-size: 14px;
+  color: #555;
+}
