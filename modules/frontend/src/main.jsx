@@ -6,6 +6,8 @@ import { LightTheme, BaseProvider } from 'baseui';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import Login from './pages/Login';
 import Homepage from './pages/Homepage';
+import RegisterForm from './components/RegisterForm';
+import Piani from './pages/Piani';
 
 // Qui fare il routing frontend, quindi aggiungere qui le pagine jsx qui
 const router = createBrowserRouter([
@@ -21,6 +23,10 @@ const router = createBrowserRouter([
   {
     path: '/homepage',
     element: <Homepage />, // passare la pagina jsx con le <>
+  },
+  {
+    path: '/piani',
+    element: <Piani />, //passare la pagina jsx con le <>
   },
 ]);
 
