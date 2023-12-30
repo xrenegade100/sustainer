@@ -14,13 +14,13 @@ const server = express();
 const key = 'keyboard cat';
 server.use(morgan('dev', { skip: () => process.env.NODE_ENV === 'test' })); // skip request logging during tests
 server.use(helmet());
-server.use(cors());
+server.use(cors({ credentials: true, origin: true }));
 server.use(express.json());
 server.use(
   session({
     secret: key,
     resave: false,
-    saveUninitialized: false,
+    saveUninitialized: true,
     cookie: {
       secure: false,
       maxAge: 600000,
@@ -29,6 +29,8 @@ server.use(
 );
 
 server.use('/login', UtenteController.loginIMP);
+server.use('/logout', UtenteController.logout);
+server.use('/verificaLogin', UtenteController.verificaLogin);
 server.use('/register', UtenteController.registrazioneIMP);
 export default server;
 export { key };
