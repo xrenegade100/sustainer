@@ -23,10 +23,6 @@ const router = createBrowserRouter([
     path: '/homepage',
     element: <Homepage />, // passare la pagina jsx con le <>
   },
-  {
-    path: '/Register',
-    element: <RegisterForm />, // passare la pagina jsx con le <>
-  },
 ]);
 
 const engine = new Styletron();

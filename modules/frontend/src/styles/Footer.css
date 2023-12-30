@@ -1,14 +1,36 @@
+@import url('https://fonts.googleapis.com/css?family=Lato');
 .footer {
   background-color: #e8e8e8;
-  margin-top: 5%;
+  margin-top: 10%;
 }
 
 .tab {
   display: grid;
-  grid-template-columns: repeat(6, 1fr);
+  grid-template-columns: repeat(5, 1fr);
   gap: 7%;
   margin-left: 1%;
   padding: 1%;
   font-family: 'Lato';
   font-size: 1em;
+}
+
+.sottodiv {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.footerdiv {
+  color: #222222;
+  margin-top: 3%;
+  text-align: center;
+}
+
+.img-maniblue {
+  margin-left: 70%;
+}
+
+.img-footer {
+  position: bottom;
+  height: 100%;
+  width: 100%;
 }

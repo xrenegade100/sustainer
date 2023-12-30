@@ -1,5 +1,4 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import Navbar from '../components/Navbar';
 import '../styles/Homepage.css';
 import Footer from '../components/Footer';
@@ -12,34 +11,22 @@ const homepage = () => (
 
       <img className="img-scritta" src="/Scrittahome.png" alt="" />
 
-      <button className="tasto-au">About us</button>
+      <button className="tasto-au">
+        <a href="#about-us-section" class="testo-white">
+          About us
+        </a>
+      </button>
 
       <div className="sez-testo">
         <img className="img-loghihome" src="/loghihome.png" alt="" />
         <div className="paragrafi">
-          <p>
-            Lorem Ipsum is simply dummy text of the printing and typesetting
-            industry. Lorem Ipsum has been the industry's standard dummy text
-            ever since the 1500s,
-          </p>
-          <p>
-            Lorem Ipsum is simply dummy text of the printing and typesetting
-            industry. Lorem Ipsum has been the industry's standard dummy text
-            ever since the 1500s,
-          </p>
-          <p>
-            Lorem Ipsum is simply dummy text of the printing and typesetting
-            industry. Lorem Ipsum has been the industry's standard dummy text
-            ever since the 1500s,
-          </p>
-          <p>
-            Lorem Ipsum is simply dummy text of the printing and typesetting
-            industry. Lorem Ipsum has been the industry's standard dummy text
-            ever since the 1500s,
-          </p>
+          <p>Approccio personalizzato</p>
+          <p>Sostenibilità ambientale ed energetica</p>
+          <p>Personalizzazione delle soluzioni</p>
+          <p>Programmazione facilitata</p>
         </div>
       </div>
-      <div className="about-sup">
+      <div className="about-sup" id="about-us-section">
         <div class="sin">
           <img className="img-razzo" src="/razzo.png" alt="" />
           <p>

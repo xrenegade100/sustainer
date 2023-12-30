@@ -18,9 +18,6 @@ const Footer = () => (
         <p>Contact</p>
       </div>
       <div>
-        <p>&copy; 2023 Nome del Tuo Sito. Tutti i diritti riservati.</p>
-      </div>
-      <div>
         <p>Socials</p>
         <p>Linkedin</p>
         <p>Instagram</p>
@@ -28,6 +25,13 @@ const Footer = () => (
         <p>Reddit</p>
       </div>
       <img className="img-susblue" src="/susblue.png" alt="" />
+    </div>
+    <div class="sottodiv">
+      <img className="img-footer" src="/footersin.png" alt="" />
+      <div class="footerdiv">
+        <p>&copy; 2023 Sustainer. Tutti i diritti riservati.</p>
+      </div>
+      <img className="img-footer" src="/footerdex.png" alt="" />
     </div>
   </div>
 );

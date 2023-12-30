@@ -1,12 +1,30 @@
+@import url('https://fonts.googleapis.com/css?family=Lato');
+
 .navbar {
   background-color: #2467d1;
-  overflow: hidden;
+  padding-bottom: 1%;
+}
+
+.text-black {
+  color: black;
+  text-align: left; /* Allinea il testo a sinistra */
+  font-family: 'Lato';
+}
+
+.text-white {
+  font-family: 'Lato';
+  color: white;
+  font-size: 1.5em;
+  text-align: center;
+}
+
+.text-white:hover {
+  font-weight: bold;
 }
 
 .navbar ul {
   list-style-type: none;
   padding-top: 0.7%;
-  overflow: hidden;
 }
 
 .navbar li {
@@ -16,24 +34,49 @@
 
 .navbar a {
   display: block;
-  color: #ffffff;
-  text-align: center;
   padding: 14px 16px;
   text-decoration: none;
-  font-size: 1.5em;
 }
 
-.navbar a:hover {
-  font-family: 'Lato';
-  font-weight: bold;
-  color: #ffffff;
-}
-
-.img-file {
+.logo {
   margin: 0;
   width: 14%;
   height: 14%;
 }
 .img-avatar {
   margin-bottom: 10%;
+}
+
+.dropdown-li {
+  position: relative;
+}
+
+/* Navbar.css */
+
+.dropdown-content {
+  display: block;
+  position: absolute;
+  top: 80%;
+  right: 10%;
+  background-color: #fff;
+  border: 1px solid black;
+  padding: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  z-index: 100%;
+  color: black;
+  border-radius: 8px; /* Puoi regolare il valore in base alla curvatura desiderata */
+  width: 250%; /* Imposta la larghezza desiderata */
+}
+
+.dropdown-content a {
+  display: block;
+  padding: 8px;
+  color: black;
+  text-decoration: none;
+  transition: background-color 0.3s ease; /* Aggiungi un'animazione di transizione */
+}
+
+/* Illuminazione al passaggio del mouse */
+.dropdown-content a:hover {
+  background-color: #f0f0f0; /* Cambia il colore di sfondo al passaggio della freccia */
 }

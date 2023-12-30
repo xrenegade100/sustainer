@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import '../styles/Navbar.css'; // Importa il file di stile CSS per la navbar
 
-const Navbar = () => {
+const NavbarLogin = () => {
   const [isDropdownVisible, setIsDropdownVisible] = useState(false);
 
   const handleAvatarClick = () => {
@@ -34,10 +34,16 @@ const Navbar = () => {
             <div className="dropdown-content">
               {/* Contenuto del menù a tendina */}
               <Link to="/login" className="text-black">
-                Accedi
+                Profilo
               </Link>
               <Link to="/" className="text-black">
-                Home
+                Il mio piano
+              </Link>
+              <Link to="/" className="text-black">
+                Il mio storico
+              </Link>
+              <Link to="/" className="text-black">
+                Esci
               </Link>
             </div>
           )}
@@ -77,4 +83,4 @@ const Navbar = () => {
   );
 };
 
-export default Navbar;
+export default NavbarLogin;

@@ -1,35 +1,68 @@
 import React, { useState } from 'react';
 import '../styles/LoginSignupForm.css';
-import { Tabs, Tab, FILL } from 'baseui/tabs-motion';
 import { Input } from 'baseui/input';
 import { Button, SIZE } from 'baseui/button';
 
 const RegisterForm = ({ onSubmit }) => {
-    
-    const [nome, setNome] = useState('');   
-    const [cognome, setCognome] = useState('');
-    const [emailr, setEmailr] = useState('');
-    const [passwordr, setPasswordr] = useState('');
-    const [isLoading, setIsLoading] = useState(false);
+  const [nome, setNome] = useState('');
+  const [cognome, setCognome] = useState('');
+  const [emailr, setEmailr] = useState('');
+  const [passwordr, setPasswordr] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
 
-    const handleSubmit = async () => {
-        setIsLoading(true);
-        const response = await fetch('http://localhost:5000/login/register', {
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          method: 'POST',
-          body: JSON.stringify({
-            nome,
-            cognome,
-            emailr,
-            passwordr,
-          }),
-        });
+  const handleSubmitR = async () => {
+    setIsLoading(true);
+    const nomeRegex = /^[a-zA-ZÀ-ÖØ-öø-ÿ\s']{1,100}$/;
+    if (!nomeRegex.test(nome)) {
+      alert(
+        'Il nome deve contenere solo lettere, non deve essere vuoto e non deve superare i 100 caratteri',
+      );
+      setIsLoading(false);
+      return;
+    }
+    const cognomeRegex = /^[a-zA-ZÀ-ÖØ-öø-ÿ\s']{1,100}$/;
+    if (!cognomeRegex.test(cognome)) {
+      alert(
+        'Il cognome deve contenere solo lettere, non deve essere vuoto e non deve superare i 100 caratteri',
+      );
+      setIsLoading(false);
+      return;
+    }
 
-        setIsLoading(false);
+    const emailRegex = /^[A-z0-9._%+-]+@[A-z0-9.-]+\.[A-z]{2,319}$/;
+    if (!emailRegex.test(emailr)) {
+      alert('Email non rispetta il formato corretto (es. mario@rossi.it)');
+      setIsLoading(false);
+      return;
+    }
+
+    // Password validation
+    const passwordRegex =
+      /^(?=.*[A-Z])(?=.*[!@#$%^&*()_+{}\[\]:;<>,.?~\\/-])[A-Za-z0-9!@#$%^&*()_+{}\[\]:;<>,.?~\\/-]{8,64}$/;
+    if (!passwordRegex.test(passwordr)) {
+      alert(
+        'La password deve contenere almeno 8 caratteri tra cui: \n1 lettera maisucola \n1 carattere speciale',
+      );
+      setIsLoading(false);
+      return;
+    }
+
+    const response = await fetch('http://localhost:5000/register', {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      method: 'POST',
+      body: JSON.stringify({
+        nome,
+        cognome,
+        emailr,
+        passwordr,
+      }),
+    });
+
+    setIsLoading(false);
     if (!response.ok) {
-      alert('Credeziali errate');
+      alert('Parametri errati');
       return;
     }
 
@@ -38,48 +71,53 @@ const RegisterForm = ({ onSubmit }) => {
   };
 
   return (
-    <div className="register">
-                <Input
-                  value={nome}
-                  onChange={(e) => setNome(e.target.value)}
-                  placeholder="Nome"
-                  clearable
-                  type="text"
-                />
-                <Input
-                  value={cognome}
-                  onChange={(e) => setCognome(e.target.value)}
-                  placeholder="Cognome"
-                  clearable
-                  type="text"
-                />
-                <Input
-                  value={emailr}
-                  onChange={(e) => setEmailr(e.target.value)}
-                  placeholder="mario@rossi.it"
-                  clearable
-                  type="email"
-                />
-                <Input
-                  value={passwordr}
-                  onChange={(e) => setPasswordr(e.target.value)}
-                  placeholder="password"
-                  clearable
-                  type="password"
-                />
-        
-                <Button
-                  isLoading={isLoading}
-                  onClick={handleSubmit}
-                  size={SIZE.large}
-                >
-                  Registrati
-                </Button>
-                </div>
+    <div className="login">
+      <div className="nome">
+        <Input
+          value={nome}
+          onChange={(e) => setNome(e.target.value)}
+          placeholder="Nome"
+          clearable
+          type="text"
+        />
+      </div>
+      <div className="cognome">
+        <Input
+          value={cognome}
+          onChange={(e) => setCognome(e.target.value)}
+          placeholder="Cognome"
+          clearable
+          type="text"
+        />
+      </div>
+      <div className="emailr">
+        <Input
+          value={emailr}
+          onChange={(e) => setEmailr(e.target.value)}
+          placeholder="mario@rossi.it"
+          clearable
+          type="email"
+        />
+      </div>
+      <div className="passwordr">
+        <Input
+          value={passwordr}
+          onChange={(e) => setPasswordr(e.target.value)}
+          placeholder="password"
+          clearable
+          type="password"
+        />
+      </div>
+      <div className="buttonsgupin">
+        <Button isLoading={isLoading} onClick={handleSubmitR} size={SIZE.large}>
+          Registrati
+        </Button>
+      </div>
+    </div>
   );
 };
 RegisterForm.propTypes = {
-    onSubmit: () => {},
-  };
-  
-  export default RegisterForm;
+  onSubmit: () => {},
+};
+
+export default RegisterForm;
