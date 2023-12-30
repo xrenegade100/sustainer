@@ -12,14 +12,15 @@
 
 .title-card {
   font-family: Lato;
-  font-size: 24px;
+  font-size: 28px;
+  font-weight: bold;
   margin-bottom: 10px;
 }
 
-.subtitle {
+.subtitle-card {
   font-family: Lato;
-  font-size: 18px;
-  color: #888;
+  font-size: 14px;
+  font-weight: bold;
   margin-bottom: 10px;
 }
 
@@ -27,7 +28,6 @@
   font-family: Lato;
   font-size: 16px;
   line-height: 1.5;
-  color: #333;
   text-align: center;
 }
 
@@ -57,12 +57,23 @@
   margin-bottom: 10px;
 }
 
-.text {
-  font-size: 16px;
-  line-height: 1.5;
-  color: #333;
+.price {
+  display: flex;
+}
+
+.text-price {
+  font-size: 56px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.text-period {
+  font-size: 12px;
+  font-weight: 200;
   text-align: center;
   margin-bottom: 10px;
+  display: flex;
+  align-items: flex-end;
 }
 
 .phrase-list {
@@ -77,6 +88,11 @@
   margin-bottom: 8px;
 }
 
+.phrase-item span {
+  margin-left: 5%;
+  font-size: 14px medium;
+}
+
 .icon {
   margin-right: 8px;
   color: #5cb85c; /* colore verde (puoi cambiare con quello desiderato) */
@@ -84,5 +100,8 @@
 
 .phrase-text {
   font-size: 14px;
-  color: #555;
+}
+.card Button {
+  width: 100%;
+  background-color: #2467d1;
 }

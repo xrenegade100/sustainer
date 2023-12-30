@@ -50,7 +50,7 @@ const renderCardBasedOnType = (tipoPiano) => {
         <CardPiano
           title="Free"
           subtitle="Piano Free"
-          text="€0 /Mese"
+          price="€0"
           phrases={[
             'SI pubblicità',
             '1 Addestramento al giorno',
@@ -65,7 +65,7 @@ const renderCardBasedOnType = (tipoPiano) => {
         <CardPiano
           title="Standard"
           subtitle="Piano Standard"
-          text="€5 /Mese"
+          price="€5"
           phrases={[
             'NO Pubblicità',
             '2 Addestramenti al giorno',
@@ -80,7 +80,7 @@ const renderCardBasedOnType = (tipoPiano) => {
         <CardPiano
           title="Premium"
           subtitle="Piano Premium"
-          text="€29 /Mese"
+          price="€29"
           phrases={[
             'NO Pubblicità',
             '3 Addestramenti al giorno',
@@ -95,7 +95,7 @@ const renderCardBasedOnType = (tipoPiano) => {
         <CardPiano
           title="Business"
           subtitle="Piano Business"
-          text="€59 /mese"
+          price="€59"
           phrases={[
             'No Pubblicità',
             '4 Adeestramenti al giorno',
@@ -111,7 +111,7 @@ const renderCardBasedOnType = (tipoPiano) => {
           bgColor="#2467D1"
           title="Enterprise"
           subtitle="Piano Enterprise"
-          text="€* /mese"
+          price="€*"
           phrases={[
             'NO Pubblicità',
             'Scegli il numero di addestramenti',
@@ -119,6 +119,9 @@ const renderCardBasedOnType = (tipoPiano) => {
             'Salvataggio parametri e metrche degli addestramenti',
           ]}
           circleIcon={circleCheck}
+          textColor="#FFFFFF"
+          bgColorButton="#FFFFFF"
+          textColorButton="#222222"
         />
       );
     // Aggiungi altri casi per altri tipi di piano
@@ -127,7 +130,7 @@ const renderCardBasedOnType = (tipoPiano) => {
         <CardPiano
           title="Piano Sconosciuto"
           subtitle="Sottotitolo Sconosciuto"
-          text="Testo per il Piano Sconosciuto"
+          price="Testo per il Piano Sconosciuto"
           phrases={[
             'Funzionalità 1',
             'Funzionalità 2',
