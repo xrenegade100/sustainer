@@ -7,7 +7,7 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import Login from './pages/Login';
 import Homepage from './pages/Homepage';
 
-//Qui fare il routing frontend, quindi aggiungere qui le pagine jsx qui
+// Qui fare il routing frontend, quindi aggiungere qui le pagine jsx qui
 const router = createBrowserRouter([
   {
     path: '/',
@@ -15,12 +15,12 @@ const router = createBrowserRouter([
   },
   {
     path: '/login',
-    element: <Login />, //passare la pagina jsx con le <>
+    element: <Login />, // passare la pagina jsx con le <>
   },
 
   {
     path: '/homepage',
-    element: <Homepage />, //passare la pagina jsx con le <>
+    element: <Homepage />, // passare la pagina jsx con le <>
   },
 ]);
 
