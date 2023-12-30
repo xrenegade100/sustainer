@@ -19,6 +19,8 @@ body {
 }
 
 .img-scritta {
+  width: max-content;
+  height: max-content;
   margin-top: 3%;
   margin-left: 25%;
 }

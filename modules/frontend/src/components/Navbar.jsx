@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import '../styles/Navbar.css'; // Importa il file di stile CSS per la navbar
 
@@ -35,9 +35,6 @@ const Navbar = () => {
               {/* Contenuto del menù a tendina */}
               <Link to="/login" className="text-black">
                 Accedi
-              </Link>
-              <Link to="/" className="text-black">
-                Home
               </Link>
             </div>
           )}

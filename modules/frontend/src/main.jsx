@@ -13,7 +13,7 @@ import Piani from './pages/Piani';
 const router = createBrowserRouter([
   {
     path: '/',
-    element: <div>Home Page</div>,
+    element: <Homepage />,
   },
   {
     path: '/login',
@@ -24,13 +24,10 @@ const router = createBrowserRouter([
     path: '/homepage',
     element: <Homepage />, // passare la pagina jsx con le <>
   },
-<<<<<<<<< Temporary merge branch 1
-{
-  path: '/piani',
-  element: <Piani />, //passare la pagina jsx con le <>
-},
-=========
->>>>>>>>> Temporary merge branch 2
+  {
+    path: '/piani',
+    element: <Piani />, //passare la pagina jsx con le <>
+  },
 ]);
 
 const engine = new Styletron();

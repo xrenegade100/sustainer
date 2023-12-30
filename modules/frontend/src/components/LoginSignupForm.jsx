@@ -19,9 +19,24 @@ const LoginTab = ({ setHeaderTitle }) => {
   const [showSnackbar, setShowSnackbar] = useState(false);
   const [snackbarMessage, setSnackbarMessage] = useState('');
   const [css] = useStyletron();
+  const navigate = useNavigate();
 
   //metodo per la snackbar
   useEffect(() => {
+    async function funzioneVerifica() {
+      const verifica = await fetch('http://localhost:5000/verificaLogin', {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        method: 'POST',
+        credentials: 'include',
+      });
+      const response = await verifica.json();
+      if (response.user) {
+        navigate('/homepage');
+      }
+    }
+    funzioneVerifica();
     let timer;
     if (showSnackbar) {
       timer = setTimeout(() => {
@@ -33,8 +48,6 @@ const LoginTab = ({ setHeaderTitle }) => {
     };
   }, [showSnackbar]);
 
-  const navigate = useNavigate();
-
   const handleSubmit = async () => {
     setIsLoading(true);
 
@@ -45,6 +58,7 @@ const LoginTab = ({ setHeaderTitle }) => {
         'Content-Type': 'application/json',
       },
       method: 'POST',
+      credentials: 'include',
       body: JSON.stringify({
         email,
         password: hashValue,
@@ -61,7 +75,6 @@ const LoginTab = ({ setHeaderTitle }) => {
 
     const data = await response.json();
     // alert(JSON.stringify(data));
-    alert(data.authenticated);
     navigate('/homepage');
   };
 
