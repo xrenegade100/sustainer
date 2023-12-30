@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import '../styles/LoginSignupForm.css';
+import { useNavigate } from 'react-router-dom';
 import { Tabs, Tab, FILL } from 'baseui/tabs-motion';
 import { Checkbox, STYLE_TYPE, LABEL_PLACEMENT } from 'baseui/checkbox';
 import { Input } from 'baseui/input';
@@ -13,6 +14,8 @@ const LoginTab = ({ setHeaderTitle }) => {
   const [password, setPassword] = useState('');
   const [remember, setRemember] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+
+  const navigate = useNavigate();
 
   const handleSubmit = async () => {
     setIsLoading(true);
@@ -37,7 +40,9 @@ const LoginTab = ({ setHeaderTitle }) => {
     }
 
     const data = await response.json();
-    alert(JSON.stringify(data));
+    // alert(JSON.stringify(data));
+    alert(data.authenticated);
+    navigate('/homepage');
   };
 
   setHeaderTitle('Accedi a Sustainer');

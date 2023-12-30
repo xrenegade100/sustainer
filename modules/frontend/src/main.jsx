@@ -6,7 +6,6 @@ import { LightTheme, BaseProvider } from 'baseui';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import Login from './pages/Login';
 import Homepage from './pages/Homepage';
-import RegisterForm from './components/RegisterForm';
 
 //Qui fare il routing frontend, quindi aggiungere qui le pagine jsx qui
 const router = createBrowserRouter([
