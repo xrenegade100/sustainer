@@ -1,4 +1,6 @@
-import React, { useState } from 'react';
+import { SnackbarElement } from 'baseui/snackbar';
+import React, { useEffect, useState } from 'react';
+import { useStyletron } from 'baseui';
 import '../styles/LoginSignupForm.css';
 import { useNavigate } from 'react-router-dom';
 import { Tabs, Tab, FILL } from 'baseui/tabs-motion';
@@ -14,6 +16,22 @@ const LoginTab = ({ setHeaderTitle }) => {
   const [password, setPassword] = useState('');
   const [remember, setRemember] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [showSnackbar, setShowSnackbar] = useState(false);
+  const [snackbarMessage, setSnackbarMessage] = useState('');
+  const [css] = useStyletron();
+
+  //metodo per la snackbar
+  useEffect(() => {
+    let timer;
+    if (showSnackbar) {
+      timer = setTimeout(() => {
+        setShowSnackbar(false);
+      }, 3500); // 3500ms = 3.5s
+    }
+    return () => {
+      clearTimeout(timer);
+    };
+  }, [showSnackbar]);
 
   const navigate = useNavigate();
 
@@ -35,7 +53,9 @@ const LoginTab = ({ setHeaderTitle }) => {
 
     setIsLoading(false);
     if (!response.ok) {
-      alert('Credeziali errate');
+      setSnackbarMessage('credenziali errate');
+      setShowSnackbar(true);
+      setIsLoading(false);
       return;
     }
 
@@ -101,6 +121,32 @@ const LoginTab = ({ setHeaderTitle }) => {
           ACCEDI
         </Button>
       </div>
+      {showSnackbar && (
+        <div className={css({ position: 'relative' })}>
+          <SnackbarElement
+            message={
+              <div
+                className={css({
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                })}
+              >
+                {snackbarMessage}
+              </div>
+            }
+            focus={false}
+            overrides={{
+              Root: {
+                style: {
+                  position: 'absolute',
+                  top: '20px', // Sposta la Snackbar di 50px verso il basso
+                },
+              },
+            }}
+          />
+        </div>
+      )}
     </div>
   );
 };
