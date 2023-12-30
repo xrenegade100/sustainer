@@ -1,8 +1,10 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import '../styles/LoginSignupForm.css';
+import { useStyletron } from 'baseui';
 import { Input } from 'baseui/input';
 import { Button, SIZE } from 'baseui/button';
 import SHA256 from 'crypto-js/sha256';
+import { SnackbarElement } from 'baseui/snackbar';
 
 const RegisterForm = ({ onSubmit }) => {
   const [nome, setNome] = useState('');
@@ -10,29 +12,50 @@ const RegisterForm = ({ onSubmit }) => {
   const [emailr, setEmailr] = useState('');
   const [passwordr, setPasswordr] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const [showSnackbar, setShowSnackbar] = useState(false);
+  const [snackbarMessage, setSnackbarMessage] = useState('');
+  const [css] = useStyletron();
+
+  //metodo per la snackbar
+  useEffect(() => {
+    let timer;
+    if (showSnackbar) {
+      timer = setTimeout(() => {
+        setShowSnackbar(false);
+      }, 3500); // 3500ms = 3.5s
+    }
+    return () => {
+      clearTimeout(timer);
+    };
+  }, [showSnackbar]);
 
   const handleSubmitR = async () => {
     setIsLoading(true);
     const nomeRegex = /^[a-zA-ZÀ-ÖØ-öø-ÿ\s']{1,100}$/;
     if (!nomeRegex.test(nome)) {
-      alert(
+      setSnackbarMessage(
         'Il nome deve contenere solo lettere, non deve essere vuoto e non deve superare i 100 caratteri',
       );
+      setShowSnackbar(true);
       setIsLoading(false);
       return;
     }
     const cognomeRegex = /^[a-zA-ZÀ-ÖØ-öø-ÿ\s']{1,100}$/;
     if (!cognomeRegex.test(cognome)) {
-      alert(
+      setSnackbarMessage(
         'Il cognome deve contenere solo lettere, non deve essere vuoto e non deve superare i 100 caratteri',
       );
+      setShowSnackbar(true);
       setIsLoading(false);
       return;
     }
 
     const emailRegex = /^[A-z0-9._%+-]+@[A-z0-9.-]+\.[A-z]{2,319}$/;
     if (!emailRegex.test(emailr)) {
-      alert('Email non rispetta il formato corretto (es. mario@rossi.it)');
+      setSnackbarMessage(
+        'Email non rispetta il formato corretto (es. mario@rossi.it)',
+      );
+      setShowSnackbar(true);
       setIsLoading(false);
       return;
     }
@@ -41,9 +64,10 @@ const RegisterForm = ({ onSubmit }) => {
     const passwordRegex =
       /^(?=.*[A-Z])(?=.*[!@#$%^&*()_+{}\[\]:;<>,.?~\\/-])[A-Za-z0-9!@#$%^&*()_+{}\[\]:;<>,.?~\\/-]{8,64}$/;
     if (!passwordRegex.test(passwordr)) {
-      alert(
-        'La password deve contenere almeno 8 caratteri tra cui: \n1 lettera maisucola \n1 carattere speciale',
+      setSnackbarMessage(
+        'La password deve contenere almeno 8 caratteri tra cui: 1 lettera maisucola 1 carattere speciale',
       );
+      setShowSnackbar(true);
       setIsLoading(false);
       return;
     }
@@ -116,6 +140,32 @@ const RegisterForm = ({ onSubmit }) => {
           Registrati
         </Button>
       </div>
+      {showSnackbar && (
+        <div className={css({ position: 'relative' })}>
+          <SnackbarElement
+            message={
+              <div
+                className={css({
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                })}
+              >
+                {snackbarMessage}
+              </div>
+            }
+            focus={false}
+            overrides={{
+              Root: {
+                style: {
+                  position: 'absolute',
+                  top: '20px', // Sposta la Snackbar di 50px verso il basso
+                },
+              },
+            }}
+          />
+        </div>
+      )}
     </div>
   );
 };
