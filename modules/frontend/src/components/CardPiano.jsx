@@ -1,9 +1,9 @@
 /* eslint-disable react/function-component-definition */
 import React, { useState } from 'react';
 import '../styles/CardPiano.css';
-import circleCheck from '../assets/circle_check.svg';
+import { Button, SIZE } from 'baseui/button';
 
-const Card = ({ title, subtitle, text, phrases }) => {
+const Card = ({ title, subtitle, text, phrases, bgColor, circleIcon }) => {
   const [email, setEmail] = useState('');
 
   /* const checkEmail = async () => {
@@ -28,15 +28,15 @@ const Card = ({ title, subtitle, text, phrases }) => {
   }; */
 
   return (
-    <div className="card">
+    <div className="card" style={{ backgroundColor: bgColor }}>
       <h2 className="title-card">{title}</h2>
       <h4 className="subtitle">{subtitle}</h4>
       <p className="text">{text}</p>
-      button
+      <Button size={SIZE.large}>Acquista</Button>
       <ul className="phrase-list">
         {phrases?.map((phrase, index) => (
           <li key={index} className="phrase-item">
-            <img src={circleCheck} alt="circleCheck" />
+            <img src={circleIcon} alt="circleCheck" />
             <span className="phrase-text">{phrase}</span>
           </li>
         ))}

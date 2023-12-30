@@ -42,7 +42,7 @@
 .slider {
   display: flex;
   width: 1000px;
-  animation: 10s sliding infinite;
+  animation: 20s sliding infinite;
 }
 
 .slide {
@@ -52,10 +52,19 @@
 
 @keyframes sliding {
   0% {
+    transform: translateX(5%);
+  }
+  10% {
     transform: translateX(0%);
+  }
+  25% {
+    transform: translateX(-25%);
   }
   50% {
     transform: translateX(-50%);
+  }
+  75% {
+    transform: translateX(-75%);
   }
   100% {
     transform: translateX(-100%);

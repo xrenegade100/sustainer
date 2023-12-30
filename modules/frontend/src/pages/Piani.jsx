@@ -2,6 +2,8 @@ import React from 'react';
 import '../styles/Piani.css';
 import Navbar from '../components/Navbar';
 import CardPiano from '../components/CardPiano';
+import circleCheck from '../assets/circle_check.svg';
+import circleCheckWhite from '../assets/circle_check_white.svg';
 
 const Piani = () => {
   const tipoPiano = ['free', 'standard', 'premium', 'business', 'enterprise'];
@@ -55,6 +57,7 @@ const renderCardBasedOnType = (tipoPiano) => {
             'Nessun salvataggio in memoria',
             'Salvataggio parametri e metrche degli addestramenti',
           ]}
+          circleIcon={circleCheckWhite}
         />
       );
     case 'standard':
@@ -69,6 +72,7 @@ const renderCardBasedOnType = (tipoPiano) => {
             '1 Salvataggio in memoria',
             'Salvataggio parametri e metrche degli addestramenti',
           ]}
+          circleIcon={circleCheckWhite}
         />
       );
     case 'premium':
@@ -83,6 +87,7 @@ const renderCardBasedOnType = (tipoPiano) => {
             '5 Salavataggi in memoria',
             'Salvataggio parametri e metrche degli addestramenti',
           ]}
+          circleIcon={circleCheckWhite}
         />
       );
     case 'business':
@@ -97,11 +102,13 @@ const renderCardBasedOnType = (tipoPiano) => {
             '10 Salvattaggi in memoria ',
             'Salvataggio parametri e metrche degli addestramenti',
           ]}
+          circleIcon={circleCheckWhite}
         />
       );
     case 'enterprise':
       return (
         <CardPiano
+          bgColor="#2467D1"
           title="Enterprise"
           subtitle="Piano Enterprise"
           text="€* /mese"
@@ -111,6 +118,7 @@ const renderCardBasedOnType = (tipoPiano) => {
             'Scegli il numero di salvataggi',
             'Salvataggio parametri e metrche degli addestramenti',
           ]}
+          circleIcon={circleCheck}
         />
       );
     // Aggiungi altri casi per altri tipi di piano
@@ -126,6 +134,7 @@ const renderCardBasedOnType = (tipoPiano) => {
             'Funzionalità 3',
             'Funzionalità 4',
           ]}
+          circleIcon={circleCheckWhite}
         />
       );
   }
