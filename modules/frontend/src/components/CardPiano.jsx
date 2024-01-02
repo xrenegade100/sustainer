@@ -15,28 +15,6 @@ const Card = ({
   textColorButton,
 }) => {
   const [email, setEmail] = useState('');
-
-  /* const checkEmail = async () => {
-    const response = await fetch('http://localhost:5000/trov aUtente', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ email }),
-    });
-    const content = await response.json();
-    const { user } = content;
-
-    alert('User: ' + user.email);
-    //const data = await response.json();
-
-    if (data.exists) {
-      alert('Email exists in the database');
-    } else {
-      alert('Email does not exist in the database');
-    }
-  }; */
-
   return (
     <div
       className="card"

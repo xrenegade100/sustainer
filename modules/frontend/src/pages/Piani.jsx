@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import '../styles/Piani.css';
 import Navbar from '../components/Navbar';
 import CardPiano from '../components/CardPiano';
@@ -7,6 +7,30 @@ import circleCheckWhite from '../assets/circle_check_white.svg';
 
 const Piani = () => {
   const tipoPiano = ['free', 'standard', 'premium', 'business', 'enterprise'];
+
+  const [data, setData] = useState([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch('http://localhost:5000/piani');
+        const result = await response.json();
+
+        setData(result);
+      } catch (error) {
+        console.error('Errore durante la fetch:', error);
+      }
+    };
+    fetchData();
+    console.log(data);
+  }, []);
+
+  console.log(data);
+
+  const tipi = data.map((piano) => piano.tipo);
+  tipi.push('Enterprise');
+  console.log(tipi);
+
   return (
     <>
       <div className="header">
@@ -18,21 +42,13 @@ const Piani = () => {
         </div>
         <div className="row">
           <div className="piani-section">
-            {renderCardBasedOnType(tipoPiano[4])}
+            {renderCardBasedOnType(tipi[4])}
             <div className="slider-piani">
               <div className="slider">
-                <div className="slide">
-                  {renderCardBasedOnType(tipoPiano[0])}
-                </div>
-                <div className="slide">
-                  {renderCardBasedOnType(tipoPiano[1])}
-                </div>
-                <div className="slide">
-                  {renderCardBasedOnType(tipoPiano[2])}
-                </div>
-                <div className="slide">
-                  {renderCardBasedOnType(tipoPiano[3])}
-                </div>
+                <div className="slide">{renderCardBasedOnType(tipi[0])}</div>
+                <div className="slide">{renderCardBasedOnType(tipi[1])}</div>
+                <div className="slide">{renderCardBasedOnType(tipi[2])}</div>
+                <div className="slide">{renderCardBasedOnType(tipi[3])}</div>
               </div>
             </div>
           </div>
@@ -43,9 +59,9 @@ const Piani = () => {
   );
 };
 
-const renderCardBasedOnType = (tipoPiano) => {
-  switch (tipoPiano) {
-    case 'free':
+const renderCardBasedOnType = (tipi) => {
+  switch (tipi) {
+    case 'Free':
       return (
         <CardPiano
           title="Free"
@@ -60,7 +76,7 @@ const renderCardBasedOnType = (tipoPiano) => {
           circleIcon={circleCheckWhite}
         />
       );
-    case 'standard':
+    case 'Standard':
       return (
         <CardPiano
           title="Standard"
@@ -75,7 +91,7 @@ const renderCardBasedOnType = (tipoPiano) => {
           circleIcon={circleCheckWhite}
         />
       );
-    case 'premium':
+    case 'Premium':
       return (
         <CardPiano
           title="Premium"
@@ -90,7 +106,7 @@ const renderCardBasedOnType = (tipoPiano) => {
           circleIcon={circleCheckWhite}
         />
       );
-    case 'business':
+    case 'Business':
       return (
         <CardPiano
           title="Business"
@@ -105,7 +121,7 @@ const renderCardBasedOnType = (tipoPiano) => {
           circleIcon={circleCheckWhite}
         />
       );
-    case 'enterprise':
+    case 'Enterprise':
       return (
         <CardPiano
           bgColor="#2467D1"
