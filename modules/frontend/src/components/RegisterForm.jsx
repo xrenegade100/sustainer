@@ -91,7 +91,9 @@ const RegisterForm = ({ onSubmit }) => {
 
     setIsLoading(false);
     if (!response.ok) {
-      alert('Parametri errati');
+      setSnackbarMessage('Utente già esistente, procedere con login!');
+      setShowSnackbar(true);
+      setIsLoading(false);
       return;
     }
 
