@@ -1,6 +1,6 @@
 import serviziAmministratore from './serviziAmministratore';
-import ComunicazioneDAO from '../dao/ComunicazioneDAO';
-import AmministratoreDAO from '../../dao/AmministratoreDAO';
+import ComunicazioneDAO from '../../DAO/ComunicazioneDAO';
+import AmministratoreDAO from '../../DAO/AmministratoreDAO';
 
 class ServiziAmministratoreImpl implements serviziAmministratore {
   // login
@@ -13,15 +13,24 @@ class ServiziAmministratoreImpl implements serviziAmministratore {
   }
 
   // invio comunicazione
-  // eslint-disable-next-line max-len, camelcase
-  static async invioComunicazioneIMP(id_amministratore: number, email: string, messaggio: string, data_comunicazione: Date) {
+  /*static async invioComunicazioneIMP(
+    id_amministratore: number,
+    email: string,
+    messaggio: string,
+    data_comunicazione: Date,
+  ) {
     // eslint-disable-next-line max-len
-    const comunicazione = await ComunicazioneDAO.inviaComunicazione(id_amministratore, email, messaggio, data_comunicazione);
+    const comunicazione = await ComunicazioneDAO.inviaComunicazione(
+      id_amministratore,
+      email,
+      messaggio,
+      data_comunicazione,
+    );
     if (comunicazione) {
       return comunicazione;
     }
     return null;
-  }
+  }*/
 
   // visualizza utenti
   static async visualizzaUtentiIMP() {
@@ -34,9 +43,17 @@ class ServiziAmministratoreImpl implements serviziAmministratore {
 
   // modifica informazioni utente
   // eslint-disable-next-line max-len
-  static async modificaInformazioniUtenteIMP(email: string, nuovoNome: string, nuovoCognome: string) {
+  static async modificaInformazioniUtenteIMP(
+    email: string,
+    nuovoNome: string,
+    nuovoCognome: string,
+  ) {
     // eslint-disable-next-line max-len
-    const utenteModificato = await AmministratoreDAO.modificaInformazioniUtente(email, nuovoNome, nuovoCognome);
+    const utenteModificato = await AmministratoreDAO.modificaInformazioniUtente(
+      email,
+      nuovoNome,
+      nuovoCognome,
+    );
     if (utenteModificato !== null && utenteModificato !== undefined) {
       return utenteModificato;
     }

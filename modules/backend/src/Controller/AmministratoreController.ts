@@ -1,22 +1,21 @@
 import express, { Request, Response } from 'express';
-import serviziAmministratoreImpl from '../service/serviziAmministratoreImpl';
+import serviziAmministratoreImpl from '../account/service/serviziAmministratoreImpl';
 
 class AmministratoreController {
-  public router = express.Router();
-
-  constructor() {
-    this.initializeRoutes();
-  }
-
-  public initializeRoutes() {
-    this.router.post('/', serviziAmministratoreImpl.loginIMP);
-    this.router.post('/comunicazione', serviziAmministratoreImpl.invioComunicazioneIMP);
-    this.router.get('/utenti', serviziAmministratoreImpl.visualizzaUtenti);
-    this.router.put('/ModUtente', serviziAmministratoreImpl.modificaInformazioniUtente);
-  }
+  static verificaLoginAm = async (req: Request, res: Response) => {
+    console.log('Identificativo in verifica login : ', req.sessionID);
+    console.log('sono in verifica login : ', req.session!.authenticated);
+    if (req.session!.authenticated) {
+      console.log('Sei gia autenticato');
+      return res
+        .status(200)
+        .json({ success: true, user: req.session!.authenticated });
+    }
+    return res.status(200).json({ success: false });
+  };
 
   // login
-  static login = async (req:Request, res:Response) => {
+  static login = async (req: Request, res: Response) => {
     const { email, password } = req.body;
     const admin = await serviziAmministratoreImpl.loginIMP(email, password);
     if (admin) {
@@ -26,15 +25,20 @@ class AmministratoreController {
   };
 
   // invio comunicazione
-  static inviaComunicazione = async (req: Request, res: Response) => {
-    const { idAmministratore, emails, messaggio } = req.body;
-    // eslint-disable-next-line max-len
-    const comunicazione = await serviziAmministratoreImpl.inviaComunicazioneIMP(idAmministratore, emails, messaggio);
+  /*static inviaComunicazione = async (req: Request, res: Response) => {
+    const { idAmministratore, emails, messaggio, data_comunicazione } =
+      req.body;
+    const comunicazione = await serviziAmministratoreImpl.invioComunicazioneIMP(
+      idAmministratore,
+      emails,
+      messaggio,
+      data_comunicazione,
+    );
     if (comunicazione) {
       return res.status(200).json({ comunicazione });
     }
     return res.status(403).json({ message: 'comunicazione non inviata' });
-  };
+  };*/
 
   // visualizza utenti
   static visualizzaUtenti = async (req: Request, res: Response) => {
@@ -49,7 +53,12 @@ class AmministratoreController {
   static modificaInformazioniUtente = async (req: Request, res: Response) => {
     const { email, nuovoNome, nuovoCognome } = req.body;
     // eslint-disable-next-line max-len
-    const utenteModificato = await serviziAmministratoreImpl.modificaInformazioniUtenteIMP(email, nuovoNome, nuovoCognome);
+    const utenteModificato =
+      await serviziAmministratoreImpl.modificaInformazioniUtenteIMP(
+        email,
+        nuovoNome,
+        nuovoCognome,
+      );
     if (utenteModificato) {
       return res.status(200).json({ utenteModificato });
     }
@@ -59,12 +68,39 @@ class AmministratoreController {
   // cancella utente
   static cancellaUtente = async (req: Request, res: Response) => {
     const { email } = req.body;
-    const utenteCancellato = await serviziAmministratoreImpl.cancellaUtenteIMP(email);
+    const utenteCancellato = await serviziAmministratoreImpl.cancellaUtenteIMP(
+      email,
+    );
     if (utenteCancellato) {
       return res.status(200).json({ utenteCancellato });
     }
     return res.status(403).json({ message: 'utente non cancellato' });
   };
+
+  // logout
+  static logout = (req: Request, res: Response) => {
+    try {
+      // Distruggi la sessione
+      req.session!.destroy((err) => {
+        if (err) {
+          console.error('Errore durante il logout:', err);
+          return res
+            .status(500)
+            .json({ success: false, message: 'Errore durante il logout' });
+        }
+
+        // Rispondi con successo
+        return res
+          .status(200)
+          .json({ success: true, message: 'Logout effettuato con successo' });
+      });
+    } catch (error) {
+      console.error('Errore durante il logout:', error);
+      return res
+        .status(500)
+        .json({ success: false, message: 'Errore durante il logout' });
+    }
+  };
 }
 
-export default new AmministratoreController().router;
+export default AmministratoreController;

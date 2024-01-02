@@ -5,6 +5,7 @@ import '../styles/Navbar.css';
 const Navbar = () => {
   const [isDropdownVisible, setIsDropdownVisible] = useState(false);
   const [isUserAuthenticated, setIsUserAuthenticated] = useState(false);
+  const [isAdmin, setIsAdmin] = useState(false);
 
   const handleAvatarClick = () => {
     console.log('Avatar clicked');
@@ -50,8 +51,10 @@ const Navbar = () => {
 
         if (response.user) {
           setIsUserAuthenticated(true);
+          setIsAdmin(response.user.isAdmin);
         } else {
           setIsUserAuthenticated(false);
+          setIsAdmin(false);
         }
       } catch (error) {
         console.error('Errore durante la verifica del login:', error);
@@ -59,78 +62,93 @@ const Navbar = () => {
     }
 
     funzioneVerifica();
-  }, []); // L'array delle dipendenze è vuoto in quanto non si basa su alcuno stato o proprietà
+  }, []);
 
   return (
     <nav className="navbar">
       <ul>
         <img className="logo" src="/Logo.png" alt="" />
-        {/* ... (Altri elementi della navbar) */}
-        <li
-          className="dropdown-li"
-          role="button"
-          tabIndex="0"
-          onClick={handleAvatarClick}
-          onKeyDown={handleDropdownKeyDown}
-        >
-          <img className="img-avatar" src="/Avatar.png" alt="" />
-          {isDropdownVisible && (
-            <div className="dropdown-content">
-              {isUserAuthenticated ? (
-                // Contenuto del menù a tendina quando l'utente è autenticato
-                <>
-                  <Link to="/login" className="text-black">
-                    Profilo
-                  </Link>
-                  <Link to="/" className="text-black">
-                    Il mio piano
-                  </Link>
-                  <Link to="/" className="text-black">
-                    Il mio storico
-                  </Link>
-                  <Link onClick={handleLogout}>
-                    <span className="text-black">Esci</span>
-                  </Link>
-                </>
-              ) : (
-                // Contenuto del menù a tendina quando l'utente non è autenticato
-                <Link to="/login" className="text-black">
-                  Accedi
-                </Link>
+        {isAdmin ? (
+          <>
+            <li>
+              <Link to="/admin/dashboard" className="text-white">
+                Dashboard
+              </Link>
+            </li>
+            <li>
+              <Link to="/admin/users" className="text-white">
+                Utenti
+              </Link>
+              {/* Altri link o elementi specifici per l'amministratore */}
+            </li>
+          </>
+        ) : (
+          <>
+            <li
+              className="dropdown-li"
+              role="button"
+              tabIndex="0"
+              onClick={handleAvatarClick}
+              onKeyDown={handleDropdownKeyDown}
+            >
+              <img className="img-avatar" src="/Avatar.png" alt="" />
+              {isDropdownVisible && (
+                <div className="dropdown-content">
+                  {isUserAuthenticated ? (
+                    <>
+                      <Link to="/login" className="text-black">
+                        Profilo
+                      </Link>
+                      <Link to="/" className="text-black">
+                        Il mio piano
+                      </Link>
+                      <Link to="/" className="text-black">
+                        Il mio storico
+                      </Link>
+                      <Link onClick={handleLogout}>
+                        <span className="text-black">Esci</span>
+                      </Link>
+                    </>
+                  ) : (
+                    <Link to="/login" className="text-black">
+                      Accedi
+                    </Link>
+                  )}
+                </div>
               )}
-            </div>
-          )}
-        </li>
-        <li>
-          <Link to="/community" className="text-white">
-            Community
-          </Link>
-        </li>
-        <li>
-          <Link to="/cloud" className="text-white">
-            Cloud
-          </Link>
-        </li>
-        <li>
-          <Link to="/storico" className="text-white">
-            Storico
-          </Link>
-        </li>
-        <li>
-          <Link to="/addestra" className="text-white">
-            Addestra
-          </Link>
-        </li>
-        <li>
-          <Link to="/piani" className="text-white">
-            Piani
-          </Link>
-        </li>
-        <li>
-          <Link to="/" className="text-white">
-            Home
-          </Link>
-        </li>
+            </li>
+            <li>
+              <Link to="/community" className="text-white">
+                Community
+              </Link>
+            </li>
+            <li>
+              <Link to="/cloud" className="text-white">
+                Cloud
+              </Link>
+            </li>
+            <li>
+              <Link to="/storico" className="text-white">
+                Storico
+              </Link>
+            </li>
+            <li>
+              <Link to="/addestra" className="text-white">
+                Addestra
+              </Link>
+            </li>
+            <li>
+              <Link to="/piani" className="text-white">
+                Piani
+              </Link>
+            </li>
+            <li>
+              <Link to="/" className="text-white">
+                Home
+              </Link>
+            </li>
+          </>
+        )}
       </ul>
     </nav>
   );
