@@ -28,8 +28,9 @@ const Piani = () => {
   console.log(data);
 
   const tipi = data.map((piano) => piano.tipo);
+  const prezzi = data.map((piano) => piano.prezzo);
   tipi.push('Enterprise');
-  console.log(tipi);
+  console.log(prezzi);
 
   return (
     <>
@@ -45,10 +46,18 @@ const Piani = () => {
             {renderCardBasedOnType(tipi[4])}
             <div className="slider-piani">
               <div className="slider">
-                <div className="slide">{renderCardBasedOnType(tipi[0])}</div>
-                <div className="slide">{renderCardBasedOnType(tipi[1])}</div>
-                <div className="slide">{renderCardBasedOnType(tipi[2])}</div>
-                <div className="slide">{renderCardBasedOnType(tipi[3])}</div>
+                <div className="slide">
+                  {renderCardBasedOnType(tipi[0], prezzi[0])}
+                </div>
+                <div className="slide">
+                  {renderCardBasedOnType(tipi[1], prezzi[1])}
+                </div>
+                <div className="slide">
+                  {renderCardBasedOnType(tipi[2], prezzi[2])}
+                </div>
+                <div className="slide">
+                  {renderCardBasedOnType(tipi[3], prezzi[3])}
+                </div>
               </div>
             </div>
           </div>
@@ -59,14 +68,17 @@ const Piani = () => {
   );
 };
 
-const renderCardBasedOnType = (tipi) => {
+const renderCardBasedOnType = (tipi, prezzi) => {
+  const euroValue = `€${prezzi}`;
+  console.log(euroValue);
+  console.log(prezzi);
   switch (tipi) {
     case 'Free':
       return (
         <CardPiano
-          title="Free"
+          title={tipi}
           subtitle="Piano Free"
-          price="€0"
+          price={euroValue}
           phrases={[
             'SI pubblicità',
             '1 Addestramento al giorno',
@@ -79,9 +91,9 @@ const renderCardBasedOnType = (tipi) => {
     case 'Standard':
       return (
         <CardPiano
-          title="Standard"
+          title={tipi}
           subtitle="Piano Standard"
-          price="€5"
+          price={euroValue}
           phrases={[
             'NO Pubblicità',
             '2 Addestramenti al giorno',
@@ -94,9 +106,9 @@ const renderCardBasedOnType = (tipi) => {
     case 'Premium':
       return (
         <CardPiano
-          title="Premium"
+          title={tipi}
           subtitle="Piano Premium"
-          price="€29"
+          price={euroValue}
           phrases={[
             'NO Pubblicità',
             '3 Addestramenti al giorno',
@@ -109,9 +121,9 @@ const renderCardBasedOnType = (tipi) => {
     case 'Business':
       return (
         <CardPiano
-          title="Business"
+          title={tipi}
           subtitle="Piano Business"
-          price="€59"
+          price={euroValue}
           phrases={[
             'No Pubblicità',
             '4 Adeestramenti al giorno',
@@ -125,7 +137,7 @@ const renderCardBasedOnType = (tipi) => {
       return (
         <CardPiano
           bgColor="#2467D1"
-          title="Enterprise"
+          title={tipi}
           subtitle="Piano Enterprise"
           price="€*"
           phrases={[
