@@ -12,7 +12,8 @@ class PianoController {
   };
 
   static visulizzaPianoIMP = async (req: Request, res: Response) => {
-    if (req.session!.autehnticated) {
+    console.log('VISUALIZZA PIANO: ', req.sessionID);
+    if (req.session!.authenticated) {
       console.log('Sei autenticato per visualizzare il piano');
       const acquisto = await serviziPianoImpl.gelUltimoAcquistoUtente(
         req.session!.id_user,
@@ -21,10 +22,11 @@ class PianoController {
         acquisto!.get_id_piano(),
       );
       if (piano) {
-        return res.status(200).json(piano).json(acquisto);
+        const arr = [piano, acquisto];
+        return res.status(200).json(arr);
       }
     }
-    return res.status(403).json({ message: 'piano non trovato' });
+    return res.status(403).json({ message: 'piano non trovato..' });
   };
 
   /*

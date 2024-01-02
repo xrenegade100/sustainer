@@ -18,7 +18,6 @@ class PianoDAO {
     const [rows] = await conn.query('SELECT * FROM piano LIMIT 0,4');
     const piani = rows as RowDataPacket[];
 
-    console.log(piani);
     return piani.map(
       (piano) =>
         new Piano(

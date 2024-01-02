@@ -4,7 +4,6 @@ import PianoDAO from '../../DAO/PianoDAO';
 class serviziPianoImpl implements serviziPiano {
   static async getTipiPiani() {
     const tipiPiani = await PianoDAO.getTipiPiani();
-    console.log(tipiPiani);
     if (tipiPiani) {
       return tipiPiani;
     }

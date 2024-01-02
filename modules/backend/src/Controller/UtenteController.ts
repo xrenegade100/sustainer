@@ -4,16 +4,17 @@ import serviziUtenteImpl from '../account/service/serviziUtenteImpl';
 class UtenteController {
   static verificaLogin = async (req: Request, res: Response) => {
     console.log('Identificativo in verifica login : ', req.sessionID);
-    console.log('sono in verifica login : ', req.session!.authenticated);
+    console.log(
+      'Identificativo mail utente in verifica login : ',
+      req.session!.authenticated,
+    );
     if (req.session!.authenticated) {
       console.log('Sei gia autenticato');
-      return res
-        .status(200)
-        .json({
-          success: true,
-          user: req.session!.authenticated,
-          id: req.session!.id_user,
-        });
+      return res.status(200).json({
+        success: true,
+        user: req.session!.authenticated,
+        id: req.session!.id_user,
+      });
     }
     return res.status(200).json({ success: false });
   };
