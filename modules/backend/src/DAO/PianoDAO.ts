@@ -1,5 +1,4 @@
 import { RowDataPacket } from 'mysql2';
-import { promises } from 'dns';
 import db from '../db/poolDB';
 import Piano from '../piano/domain/Piano';
 
@@ -15,7 +14,7 @@ class PianoDAO {
   static async getTipiPiani() {
     const conn = await db();
 
-    const [rows] = await conn.query('SELECT * FROM piano');
+    const [rows] = await conn.query('SELECT * FROM piano LIMIT 0,4');
     const piani = rows as RowDataPacket[];
 
     console.log(piani);
@@ -29,14 +28,6 @@ class PianoDAO {
           piano.limite_addestramenti_modelli,
         ),
     );
-  }
-
-  static async getPrezzoPiani() {
-    const conn = await db();
-
-    const piani = (await conn.query('SELECT * FROM piano')) as RowDataPacket;
-
-    console.log(piani);
   }
 }
 
