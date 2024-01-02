@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import '../styles/Piani.css';
 import Navbar from '../components/Navbar';
 import CardPiano from '../components/CardPiano';
@@ -7,6 +7,31 @@ import circleCheckWhite from '../assets/circle_check_white.svg';
 
 const Piani = () => {
   const tipoPiano = ['free', 'standard', 'premium', 'business', 'enterprise'];
+
+  const [data, setData] = useState([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch('http://localhost:5000/piani');
+        const result = await response.json();
+
+        setData(result);
+      } catch (error) {
+        console.error('Errore durante la fetch:', error);
+      }
+    };
+    fetchData();
+    console.log(data);
+  }, []);
+
+  console.log(data);
+
+  const tipi = data.map((piano) => piano.tipo);
+  const prezzi = data.map((piano) => piano.prezzo);
+  tipi.push('Enterprise');
+  console.log(prezzi);
+
   return (
     <>
       <div className="header">
@@ -18,20 +43,20 @@ const Piani = () => {
         </div>
         <div className="row">
           <div className="piani-section">
-            {renderCardBasedOnType(tipoPiano[4])}
+            {renderCardBasedOnType(tipi[4])}
             <div className="slider-piani">
               <div className="slider">
                 <div className="slide">
-                  {renderCardBasedOnType(tipoPiano[0])}
+                  {renderCardBasedOnType(tipi[0], prezzi[0])}
                 </div>
                 <div className="slide">
-                  {renderCardBasedOnType(tipoPiano[1])}
+                  {renderCardBasedOnType(tipi[1], prezzi[1])}
                 </div>
                 <div className="slide">
-                  {renderCardBasedOnType(tipoPiano[2])}
+                  {renderCardBasedOnType(tipi[2], prezzi[2])}
                 </div>
                 <div className="slide">
-                  {renderCardBasedOnType(tipoPiano[3])}
+                  {renderCardBasedOnType(tipi[3], prezzi[3])}
                 </div>
               </div>
             </div>
@@ -43,14 +68,17 @@ const Piani = () => {
   );
 };
 
-const renderCardBasedOnType = (tipoPiano) => {
-  switch (tipoPiano) {
-    case 'free':
+const renderCardBasedOnType = (tipi, prezzi) => {
+  const euroValue = `€${prezzi}`;
+  console.log(euroValue);
+  console.log(prezzi);
+  switch (tipi) {
+    case 'Free':
       return (
         <CardPiano
-          title="Free"
+          title={tipi}
           subtitle="Piano Free"
-          text="€0 /Mese"
+          price={euroValue}
           phrases={[
             'SI pubblicità',
             '1 Addestramento al giorno',
@@ -60,12 +88,12 @@ const renderCardBasedOnType = (tipoPiano) => {
           circleIcon={circleCheckWhite}
         />
       );
-    case 'standard':
+    case 'Standard':
       return (
         <CardPiano
-          title="Standard"
+          title={tipi}
           subtitle="Piano Standard"
-          text="€5 /Mese"
+          price={euroValue}
           phrases={[
             'NO Pubblicità',
             '2 Addestramenti al giorno',
@@ -75,12 +103,12 @@ const renderCardBasedOnType = (tipoPiano) => {
           circleIcon={circleCheckWhite}
         />
       );
-    case 'premium':
+    case 'Premium':
       return (
         <CardPiano
-          title="Premium"
+          title={tipi}
           subtitle="Piano Premium"
-          text="€29 /Mese"
+          price={euroValue}
           phrases={[
             'NO Pubblicità',
             '3 Addestramenti al giorno',
@@ -90,12 +118,12 @@ const renderCardBasedOnType = (tipoPiano) => {
           circleIcon={circleCheckWhite}
         />
       );
-    case 'business':
+    case 'Business':
       return (
         <CardPiano
-          title="Business"
+          title={tipi}
           subtitle="Piano Business"
-          text="€59 /mese"
+          price={euroValue}
           phrases={[
             'No Pubblicità',
             '4 Adeestramenti al giorno',
@@ -105,13 +133,13 @@ const renderCardBasedOnType = (tipoPiano) => {
           circleIcon={circleCheckWhite}
         />
       );
-    case 'enterprise':
+    case 'Enterprise':
       return (
         <CardPiano
           bgColor="#2467D1"
-          title="Enterprise"
+          title={tipi}
           subtitle="Piano Enterprise"
-          text="€* /mese"
+          price="€*"
           phrases={[
             'NO Pubblicità',
             'Scegli il numero di addestramenti',
@@ -119,6 +147,9 @@ const renderCardBasedOnType = (tipoPiano) => {
             'Salvataggio parametri e metrche degli addestramenti',
           ]}
           circleIcon={circleCheck}
+          textColor="#FFFFFF"
+          bgColorButton="#FFFFFF"
+          textColorButton="#222222"
         />
       );
     // Aggiungi altri casi per altri tipi di piano
@@ -127,7 +158,7 @@ const renderCardBasedOnType = (tipoPiano) => {
         <CardPiano
           title="Piano Sconosciuto"
           subtitle="Sottotitolo Sconosciuto"
-          text="Testo per il Piano Sconosciuto"
+          price="Testo per il Piano Sconosciuto"
           phrases={[
             'Funzionalità 1',
             'Funzionalità 2',

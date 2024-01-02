@@ -1,5 +1,9 @@
 @import url('https://fonts.googleapis.com/css?family=Lato');
 
+* {
+  font-family: Lato;
+}
+
 .navbar {
   background-color: #2467d1;
   padding-bottom: 1%;

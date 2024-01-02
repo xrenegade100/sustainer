@@ -5,6 +5,7 @@ import { Input } from 'baseui/input';
 import { Button, SIZE } from 'baseui/button';
 import SHA256 from 'crypto-js/sha256';
 import { SnackbarElement } from 'baseui/snackbar';
+import { useNavigate } from 'react-router-dom';
 
 const RegisterForm = ({ onSubmit }) => {
   const [nome, setNome] = useState('');
@@ -15,6 +16,7 @@ const RegisterForm = ({ onSubmit }) => {
   const [showSnackbar, setShowSnackbar] = useState(false);
   const [snackbarMessage, setSnackbarMessage] = useState('');
   const [css] = useStyletron();
+  const navigate = useNavigate();
 
   //metodo per la snackbar
   useEffect(() => {
@@ -94,7 +96,17 @@ const RegisterForm = ({ onSubmit }) => {
     }
 
     const data = await response.json();
-    alert(JSON.stringify(data));
+    if (data) {
+      setSnackbarMessage(
+        'Registrazione avvenuta con successo, torna alla login per accedere!',
+      );
+      setShowSnackbar(true);
+      setIsLoading(false);
+      setNome('');
+      setCognome('');
+      setEmailr('');
+      setPasswordr('');
+    }
   };
 
   return (
