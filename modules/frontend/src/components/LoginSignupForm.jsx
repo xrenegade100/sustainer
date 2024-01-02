@@ -1,7 +1,6 @@
 import { SnackbarElement } from 'baseui/snackbar';
 import React, { useEffect, useState } from 'react';
 import { useStyletron } from 'baseui';
-import '../styles/LoginSignupForm.css';
 import { useNavigate } from 'react-router-dom';
 import { Tabs, Tab, FILL } from 'baseui/tabs-motion';
 import { Checkbox, STYLE_TYPE, LABEL_PLACEMENT } from 'baseui/checkbox';
@@ -10,7 +9,10 @@ import { Button, SIZE } from 'baseui/button';
 import SHA256 from 'crypto-js/sha256';
 import RegisterForm from './RegisterForm';
 
-const LoginTab = ({ setHeaderTitle }) => {
+
+const LoginSignupForm = () => {
+  const [activeKey, setActiveKey] = useState('0');
+  const [headerTitle, setHeaderTitle] = useState('Accedi a Sustainer');
   const [checked, setChecked] = useState(false);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -21,7 +23,6 @@ const LoginTab = ({ setHeaderTitle }) => {
   const [css] = useStyletron();
   const navigate = useNavigate();
 
-  //metodo per la snackbar
   useEffect(() => {
     async function funzioneVerifica() {
       const verifica = await fetch('http://localhost:5000/verificaLogin', {
@@ -41,7 +42,7 @@ const LoginTab = ({ setHeaderTitle }) => {
     if (showSnackbar) {
       timer = setTimeout(() => {
         setShowSnackbar(false);
-      }, 3500); // 3500ms = 3.5s
+      }, 3500);
     }
     return () => {
       clearTimeout(timer);
@@ -50,7 +51,6 @@ const LoginTab = ({ setHeaderTitle }) => {
 
   const handleSubmit = async () => {
     setIsLoading(true);
-
     const hashValue = SHA256(password).toString();
 
     const response = await fetch('http://localhost:5000/login', {
@@ -67,120 +67,19 @@ const LoginTab = ({ setHeaderTitle }) => {
 
     setIsLoading(false);
     if (!response.ok) {
-      setSnackbarMessage('credenziali errate');
+      setSnackbarMessage('Credenziali errate');
       setShowSnackbar(true);
       setIsLoading(false);
       return;
     }
 
     const data = await response.json();
-    // alert(JSON.stringify(data));
     navigate('/homepage');
   };
 
-  setHeaderTitle('Accedi a Sustainer');
-
-  return (
-    <div className="login">
-      <Checkbox
-        checked={checked}
-        checkmarkType={STYLE_TYPE.toggle_round}
-        onChange={(e) => setChecked(e.target.checked)}
-        labelPlacement={LABEL_PLACEMENT.right}
-        overrides={{
-          Toggle: {
-            style: () => ({
-              backgroundColor: checked ? '#2467d1' : '#fff',
-            }),
-          },
-        }}
-      >
-        Amministratore
-      </Checkbox>
-      <div className="email">
-        <Input
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          placeholder="mario@rossi.it"
-          clearable
-          type="email"
-        />
-      </div>
-      <div className="password">
-        <Input
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          clearable
-          type="password"
-        />
-      </div>
-      <Checkbox
-        checked={remember}
-        checkmarkType={STYLE_TYPE.toggle_round}
-        onChange={(e) => setRemember(e.target.checked)}
-        labelPlacement={LABEL_PLACEMENT.right}
-        overrides={{
-          Toggle: {
-            style: () => ({
-              backgroundColor: remember ? '#2467d1' : '#fff',
-            }),
-          },
-        }}
-      >
-        Ricordami
-      </Checkbox>
-      <div className="buttonsgupin">
-        <Button isLoading={isLoading} onClick={handleSubmit} size={SIZE.large}>
-          ACCEDI
-        </Button>
-      </div>
-      {showSnackbar && (
-        <div className={css({ position: 'relative' })}>
-          <SnackbarElement
-            message={
-              <div
-                className={css({
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                })}
-              >
-                {snackbarMessage}
-              </div>
-            }
-            focus={false}
-            overrides={{
-              Root: {
-                style: {
-                  position: 'absolute',
-                  top: '20px', // Sposta la Snackbar di 50px verso il basso
-                },
-              },
-            }}
-          />
-        </div>
-      )}
-    </div>
-  );
-};
-
-const RegisterTab = ({ setHeaderTitle }) => {
-  setHeaderTitle('Registrati a Sustainer');
-
-  return (
-    <div className="reg">
-      <RegisterForm />
-    </div>
-  );
-};
-
-const LoginSignupForm = () => {
-  const [activeKey, setActiveKey] = useState('0');
-  const [headerTitle, setHeaderTitle] = useState('Accedi a Sustainer');
-
   return (
     <div className="form">
-      <div className="card">
+      <div className="cardLogin">
         <div className="form-header">
           <span className="form-header-title">{headerTitle}</span>
         </div>
@@ -202,13 +101,84 @@ const LoginSignupForm = () => {
             }}
             onChange={(val) => {
               setActiveKey(val.activeKey);
+              setHeaderTitle(
+                val.activeKey === '0' ? 'Accedi a Sustainer' : 'Registrati a Sustainer',
+              );
             }}
           >
             <Tab title="Accedi">
-              <LoginTab setHeaderTitle={setHeaderTitle} />
+              <div className="email">
+                <Input
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  placeholder="mario@rossi.it"
+                  clearable
+                  type="email"
+                />
+              </div>
+              <div className="password">
+                <Input
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  clearable
+                  type="password"
+                />
+              </div>
+              <Checkbox
+                checked={remember}
+                checkmarkType={STYLE_TYPE.toggle_round}
+                onChange={(e) => setRemember(e.target.checked)}
+                labelPlacement={LABEL_PLACEMENT.right}
+                overrides={{
+                  Toggle: {
+                    style: () => ({
+                      backgroundColor: remember ? '#2467d1' : '#fff',
+                    }),
+                  },
+                }}
+              >
+                Ricordami
+              </Checkbox>
+              <div className="buttonsgupin">
+                <Button
+                  isLoading={isLoading}
+                  onClick={handleSubmit}
+                  size={SIZE.large}
+                >
+                  Accedi
+                </Button>
+              </div>
+              {showSnackbar && (
+                <div className={css({ position: 'relative' })}>
+                  <SnackbarElement
+                    message={(
+                      <div
+                        className={css({
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                        })}
+                      >
+                        {snackbarMessage}
+                      </div>
+                    )}
+                    focus={false}
+                    overrides={{
+                      Root: {
+                        style: {
+                          position: 'absolute',
+                          top: '20px',
+                        },
+                      },
+                    }}
+                  />
+                </div>
+              )}
             </Tab>
             <Tab title="Registrati">
-              <RegisterTab setHeaderTitle={setHeaderTitle} />
+              <div className="reg">
+                <RegisterForm />
+              </div>
             </Tab>
           </Tabs>
         </div>
