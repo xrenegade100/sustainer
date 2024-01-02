@@ -9,7 +9,11 @@ class UtenteController {
       console.log('Sei gia autenticato');
       return res
         .status(200)
-        .json({ success: true, user: req.session!.authenticated });
+        .json({
+          success: true,
+          user: req.session!.authenticated,
+          id: req.session!.id_user,
+        });
     }
     return res.status(200).json({ success: false });
   };
@@ -21,6 +25,7 @@ class UtenteController {
 
       if (user) {
         req.session!.authenticated = user.get_email();
+        req.session!.id_user = user.get_id_utente();
         console.log('Identificativo in login : ', req.sessionID);
         console.log('Salvo nella sessione : ', req.session!.authenticated);
         req.session!.save(() => {});

@@ -1,6 +1,5 @@
 import serviziPiano from './serviziPiano';
 import PianoDAO from '../../DAO/PianoDAO';
-import Piano from '../domain/Piano';
 
 class serviziPianoImpl implements serviziPiano {
   static async getTipiPiani() {
@@ -8,6 +7,22 @@ class serviziPianoImpl implements serviziPiano {
     console.log(tipiPiani);
     if (tipiPiani) {
       return tipiPiani;
+    }
+    return null;
+  }
+
+  static async gelUltimoAcquistoUtente(id_utente: string) {
+    const acquisto = await PianoDAO.getUltimoAcquistoUtente(id_utente);
+    if (acquisto) {
+      return acquisto;
+    }
+    return null;
+  }
+
+  static async getPianoUtente(id_piano: number) {
+    const piano = await PianoDAO.getPianoUtente(id_piano);
+    if (piano) {
+      return piano;
     }
     return null;
   }

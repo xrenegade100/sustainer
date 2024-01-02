@@ -35,5 +35,6 @@ server.use('/verificaLogin', UtenteController.verificaLogin);
 server.use('/register', UtenteController.registrazioneIMP);
 
 server.use('/piani', PianoController.getTipiPianoIMP);
+server.use('/modificaPiano', PianoController.visulizzaPianoIMP);
 export default server;
 export { key };
