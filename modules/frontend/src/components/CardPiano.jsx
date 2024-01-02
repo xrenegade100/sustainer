@@ -3,36 +3,35 @@ import React, { useState } from 'react';
 import '../styles/CardPiano.css';
 import { Button, SIZE } from 'baseui/button';
 
-const Card = ({ title, subtitle, text, phrases, bgColor, circleIcon }) => {
+const Card = ({
+  title,
+  subtitle,
+  price,
+  phrases,
+  bgColor,
+  circleIcon,
+  textColor,
+  bgColorButton,
+  textColorButton,
+}) => {
   const [email, setEmail] = useState('');
-
-  /* const checkEmail = async () => {
-    const response = await fetch('http://localhost:5000/trov aUtente', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ email }),
-    });
-    const content = await response.json();
-    const { user } = content;
-
-    alert('User: ' + user.email);
-    //const data = await response.json();
-
-    if (data.exists) {
-      alert('Email exists in the database');
-    } else {
-      alert('Email does not exist in the database');
-    }
-  }; */
-
   return (
-    <div className="card" style={{ backgroundColor: bgColor }}>
+    <div
+      className="card"
+      style={{ backgroundColor: bgColor, color: textColor }}
+    >
       <h2 className="title-card">{title}</h2>
-      <h4 className="subtitle">{subtitle}</h4>
-      <p className="text">{text}</p>
-      <Button size={SIZE.large}>Acquista</Button>
+      <h4 className="subtitle-card">{subtitle}</h4>
+      <div className="price">
+        <p className="text-price">{price}</p>
+        <p className="text-period">/Mese</p>
+      </div>
+      <Button
+        style={{ backgroundColor: bgColorButton, color: textColorButton }}
+        size={SIZE.large}
+      >
+        Acquista
+      </Button>
       <ul className="phrase-list">
         {phrases?.map((phrase, index) => (
           <li key={index} className="phrase-item">

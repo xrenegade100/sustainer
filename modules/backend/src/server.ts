@@ -4,6 +4,7 @@ import morgan from 'morgan';
 import helmet from 'helmet';
 import cors from 'cors';
 import UtenteController from './Controller/UtenteController';
+import PianoController from './Controller/PianoController';
 
 const server = express();
 
@@ -32,5 +33,7 @@ server.use('/login', UtenteController.loginIMP);
 server.use('/logout', UtenteController.logout);
 server.use('/verificaLogin', UtenteController.verificaLogin);
 server.use('/register', UtenteController.registrazioneIMP);
+
+server.use('/piani', PianoController.getTipiPianoIMP);
 export default server;
 export { key };
