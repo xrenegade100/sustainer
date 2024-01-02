@@ -82,7 +82,7 @@ const Navbar = () => {
                   <Link to="/login" className="text-black">
                     Profilo
                   </Link>
-                  <Link to="/" className="text-black">
+                  <Link to="/modifica-piano" className="text-black">
                     Il mio piano
                   </Link>
                   <Link to="/" className="text-black">

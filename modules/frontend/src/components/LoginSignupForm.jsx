@@ -21,7 +21,7 @@ const LoginTab = ({ setHeaderTitle }) => {
   const [css] = useStyletron();
   const navigate = useNavigate();
 
-  //metodo per la snackbar
+  // metodo per la snackbar
   useEffect(() => {
     async function funzioneVerifica() {
       const verifica = await fetch('http://localhost:5000/verificaLogin', {

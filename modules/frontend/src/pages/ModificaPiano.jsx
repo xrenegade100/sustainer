@@ -1,3 +1,4 @@
+import { useNavigate } from 'react-router-dom';
 import React, { useEffect, useState } from 'react';
 import '../styles/ModificaPiano.css';
 import Navbar from '../components/Navbar';
@@ -6,14 +7,39 @@ import circleCheck from '../assets/circle_check.svg';
 import circleCheckWhite from '../assets/circle_check_white.svg';
 
 const ModificaPiano = () => {
-  const tipoPiano = ['free', 'standard', 'premium', 'business', 'enterprise'];
-
+  const [utente, setUtente] = useState([]);
   const [data, setData] = useState([]);
+  const [pianoUtente, setPianoUtente] = useState([]);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const fetchData = async function funzioneVerifica() {
+      const verifica = await fetch('http://localhost:5000/verificaLogin', {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        method: 'POST',
+        credentials: 'include',
+      });
+      const response = await verifica.json();
+      if (!response.user) {
+        navigate('/piani');
+      }
+    };
+    fetchData();
+    console.log(data);
+  }, []);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch('http://localhost:5000/piani');
+        const response = await fetch('http://localhost:5000/piani', {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          method: 'GET',
+          credentials: 'include',
+        });
         const result = await response.json();
 
         setData(result);
@@ -25,7 +51,26 @@ const ModificaPiano = () => {
     console.log(data);
   }, []);
 
-  console.log(data);
+  useEffect(() => {
+    const fetchPianoUtente = async () => {
+      try {
+        const response = await fetch('http://localhost:5000/modificaPiano', {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          method: 'POST',
+          credentials: 'include',
+        });
+        const result = await response.json();
+
+        setPianoUtente(result);
+      } catch (error) {
+        console.error('Errore durante la fetch:', error);
+      }
+    };
+    fetchPianoUtente();
+    console.log(pianoUtente);
+  }, []);
 
   const tipi = data.map((piano) => piano.tipo);
   const prezzi = data.map((piano) => piano.prezzo);
