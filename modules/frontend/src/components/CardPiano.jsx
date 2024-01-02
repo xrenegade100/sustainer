@@ -13,6 +13,7 @@ const Card = ({
   textColor,
   bgColorButton,
   textColorButton,
+  buttonText,
 }) => {
   const [email, setEmail] = useState('');
   return (
@@ -30,7 +31,7 @@ const Card = ({
         style={{ backgroundColor: bgColorButton, color: textColorButton }}
         size={SIZE.large}
       >
-        Acquista
+        {buttonText}
       </Button>
       <ul className="phrase-list">
         {phrases?.map((phrase, index) => (
