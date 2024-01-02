@@ -1,21 +1,43 @@
-const { connessioneDB } = require('../db/poolDB.ts');
+import { RowDataPacket } from 'mysql2';
+import { promises } from 'dns';
+import db from '../db/poolDB';
+import Piano from '../piano/domain/Piano';
 
-connessioneDB.query(
-  'SELECT * FROM piano',
-  (err, results, fields) => {
-    if (err) {
-      // Gestisci gli errori qui
-      console.error(err);
-      return;
-    }
+class PianoDAO {
+  static async getAllPiani() {
+    const conn = await db();
 
-    // Accesso ai valori nei risultati
-    results.forEach((row) => {
-      console.log('Identificativo piano:', row.id_piano);
-      console.log('Tipo:', row.tipo);
-      console.log('Prezzo:', row.prezzo);
-      console.log('Prezzo:', row.limite_salvataggi_modelli);
-      console.log('Prezzo:', row.limite_addestramenti_modelli);
-    });
-  },
-);
+    const piani = (await conn.query('SELECT * FROM piano')) as RowDataPacket;
+
+    console.log(piani);
+  }
+
+  static async getTipiPiani() {
+    const conn = await db();
+
+    const [rows] = await conn.query('SELECT * FROM piano');
+    const piani = rows as RowDataPacket[];
+
+    console.log(piani);
+    return piani.map(
+      (piano) =>
+        new Piano(
+          piano.id_piano,
+          piano.tipo,
+          piano.prezzo,
+          piano.limite_salvataggi_modelli,
+          piano.limite_addestramenti_modelli,
+        ),
+    );
+  }
+
+  static async getPrezzoPiani() {
+    const conn = await db();
+
+    const piani = (await conn.query('SELECT * FROM piano')) as RowDataPacket;
+
+    console.log(piani);
+  }
+}
+
+export default PianoDAO;
