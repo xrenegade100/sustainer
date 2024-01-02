@@ -5,6 +5,7 @@ import helmet from 'helmet';
 import cors from 'cors';
 import UtenteController from './Controller/UtenteController';
 import PianoController from './Controller/PianoController';
+import AmministratoreController from './Controller/AmministratoreController';
 
 const server = express();
 
@@ -35,5 +36,15 @@ server.use('/verificaLogin', UtenteController.verificaLogin);
 server.use('/register', UtenteController.registrazioneIMP);
 
 server.use('/piani', PianoController.getTipiPianoIMP);
+
+server.use('/loginAm', AmministratoreController.login);
+server.use('/logoutAm', AmministratoreController.logout);
+server.use('/cancellaUtenteAm', AmministratoreController.cancellaUtente);
+server.use(
+  '/modificaInformazioniUtenteAm',
+  AmministratoreController.modificaInformazioniUtente,
+);
+server.use('/visualizzaUtentiAm', AmministratoreController.visualizzaUtenti);
+server.use('/verificaLoginAm', AmministratoreController.verificaLoginAm);
 export default server;
 export { key };
