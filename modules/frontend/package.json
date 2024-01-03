@@ -10,6 +10,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@stripe/stripe-js": "^2.2.2",
     "baseui": "^0.0.0-next-186f23406",
     "crypto-js": "^4.2.0",
     "jose": "^5.2.0",
@@ -20,6 +21,7 @@
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.21.1",
     "sort-by": "^1.2.0",
+    "stripe": "^14.10.0",
     "styletron-engine-monolithic": "^1.0.0",
     "styletron-react": "^6.1.1"
   },

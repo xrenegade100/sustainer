@@ -5,7 +5,6 @@ class serviziPianoImpl implements serviziPiano {
   // metodo che ritorna tutti i piani
   static async getTipiPiani() {
     const tipiPiani = await PianoDAO.getTipiPiani(); // richiamo il metodo getTipiPiani del PianoDAO
-    console.log(tipiPiani);
     if (tipiPiani) {
       return tipiPiani;
     }
@@ -17,8 +16,9 @@ class serviziPianoImpl implements serviziPiano {
     await PianoDAO.AcquistoPianoFree(id_utente); // richiamo il metodo AcquistoPianoFree del PianoDAO
   }
 
+  //funzione che mi ritorna l'ultimo piano acquistato dall'utente
   static async gelUltimoAcquistoUtente(id_utente: string) {
-    const acquisto = await PianoDAO.getUltimoAcquistoUtente(id_utente);
+    const acquisto = await PianoDAO.getUltimoAcquistoUtente(id_utente); // richiamo il metodo getUltimoAcquistoUtente del PianoDAO
     if (acquisto) {
       return acquisto;
     }
@@ -31,6 +31,11 @@ class serviziPianoImpl implements serviziPiano {
       return piano;
     }
     return null;
+  }
+
+  //funzione che effettua l'acquisto di un piano
+  static async AcquistoPiano(id_utente: number, id_piano: number) {
+    await PianoDAO.AcquistoPiano(id_utente, id_piano); // richiamo il metodo AcquistoPiano del PianoDAO
   }
 }
 
