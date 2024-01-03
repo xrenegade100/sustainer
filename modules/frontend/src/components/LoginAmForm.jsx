@@ -4,7 +4,6 @@ import { useStyletron } from 'baseui';
 import { useNavigate } from 'react-router-dom';
 import { Input } from 'baseui/input';
 import { Button, SIZE } from 'baseui/button';
-import SHA256 from 'crypto-js/sha256';
 
 const LoginAmForm = () => {
   const [email, setEmail] = useState('');
@@ -26,7 +25,7 @@ const LoginAmForm = () => {
       });
       const response = await verifica.json();
 
-      if (response.admin) {
+      if (response.admin_id) {
         navigate('/homepage');
       }
     }
@@ -100,30 +99,30 @@ const LoginAmForm = () => {
             </Button>
           </div>
           {showSnackbar && (
-          <div className={css({ position: 'relative' })}>
-            <SnackbarElement
-              message={(
-                <div
-                  className={css({
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                  })}
-                >
-                  {snackbarMessage}
-                </div>
-                    )}
-              focus={false}
-              overrides={{
-                Root: {
-                  style: {
-                    position: 'absolute',
-                    top: '20px',
+            <div className={css({ position: 'relative' })}>
+              <SnackbarElement
+                message={
+                  <div
+                    className={css({
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                    })}
+                  >
+                    {snackbarMessage}
+                  </div>
+                }
+                focus={false}
+                overrides={{
+                  Root: {
+                    style: {
+                      position: 'absolute',
+                      top: '20px',
+                    },
                   },
-                },
-              }}
-            />
-          </div>
+                }}
+              />
+            </div>
           )}
         </div>
       </div>

@@ -61,7 +61,28 @@ const Navbar = () => {
       }
     }
 
+    async function funzioneVerificaA() {
+      try {
+        const verifica = await fetch('http://localhost:5000/verificaLoginAm', {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          method: 'POST',
+          credentials: 'include',
+        });
+        const response = await verifica.json();
+        if (response.admin_id) {
+          setIsAdmin(true);
+        } else {
+          setIsAdmin(false);
+        }
+      } catch (error) {
+        console.error('Errore durante la verifica del login:', error);
+      }
+    }
+
     funzioneVerifica();
+    funzioneVerificaA();
   }, []);
 
   return (
@@ -99,7 +120,7 @@ const Navbar = () => {
                       <Link to="/login" className="text-black">
                         Profilo
                       </Link>
-                      <Link to="/" className="text-black">
+                      <Link to="/modifica-piano" className="text-black">
                         Il mio piano
                       </Link>
                       <Link to="/" className="text-black">
