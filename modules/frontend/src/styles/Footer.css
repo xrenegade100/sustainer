@@ -6,6 +6,20 @@
   font-family: Lato;
 }
 
+a {
+  text-decoration: none; 
+  color: #222222; 
+}
+
+a:hover {
+  color: #2467d1; 
+}
+
+.titleF{
+  font-size: 100%;
+  font-weight: bold;
+}
+
 .footer {
   width: 100%;
   background-color: #e8e8e8;
