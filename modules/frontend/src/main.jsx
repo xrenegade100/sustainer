@@ -9,6 +9,7 @@ import Homepage from './pages/Homepage';
 import RegisterForm from './components/RegisterForm';
 import Piani from './pages/Piani';
 import ModificaPiano from './pages/ModificaPiano';
+import LoginAmministratore from './pages/LoginAmministratore';
 
 // Qui fare il routing frontend, quindi aggiungere qui le pagine jsx qui
 const router = createBrowserRouter([
@@ -28,6 +29,10 @@ const router = createBrowserRouter([
   {
     path: '/piani',
     element: <Piani />, //passare la pagina jsx con le <>
+  },
+  {
+    path: '/loginAm',
+    element: <LoginAmministratore />, //passare la pagina jsx con le <>
   },
   {
     path: '/modifica-piano',
