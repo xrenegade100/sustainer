@@ -6,17 +6,17 @@
   font-family: Lato;
 }
 
-.form{
+.formAM{
   width:100%;
-  height: 500px;
+  height: 400px;
   display:flex;
   justify-content:center;
   align-items:center;
 }
 
-.cardLogin{
+.cardLoginAM{
   width:45%;
-  height: 100%;
+  height: 90%;
   background-color:#fff;
   border-radius:10px 0px 0px 10px;
   display:flex;
@@ -25,9 +25,9 @@
   flex-direction:column;
 }
 
-.form-header{
+.form-headerAM{
   width:100%;
-  height: 20%;
+  height: 45%;
   background-color:#2467d1;
   border-radius:10px 0 0 0;
   display:flex;
@@ -36,13 +36,13 @@
   flex-direction:column;
 }
 
-.form-header-title{
+.form-header-titleAM{
   color:#ffffff;
   font-size:36px;
   font-family: Lato;
 }
 
-.form-body{
+.form-bodyAM{
   width:100%;
   height:90%;
   justify-content:center;
@@ -50,23 +50,22 @@
   flex-direction:column;
 }
 
-.email{
-  margin-bottom: 5%;
-  height:40%;
+.emailAM{
+  margin-top: 5%;
+  margin-bottom: 10%;
 }
 
-.password{
+.passwordAM{
   margin-bottom: 5%;
-  height:40%;
 }
 
 
-.buttonsgupin{
+.buttonsgupinAM{
   margin-top: 5%;
   height: 20%;
 }
 
-.buttonsgupin Button{
+.buttonloginAM Button{
   width: 100%;
   background-color:#2467d1;
   font-family: Lato;
@@ -89,16 +88,16 @@
 
 /* For landscape phones and down */
 @media (max-width: 425px) {
-  .form {
+  .formAM {
     flex-direction: column-reverse;
   }
 
-  .cardLogin{
+  .cardLoginAM{
      width:90%;
      height: 90%;
   }
  
-  .form-header-title{
+  .form-header-titleAM{
      font-size:24px;
   }
  
@@ -113,11 +112,11 @@
  
 /* For portrait phones and down */
 @media (max-width: 375px) {
-  .form {
+  .formAM {
     flex-direction: column-reverse;
   }
 
-  .cardLogin{
+  .cardLoginAM{
      width:90%;
      height: 90%;
   }
@@ -125,12 +124,12 @@
  
  /* For smaller devices and down */
  @media (max-width: 320px) {
-  .cardLogin{
+  .cardLoginAM{
      width:90%;
      height: 90%;
   }
  
-  .form-header-title{
+  .form-header-titleAM{
      font-size:18px;
   }
  

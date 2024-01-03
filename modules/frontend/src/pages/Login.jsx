@@ -2,16 +2,16 @@ import React from 'react';
 import LoginSignupForm from '../components/LoginSignupForm';
 import '../styles/Navbar.css';
 import '../styles/Login.css';
-import Footer from '../components/Footer';
+import NavbarLogin from '../components/NavbarLogin';
 
 const Login = () => (
   <div className="header">
+    <NavbarLogin />
     <div className="main">
       <div className="">
         <LoginSignupForm />
       </div>
     </div>
-    <Footer />
   </div>
 );
 

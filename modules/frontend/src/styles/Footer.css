@@ -1,35 +1,141 @@
 @import url('https://fonts.googleapis.com/css?family=Lato');
+
+* {
+  margin: 0;
+  padding: 0;
+  font-family: Lato;
+}
+
 .footer {
+  width: 100%;
   background-color: #e8e8e8;
   margin-top: 10%;
 }
 
-.tab {
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  gap: 7%;
-  padding: 1%;
-  font-family: 'Lato';
-  font-size: 1em;
+.tabella{
+  width:100%;
 }
 
-.sottodiv {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
+.tabella .row1 {
+ width: 99%;
+ display: flex;
+ margin-top: 2%;
+ margin-bottom: 5%;
 }
 
-.footerdiv {
-  color: #222222;
-  margin-top: 3%;
-  text-align: center;
+.row1 .col1 {
+  width: 20%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
 }
 
-.img-maniblue {
-  margin-left: 60%;
+.row1 .col1 img{
+  width:30%;
 }
 
-.img-footer {
-  position: bottom;
-  height: 100%;
+.row1 .col2 {
+  width: 20%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+
+.row1 .col3 {
+  width: 20%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+
+.row1 .col4 {
+  width: 20%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+
+.row1 .col5 {
+  width: 20%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.row1 .col5 img{
+  width:90%;
+}
+
+.tabella .row2 {
   width: 100%;
+  display: flex;
+ }
+
+.row2 .col1 {
+  width: 35%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.row2 .col1 img{
+  width:100%;
+  height: 100%;
+}
+
+.row2 .col2 {
+  width: 30%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.row2 .col3 {
+  width: 35%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.row2 .col3 img{
+  width:100%;
+  height: 100%;
+}
+
+@media (max-width: 768px) {
+  *{
+    margin: 0;
+    padding: 0;
+    font-family: Lato;
+    font-size:50%;
+  }
+}
+
+@media (max-width: 425px) {
+  *{
+    margin: 0;
+    padding: 0;
+    font-family: Lato;
+    font-size:30%;
+  }
+}
+
+@media (max-width: 320px) {
+  *{
+    margin: 0;
+    padding: 0;
+    font-family: Lato;
+    font-size:20%;
+  }
 }
