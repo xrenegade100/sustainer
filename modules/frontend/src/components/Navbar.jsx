@@ -37,6 +37,26 @@ const Navbar = () => {
     }
   };
 
+  const handleLogoutAm = async () => {
+    console.error('Entro in navbar logout');
+    try {
+      const response = await fetch('http://localhost:5000/logoutAm', {
+        method: 'POST',
+        credentials: 'include',
+      });
+
+      if (response.ok) {
+        setIsUserAuthenticated(false);
+        // Altri passaggi di pulizia, reindirizzamento, ecc., se necessario
+      } else {
+        console.error('Errore durante il logout:', response.statusText);
+      }
+    } catch (error) {
+      console.error('Errore durante il logout:', error);
+    }
+    window.location.reload();
+  };
+
   useEffect(() => {
     async function funzioneVerifica() {
       try {
@@ -93,14 +113,24 @@ const Navbar = () => {
           <>
             <li>
               <Link to="/admin/dashboard" className="text-white">
-                Dashboard
+                Gestione Utenti
               </Link>
             </li>
             <li>
               <Link to="/admin/users" className="text-white">
-                Utenti
+                Comunicazioni
               </Link>
               {/* Altri link o elementi specifici per l'amministratore */}
+            </li>
+            <li>
+              <Link to="/admin/dashboard" className="text-white">
+                Gestione Piani
+              </Link>
+            </li>
+            <li>
+              <Link onClick={handleLogoutAm}>
+                <span className="text-white">Esci</span>
+              </Link>
             </li>
           </>
         ) : (
