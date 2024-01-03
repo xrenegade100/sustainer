@@ -1,6 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import React, { useEffect, useState } from 'react';
 import '../styles/ModificaPiano.css';
+import { Button, SIZE } from 'baseui/button';
 import Navbar from '../components/Navbar';
 import CardPiano from '../components/CardPiano';
 import circleCheck from '../assets/circle_check.svg';
@@ -10,6 +11,7 @@ const ModificaPiano = () => {
   const [utente, setUtente] = useState([]);
   const [data, setData] = useState([]);
   const [pianoUtente, setPianoUtente] = useState([]);
+  const [checkout, setCheckout] = useState([]);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -63,7 +65,12 @@ const ModificaPiano = () => {
         });
         const result = await response.json();
 
-        setPianoUtente(result);
+        await setPianoUtente(result);
+        /*
+        alert(result.piano.id_piano);
+        alert(result.acquisto.data_acquisto);
+        alert(pianoUtente.acquisto.id_utente);
+        */
       } catch (error) {
         console.error('Errore durante la fetch:', error);
       }
@@ -73,7 +80,9 @@ const ModificaPiano = () => {
   }, []);
 
   const tipi = data.map((piano) => piano.tipo);
+  const idPiani = data.map((piano) => piano.id_piano);
   const prezzi = data.map((piano) => piano.prezzo);
+
   tipi.push('Enterprise');
   console.log(prezzi);
 
@@ -91,20 +100,40 @@ const ModificaPiano = () => {
           <div className="spacer"></div>
           <div className="row2">
             <div className="piani-section2">
-              {renderCardBasedOnType(tipi[4])}
+              {renderCardBasedOnType(tipi[4], 0, idPiani, pianoUtente)}
               <div className="slider-piani2">
                 <div className="slider2">
                   <div className="slide2">
-                    {renderCardBasedOnType(tipi[0], prezzi[0])}
+                    {renderCardBasedOnType(
+                      tipi[0],
+                      idPiani[0],
+                      prezzi[0],
+                      pianoUtente,
+                    )}
                   </div>
                   <div className="slide2">
-                    {renderCardBasedOnType(tipi[1], prezzi[1])}
+                    {renderCardBasedOnType(
+                      tipi[1],
+                      idPiani[1],
+                      prezzi[1],
+                      pianoUtente,
+                    )}
                   </div>
                   <div className="slide2">
-                    {renderCardBasedOnType(tipi[2], prezzi[2])}
+                    {renderCardBasedOnType(
+                      tipi[2],
+                      idPiani[2],
+                      prezzi[2],
+                      pianoUtente,
+                    )}
                   </div>
                   <div className="slide2">
-                    {renderCardBasedOnType(tipi[3], prezzi[3])}
+                    {renderCardBasedOnType(
+                      tipi[3],
+                      idPiani[3],
+                      prezzi[3],
+                      pianoUtente,
+                    )}
                   </div>
                 </div>
               </div>
@@ -116,11 +145,8 @@ const ModificaPiano = () => {
     </>
   );
 };
-
-const renderCardBasedOnType = (tipi, prezzi) => {
+const renderCardBasedOnType = (tipi, idPiano, prezzi, pianoUtente) => {
   const euroValue = `€${prezzi}`;
-  console.log(euroValue);
-  console.log(prezzi);
   switch (tipi) {
     case 'Free':
       return (
@@ -136,7 +162,9 @@ const renderCardBasedOnType = (tipi, prezzi) => {
             'Salvataggio parametri e metrche degli addestramenti',
           ]}
           circleIcon={circleCheckWhite}
-          buttonText="Acquista"
+          buttonText={
+            pianoUtente.piano.id_piano <= idPiano ? 'Upgrade' : 'Downgrade'
+          }
         />
       );
     case 'Standard':
@@ -153,6 +181,9 @@ const renderCardBasedOnType = (tipi, prezzi) => {
             'Salvataggio parametri e metrche degli addestramenti',
           ]}
           circleIcon={circleCheckWhite}
+          buttonText={
+            pianoUtente.piano.id_piano <= idPiano ? 'Upgrade' : 'Downgrade'
+          }
         />
       );
     case 'Premium':
@@ -169,6 +200,9 @@ const renderCardBasedOnType = (tipi, prezzi) => {
             'Salvataggio parametri e metrche degli addestramenti',
           ]}
           circleIcon={circleCheckWhite}
+          buttonText={
+            pianoUtente.piano.id_piano <= idPiano ? 'Upgrade' : 'Downgrade'
+          }
         />
       );
     case 'Business':
@@ -185,15 +219,20 @@ const renderCardBasedOnType = (tipi, prezzi) => {
             'Salvataggio parametri e metrche degli addestramenti',
           ]}
           circleIcon={circleCheckWhite}
+          buttonText={
+            pianoUtente.piano.id_piano <= idPiano ? 'Upgrade' : 'Downgrade'
+          }
         />
       );
     case 'Enterprise':
       return (
         <CardPiano
           bgColor="#2467D1"
-          title={tipi}
-          subtitle="Piano Enterprise"
-          price="€*"
+          title={pianoUtente.piano ? pianoUtente.piano.tipo : 'Caricamento...'}
+          subtitle="Piano personale"
+          price={
+            pianoUtente.piano ? pianoUtente.piano.prezzo : 'Caricamento...'
+          }
           phrases={[
             'NO Pubblicità',
             'Scegli il numero di addestramenti',
@@ -204,6 +243,7 @@ const renderCardBasedOnType = (tipi, prezzi) => {
           textColor="#FFFFFF"
           bgColorButton="#FFFFFF"
           textColorButton="#222222"
+          buttonText="Annulla piano"
         />
       );
     // Aggiungi altri casi per altri tipi di piano

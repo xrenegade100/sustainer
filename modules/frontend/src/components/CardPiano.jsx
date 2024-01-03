@@ -2,6 +2,30 @@
 import React, { useState } from 'react';
 import '../styles/CardPiano.css';
 import { Button, SIZE } from 'baseui/button';
+import { loadStripe } from '@stripe/stripe-js';
+
+const fetchCheckout = async (titolo, prezzo) => {
+  try {
+    const stripe = await loadStripe(
+      'pk_test_51OURU6DecXgXrLSFmXl0Zo7y1yCQzOVyQUZ5ew1trbRBrh9oHv93n73XitLXt6zt47wZL4yKWSjJ7m8wnKdEPg9B00Q0FdvOLx',
+    );
+    const response = await fetch('http://localhost:5000/checkout', {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      method: 'POST',
+      credentials: 'include',
+      body: JSON.stringify({
+        titoloPiano: titolo,
+        prezzoPiano: prezzo,
+      }),
+    });
+    const session = await response.json();
+    window.location.replace(session.checkoutUrl);
+  } catch (error) {
+    console.error('Errore durante la fetch:', error);
+  }
+};
 
 const Card = ({
   title,
@@ -16,6 +40,7 @@ const Card = ({
   buttonText,
 }) => {
   const [email, setEmail] = useState('');
+
   return (
     <div
       className="card"
@@ -30,6 +55,7 @@ const Card = ({
       <Button
         style={{ backgroundColor: bgColorButton, color: textColorButton }}
         size={SIZE.large}
+        onClick={() => [fetchCheckout(title, price)]}
       >
         {buttonText}
       </Button>
