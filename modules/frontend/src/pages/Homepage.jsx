@@ -56,15 +56,12 @@ const homepage = () => (
             specifiche esigenze di ciascun cliente. Inoltre, ci impegniamo
             attivamente nella sostenibilità, cercando costantemente di ridurre
             l'impatto ambientale dell'IA attraverso l'advocacy di modelli
-            energeticamente efficienti. Nel nostro percorso, l'equità è un
-            principio guida fondamentale, lavoriamo instancabilmente per
-            garantire giustizia ed equità nell'utilizzo dell'IA, affrontando con
-            decisione qualsiasi forma di discriminazione involontaria.
+            energeticamente efficienti.
           </p>
         </div>
         <img className="img-quadr" src="/quadr.png" alt="" />
         <div class="colonna">
-          <div class="sin">
+          <div class="bho">
             <img className="img-ingranaggi" src="/ingranaggi.png" alt="" />
             <p>
               Sustainer fornisce una soluzione aperta e flessibile, consentendo
