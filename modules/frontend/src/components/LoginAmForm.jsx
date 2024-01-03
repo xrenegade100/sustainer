@@ -1,3 +1,4 @@
+import '../styles/LoginAmForm.css';
 import { SnackbarElement } from 'baseui/snackbar';
 import React, { useEffect, useState } from 'react';
 import { useStyletron } from 'baseui';
@@ -66,13 +67,13 @@ const LoginAmForm = () => {
   };
 
   return (
-    <div className="form">
-      <div className="cardLogin">
-        <div className="form-header">
-          <span className="form-header-title">Accedi Amministratore</span>
+    <div className="formAM">
+      <div className="cardLoginAM">
+        <div className="form-headerAM">
+          <span className="form-header-titleAM">Accedi Amministratore</span>
         </div>
-        <div className="form-body">
-          <div className="email">
+        <div className="form-bodyAM">
+          <div className="emailAM">
             <Input
               value={email}
               onChange={(e) => setEmail(e.target.value)}
@@ -81,7 +82,7 @@ const LoginAmForm = () => {
               type="email"
             />
           </div>
-          <div className="password">
+          <div className="passwordAM">
             <Input
               value={password}
               onChange={(e) => setPassword(e.target.value)}
@@ -89,7 +90,7 @@ const LoginAmForm = () => {
               type="password"
             />
           </div>
-          <div className="buttonsgupin">
+          <div className="buttonloginAM">
             <Button
               isLoading={isLoading}
               onClick={handleSubmit}
@@ -101,7 +102,7 @@ const LoginAmForm = () => {
           {showSnackbar && (
             <div className={css({ position: 'relative' })}>
               <SnackbarElement
-                message={
+                message={(
                   <div
                     className={css({
                       display: 'flex',
@@ -111,7 +112,7 @@ const LoginAmForm = () => {
                   >
                     {snackbarMessage}
                   </div>
-                }
+                )}
                 focus={false}
                 overrides={{
                   Root: {

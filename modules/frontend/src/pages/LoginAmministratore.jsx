@@ -1,19 +1,17 @@
 import React from 'react';
 import LoginAmForm from '../components/LoginAmForm';
+import NavbarLogin from '../components/NavbarLogin';
 import '../styles/Navbar.css';
 import '../styles/LoginAmForm.css';
-import Footer from '../components/Footer';
-import Navbar from '../components/Navbar';
 
 const LoginAmministratore = () => (
   <div className="header">
-    <Navbar />
+    <NavbarLogin />
     <div className="main">
       <div className="">
         <LoginAmForm />
       </div>
     </div>
-    <Footer />
   </div>
 );
 
