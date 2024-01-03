@@ -16,7 +16,6 @@ class PianoDAO {
     const conn = await db(); // connessione al db
     const [rows] = await conn.query('SELECT * FROM piano LIMIT 0,4'); // query che ritorna i primi 4 tipi di piani
     const piani = rows as RowDataPacket[]; // assegno a piani i risultati della query
-    console.log(piani); // stampo i piani
     return piani.map(
       (piano) =>
         new Piano(
@@ -42,11 +41,12 @@ class PianoDAO {
     );
   }
 
+  //controllo nel db l'ultimo piano acquistato dall'utente
   static async getUltimoAcquistoUtente(id_utente: string) {
     const conn = await db();
 
     const [rows] = await conn.query(
-      'SELECT * FROM acquisto WHERE id_utente = ? ORDER BY data_acquisto DESC LIMIT 1',
+      'SELECT * FROM acquisto WHERE id_utente = ? ORDER BY data_acquisto ASC LIMIT 1',
       id_utente,
     );
     const acquisto = rows as RowDataPacket[];
@@ -58,6 +58,7 @@ class PianoDAO {
     );
   }
 
+  //funzione che ritorna il piano attivo dell'utente nella pagina profilo
   static async getPianoUtente(id_piano: number) {
     const conn = await db();
 
@@ -73,6 +74,15 @@ class PianoDAO {
       piano[0].prezzo,
       piano[0].limite_salvataggi_modelli,
       piano[0].limite_addestramenti_modelli,
+    );
+  }
+
+  //funzione che permette all'utente di acquistare un piano diverso dal free
+  static async AcquistoPiano(id_utente: number, id_piano: number) {
+    const conn = await db(); // connessione al db
+    await conn.query(
+      'INSERT INTO acquisto(id_utente, id_piano, data_acquisto) VALUES (?, ?, ?)', // query che inserisce un acquisto nel db
+      [id_utente, id_piano, new Date()], // parametri della query
     );
   }
 }

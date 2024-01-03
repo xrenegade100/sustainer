@@ -36,6 +36,8 @@ server.use('/verificaLogin', UtenteController.verificaLogin);
 server.use('/register', UtenteController.registrazioneIMP);
 
 server.use('/piani', PianoController.getTipiPianoIMP);
+server.use('/modificaPiano', PianoController.visulizzaPianoIMP);
+server.use('/checkout', PianoController.AcquistoPianoIMP);
 
 server.use('/loginAm', AmministratoreController.login);
 server.use('/logoutAm', AmministratoreController.logout);
@@ -46,5 +48,6 @@ server.use(
 );
 server.use('/visualizzaUtentiAm', AmministratoreController.visualizzaUtenti);
 server.use('/verificaLoginAm', AmministratoreController.verificaLoginAm);
+
 export default server;
 export { key };
