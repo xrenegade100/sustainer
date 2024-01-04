@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { Menu } from 'baseui/icon';
 import { Link } from 'react-router-dom';
 import '../styles/Navbar.css';
 
@@ -6,6 +7,11 @@ const Navbar = () => {
   const [isDropdownVisible, setIsDropdownVisible] = useState(false);
   const [isUserAuthenticated, setIsUserAuthenticated] = useState(false);
   const [isAdmin, setIsAdmin] = useState(false);
+  const [isNavbarVisible, setIsNavbarVisible] = useState(false);
+
+  const handleMenuClick = () => {
+    setIsNavbarVisible((prevState) => !prevState);
+  };
 
   const handleAvatarClick = () => {
     console.log('Avatar clicked');
@@ -106,7 +112,7 @@ const Navbar = () => {
   }, []);
 
   return (
-    <nav className="navbar">
+    <nav className={`navbar ${isNavbarVisible ? 'visible' : ''}`}>
       <ul>
         <img className="logo" src="/Logo.png" alt="" />
         {isAdmin ? (
@@ -168,38 +174,47 @@ const Navbar = () => {
                 </div>
               )}
             </li>
-            <li>
+            <li className="elements">
               <Link to="/community" className="text-white">
                 Community
               </Link>
             </li>
-            <li>
+            <li className="elements">
               <Link to="/cloud" className="text-white">
                 Cloud
               </Link>
             </li>
-            <li>
+            <li className="elements">
               <Link to="/storico" className="text-white">
                 Storico
               </Link>
             </li>
-            <li>
+            <li className="elements">
               <Link to="/addestra" className="text-white">
                 Addestra
               </Link>
             </li>
-            <li>
+            <li className="elements">
               <Link to="/piani" className="text-white">
                 Piani
               </Link>
             </li>
-            <li>
+            <li className="elements">
               <Link to="/" className="text-white">
                 Home
               </Link>
             </li>
           </>
         )}
+        <div
+          className="toggle_Menu"
+          role="button"
+          tabIndex="0"
+          onClick={handleMenuClick}
+          onKeyDown={handleDropdownKeyDown}
+        >
+          <Menu size="35px" color="white" />
+        </div>
       </ul>
     </nav>
   );
