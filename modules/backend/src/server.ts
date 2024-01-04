@@ -1,11 +1,11 @@
-import express, { Request, Response } from 'express';
+import express, {} from 'express';
 import session from 'express-session';
 import morgan from 'morgan';
 import helmet from 'helmet';
 import cors from 'cors';
 import UtenteController from './Controller/UtenteController';
 import PianoController from './Controller/PianoController';
-import AmministratoreController from './Controller/AmministratoreController';
+import AmministratoreController from './Controller/amministratoreController';
 
 const server = express();
 
@@ -29,7 +29,7 @@ server.use(
     },
   }),
 );
-//utente
+// utente
 server.use('/login', UtenteController.loginIMP);
 server.use('/logout', UtenteController.logout);
 server.use('/verificaLogin', UtenteController.verificaLogin);
@@ -54,8 +54,8 @@ server.use(
   '/modificaInformazioniUtenteAm',
   AmministratoreController.modificaInformazioniUtente,
 );
-server.use('/visualizzaUtentiAm', AmministratoreController.visualizzaUtenti);
+/* server.use('/visualizzaUtentiAm', AmministratoreController.visualizzaUtenti); */
 server.use('/verificaLoginAm', AmministratoreController.verificaLoginAm);
-//fineamministratore
+// fineamministratore
 export default server;
 export { key };

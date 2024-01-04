@@ -3,7 +3,7 @@ class Amministratore {
 
   // creo il costruttore
   constructor(nome: string, cognome: string, email: string, password: string) {
-    this.id_amministratore = 0;
+    this.idAmministratore = 0;
     this.nome = nome;
     this.cognome = cognome;
     this.email = email;
@@ -11,7 +11,7 @@ class Amministratore {
   }
   // creo gli attributi
 
-  private id_amministratore: number;
+  private idAmministratore: number;
 
   private nome: string;
 
@@ -22,46 +22,46 @@ class Amministratore {
   private password: string;
 
   // creo i metodi get
-  public get_id_amministratore(): number {
-    return this.id_amministratore;
+  public getIdAmministratore(): number {
+    return this.idAmministratore;
   }
 
-  public get_nome(): string {
+  public getNome(): string {
     return this.nome;
   }
 
-  public get_cognome(): string {
+  public getCognome(): string {
     return this.cognome;
   }
 
-  public get_email(): string {
+  public getEmail(): string {
     return this.email;
   }
 
-  public get_password(): string {
+  public getPassword(): string {
     return this.password;
   }
 
   // creo i metodi set
   // eslint-disable-next-line camelcase
-  public set_id_amministratore(id_amministratore: number) : void {
+  public setIdAmministratore(idAmministratore: number) : void {
     // eslint-disable-next-line camelcase
-    this.id_amministratore = id_amministratore;
+    this.idAmministratore = idAmministratore;
   }
 
-  public set_nome(nome: string) : void {
+  public setNome(nome: string) : void {
     this.nome = nome;
   }
 
-  public set_cognome(cognome: string) : void {
+  public setCognome(cognome: string) : void {
     this.cognome = cognome;
   }
 
-  public set_email(email: string) : void {
+  public setEmail(email: string) : void {
     this.email = email;
   }
 
-  public set_password(password: string) : void {
+  public setPassword(password: string) : void {
     this.password = password;
   }
 }

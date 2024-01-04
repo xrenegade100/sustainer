@@ -1,7 +1,6 @@
 import { RowDataPacket } from 'mysql2/promise';
 import db from '../db/poolDB';
-import Amministratore from '../account/domain/Amministratore';
-import Utente from '../account/domain/Utente';
+import Amministratore from '../account/domain/amministratore';
 
 class AmministratoreDAO {
   // creo il metodo per il login
@@ -20,14 +19,14 @@ class AmministratoreDAO {
         amministratore[0].email,
         amministratore[0].password,
       );
-      amministratoreLoggato.set_id_amministratore(amministratore[0].id_amministratore);
+      amministratoreLoggato.setIdAmministratore(amministratore[0].idAmministratore);
       return amministratoreLoggato;
     }
     return null;
   }
 
   // creo il metodo per la visualizzazione di tutti gli utenti registrati
-  static async visualizzaUtenti(): Promise<Utente[]> {
+  /* static async visualizzaUtenti(): Promise<Utente[]> {
     const conn = await db();
 
     const [rows] = await conn.query(
@@ -42,11 +41,11 @@ class AmministratoreDAO {
         utente.email,
         utente.password,
       );
-      utenteRegistrato.set_id_utente(utente.id_utente);
+      utenteRegistrato.setIdUtente(utente.idUtente);
       utentiRegistrati.push(utenteRegistrato);
     });
     return utentiRegistrati;
-  }
+  } */
 
   // creo il metodo per la modifica delle informazioni degli utenti registrati
   // eslint-disable-next-line max-len

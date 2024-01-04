@@ -1,13 +1,13 @@
-import express, { Request, Response } from 'express';
+import { Request, Response } from 'express';
 import serviziAmministratoreImpl from '../account/service/serviziAmministratoreImpl';
 
-class AmministratoreController {
+class amministratoreController {
   static verificaLoginAm = async (req: Request, res: Response) => {
     if (req.session!.authenticated) {
       return res.status(200).json({
         success: true,
         user: req.session!.authenticated,
-        admin_id: req.session!.id_admin,
+        adminId: req.session!.idAdmin,
       });
     }
     return res.status(403).json({ success: false });
@@ -18,36 +18,35 @@ class AmministratoreController {
     const { email, password } = req.body;
     const admin = await serviziAmministratoreImpl.loginIMP(email, password);
     if (admin) {
-      req.session!.authenticated = admin.get_email();
-      req.session!.id_admin = admin.get_id_amministratore();
+      req.session!.authenticated = admin.getEmail();
+      req.session!.idAdmin = admin.getIdAmministratore();
       return res.status(200).json({
         success: true,
         user: req.session!.authenticated,
-        admin_id: req.session!.id_admin,
+        adminId: req.session!.idAdmin,
       });
     }
     return res.status(403).json({ message: 'amministratore non trovato' });
   };
 
   // visualizza utenti
-  static visualizzaUtenti = async (req: Request, res: Response) => {
+  /* static visualizzaUtenti = async (req: Request, res: Response) => {
     const utenti = await serviziAmministratoreImpl.visualizzaUtentiIMP();
     if (utenti) {
       return res.status(200).json({ utenti });
     }
     return res.status(403).json({ message: 'utenti non trovati' });
-  };
+  }; */
 
   // modifica informazioni utente
   static modificaInformazioniUtente = async (req: Request, res: Response) => {
     const { email, nuovoNome, nuovoCognome } = req.body;
     // eslint-disable-next-line max-len
-    const utenteModificato =
-      await serviziAmministratoreImpl.modificaInformazioniUtenteIMP(
-        email,
-        nuovoNome,
-        nuovoCognome,
-      );
+    const utenteModificato = await serviziAmministratoreImpl.modificaInformazioniUtenteIMP(
+      email,
+      nuovoNome,
+      nuovoCognome,
+    );
     if (utenteModificato) {
       return res.status(200).json({ utenteModificato });
     }
@@ -87,7 +86,8 @@ class AmministratoreController {
         .status(500)
         .json({ success: false, message: 'Errore durante il logout' });
     }
+    return null;
   };
 }
 
-export default AmministratoreController;
+export default amministratoreController;
