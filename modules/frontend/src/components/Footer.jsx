@@ -17,12 +17,12 @@ const Footer = () => {
             <img className="img-maniblue" src="/maniblue.png" alt="" />
           </td>
           <td className="col2">
-            <div>
+            <div className="link">
               <p><a href={`mailto:${emailAddress}`}>{emailAddress}</a></p>
             </div>
           </td>
           <td className="col3">
-            <div>
+            <div className="link">
               <p className="titleF">Quick links</p>
               <p>
                 <Link to="/homepage" className="text-whiteF">
@@ -47,7 +47,7 @@ const Footer = () => {
             </div>
           </td>
           <td className="col4">
-            <div>
+            <div className="link">
               <p className="titleF">Socials</p>
               <p><a href={linkedinProfileUrl} target="_blank" rel="noopener noreferrer">Linkedin</a></p>
               <p><a href={instagramProfileUrl} target="_blank" rel="noopener noreferrer">Instagram</a></p>

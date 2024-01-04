@@ -6,12 +6,12 @@
   font-family: Lato;
 }
 
-a {
+.footer a {
   text-decoration: none; 
   color: #222222; 
 }
 
-a:hover {
+.footer a:hover {
   color: #2467d1; 
 }
 
@@ -128,28 +128,21 @@ a:hover {
 }
 
 @media (max-width: 768px) {
-  *{
-    margin: 0;
-    padding: 0;
-    font-family: Lato;
-    font-size:50%;
+  .footer{
+    font-size: 50%;
   }
+
+
 }
 
 @media (max-width: 425px) {
-  *{
-    margin: 0;
-    padding: 0;
-    font-family: Lato;
-    font-size:30%;
+ .footer{
+    font-size: 30%;
   }
 }
 
 @media (max-width: 320px) {
-  *{
-    margin: 0;
-    padding: 0;
-    font-family: Lato;
-    font-size:20%;
+  .footer{
+    font-size: 20%;
   }
 }
