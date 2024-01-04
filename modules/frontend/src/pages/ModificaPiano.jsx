@@ -66,11 +66,6 @@ const ModificaPiano = () => {
         const result = await response.json();
 
         await setPianoUtente(result);
-        /*
-        alert(result.piano.id_piano);
-        alert(result.acquisto.data_acquisto);
-        alert(pianoUtente.acquisto.id_utente);
-        */
       } catch (error) {
         console.error('Errore durante la fetch:', error);
       }
@@ -109,6 +104,7 @@ const ModificaPiano = () => {
                       idPiani[0],
                       prezzi[0],
                       pianoUtente,
+                      true,
                     )}
                   </div>
                   <div className="slide2">
@@ -117,6 +113,7 @@ const ModificaPiano = () => {
                       idPiani[1],
                       prezzi[1],
                       pianoUtente,
+                      true,
                     )}
                   </div>
                   <div className="slide2">
@@ -125,6 +122,7 @@ const ModificaPiano = () => {
                       idPiani[2],
                       prezzi[2],
                       pianoUtente,
+                      true,
                     )}
                   </div>
                   <div className="slide2">
@@ -133,6 +131,7 @@ const ModificaPiano = () => {
                       idPiani[3],
                       prezzi[3],
                       pianoUtente,
+                      true,
                     )}
                   </div>
                 </div>
@@ -145,7 +144,7 @@ const ModificaPiano = () => {
     </>
   );
 };
-const renderCardBasedOnType = (tipi, idPiano, prezzi, pianoUtente) => {
+const renderCardBasedOnType = (tipi, idPiano, prezzi, pianoUtente, loggato) => {
   const euroValue = `€${prezzi}`;
   switch (tipi) {
     case 'Free':
@@ -165,6 +164,8 @@ const renderCardBasedOnType = (tipi, idPiano, prezzi, pianoUtente) => {
           buttonText={
             pianoUtente.piano.id_piano <= idPiano ? 'Upgrade' : 'Downgrade'
           }
+          idPlan={idPiano}
+          loggato={loggato}
         />
       );
     case 'Standard':
@@ -184,6 +185,8 @@ const renderCardBasedOnType = (tipi, idPiano, prezzi, pianoUtente) => {
           buttonText={
             pianoUtente.piano.id_piano <= idPiano ? 'Upgrade' : 'Downgrade'
           }
+          idPlan={idPiano}
+          loggato={loggato}
         />
       );
     case 'Premium':
@@ -203,6 +206,8 @@ const renderCardBasedOnType = (tipi, idPiano, prezzi, pianoUtente) => {
           buttonText={
             pianoUtente.piano.id_piano <= idPiano ? 'Upgrade' : 'Downgrade'
           }
+          idPlan={idPiano}
+          loggato={loggato}
         />
       );
     case 'Business':
@@ -222,6 +227,8 @@ const renderCardBasedOnType = (tipi, idPiano, prezzi, pianoUtente) => {
           buttonText={
             pianoUtente.piano.id_piano <= idPiano ? 'Upgrade' : 'Downgrade'
           }
+          idPlan={idPiano}
+          loggato={loggato}
         />
       );
     case 'Enterprise':

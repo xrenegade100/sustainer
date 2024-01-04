@@ -6,7 +6,6 @@ class serviziUtenteImpl implements serviziUtente {
   // metodo che uso per la login
   static async login(email: string, password: string) {
     const utentelogin = await UtenteDAO.login(email, password); // richiamo il metodo login del UtenteDAO
-    console.log(utentelogin);
     if (utentelogin) {
       // se l'utente esiste
       return utentelogin; // ritorno l'utente

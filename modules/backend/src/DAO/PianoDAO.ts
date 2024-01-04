@@ -8,7 +8,6 @@ class PianoDAO {
   static async getAllPiani() {
     const conn = await db(); // connessione al db
     const piani = (await conn.query('SELECT * FROM piano')) as RowDataPacket; // query che ritorna tutti i piani
-    console.log(piani); // stampo i piani
   }
 
   // funzione asincrona che ritorna un piano in base al suo id
@@ -44,13 +43,11 @@ class PianoDAO {
   //controllo nel db l'ultimo piano acquistato dall'utente
   static async getUltimoAcquistoUtente(id_utente: string) {
     const conn = await db();
-
     const [rows] = await conn.query(
-      'SELECT * FROM acquisto WHERE id_utente = ? ORDER BY data_acquisto ASC LIMIT 1',
+      'SELECT * FROM acquisto WHERE id_utente = ? ORDER BY data_acquisto DESC LIMIT 1',
       id_utente,
     );
     const acquisto = rows as RowDataPacket[];
-
     return new Acquisto(
       acquisto[0].id_utente,
       acquisto[0].id_piano,
@@ -80,10 +77,22 @@ class PianoDAO {
   //funzione che permette all'utente di acquistare un piano diverso dal free
   static async AcquistoPiano(id_utente: number, id_piano: number) {
     const conn = await db(); // connessione al db
-    await conn.query(
+    const [rows] = await conn.query(
       'INSERT INTO acquisto(id_utente, id_piano, data_acquisto) VALUES (?, ?, ?)', // query che inserisce un acquisto nel db
       [id_utente, id_piano, new Date()], // parametri della query
     );
+    return rows;
+  }
+
+  //funzione che ritorna id del piano
+  static async getIdPiano(tipo: string) {
+    const conn = await db();
+    const [rows] = await conn.query(
+      'SELECT id_piano FROM piano WHERE tipo = ?',
+      tipo,
+    );
+    const piano = rows as RowDataPacket[];
+    return piano[0].id_piano;
   }
 }
 

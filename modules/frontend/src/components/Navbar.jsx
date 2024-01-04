@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Menu } from 'baseui/icon';
 import { Link } from 'react-router-dom';
 import '../styles/Navbar.css';
+import { useNavigate } from 'react-router-dom';
 
 const Navbar = () => {
   const [isDropdownVisible, setIsDropdownVisible] = useState(false);
@@ -41,6 +42,7 @@ const Navbar = () => {
     } catch (error) {
       console.error('Errore durante il logout:', error);
     }
+    navigate('/homepage'); // Reindirizzo l'utente alla homepage
   };
 
   const handleLogoutAm = async () => {
@@ -60,7 +62,7 @@ const Navbar = () => {
     } catch (error) {
       console.error('Errore durante il logout:', error);
     }
-    window.location.reload();
+    navigate('/homepage'); // Reindirizzo l'admin alla homepage
   };
 
   useEffect(() => {

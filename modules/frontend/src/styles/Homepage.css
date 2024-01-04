@@ -1,5 +1,9 @@
 @import url('https://fonts.googleapis.com/css?family=Lato');
 
+.tab-abus {
+  display: none;
+}
+
 .img-logoblue {
   margin-top: 6%;
   margin-left: 23%;
@@ -14,7 +18,7 @@ html {
 body {
   background-image: url('/Sfondo.png');
   background-size: 65%;
-  background-position: left 88%;
+  background-position: left 80%;
   background-repeat: no-repeat;
   margin: 0; /* Rimuovere il margin predefinito del body */
 }
@@ -139,10 +143,38 @@ body {
 /* Media query per schermi più piccoli */
 @media only screen and (max-width: 768px) {
   .about-sup {
-    grid-template-columns: 1fr; /* Una singola colonna su schermi più piccoli */
-    margin-left: 5%;
-    margin-right: 5%;
-    margin-top: auto;
+    display: none;
+  }
+
+  .tab-abus {
+    width: 80%;
+    display: block;
+    margin-top: 5%;
+    margin-left: 10%;
+    align-items: center;
+  }
+
+  .tab-abus .row {
+    width: 100%;
+    display: flex;
+    margin-top: 5%;
+  }
+
+  .tab-abus td p {
+    text-align: center;
+  }
+
+  .tab-abus td .ctxt {
+    width: 50%;
+  }
+
+  .tab-abus td .cimg {
+    width: 20%;
+  }
+
+  .tab-abus td .img {
+    width: auto;
+    height: auto;
   }
 }
 
@@ -153,44 +185,11 @@ body {
   gap: 4%;
 }
 
-/* Media query per schermi più piccoli */
-@media only screen and (max-width: 768px) {
-  .sin {
-    grid-template-columns: 1fr; /* Una singola colonna su schermi più piccoli */
-    margin-left: 5%;
-    margin-right: 5%;
-    text-align: center;
-    margin-top: 5%;
-  }
-
-  .sin img {
-    margin: 0 auto; /* Imposta la margine laterale automatica per centrare l'immagine */
-    display: block; /* Assicura che l'immagine sia centrata */
-    height: auto;
-  }
-}
-
 .des {
   margin-top: 50%;
   display: grid;
   grid-template-columns: repeat(2, 0fr 70%);
   gap: 4%;
-}
-
-/* Media query per schermi più piccoli */
-@media only screen and (max-width: 768px) {
-  .des {
-    grid-template-columns: 1fr; /* Una singola colonna su schermi più piccoli */
-    margin-left: 5%;
-    margin-right: 5%;
-    text-align: center;
-    margin-top: auto;
-  }
-
-  .des img {
-    margin: 0 auto; /* Imposta la margine laterale automatica per centrare l'immagine */
-    display: block; /* Assicura che l'immagine sia centrata */
-  }
 }
 
 :root {
@@ -205,35 +204,10 @@ body {
   margin-left: 0%;
 }
 
-/* Media query per schermi più piccoli */
-@media only screen and (max-width: 768px) {
-  :root {
-    --spazio: 0%;
-  }
-  .cen {
-    grid-template-columns: 1fr; /* Una singola colonna su schermi più piccoli */
-    margin-left: 5%;
-    margin-right: 5%;
-    text-align: center;
-    margin-top: var(--spazio);
-  }
-  .cen img {
-    margin: 0 auto; /* Imposta la margine laterale automatica per centrare l'immagine */
-    display: block; /* Assicura che l'immagine sia centrata */
-  }
-}
-
 .colonna {
   display: flex;
   flex-direction: column;
   align-items: center;
-}
-
-/* Media query per schermi più piccoli */
-@media only screen and (max-width: 768px) {
-  .colonna {
-    flex-direction: column-reverse; /* Cambia la direzione della colonna su schermi più piccoli, se necessario */
-  }
 }
 
 .testo-white {
@@ -259,18 +233,8 @@ body {
   gap: 4%;
 }
 
-/* Media query per schermi più piccoli */
-@media only screen and (max-width: 768px) {
-  .bho {
-    grid-template-columns: 1fr; /* Una singola colonna su schermi più piccoli */
-    margin-left: 5%;
-    margin-right: 5%;
-    text-align: center;
-    margin-top: 25%;
-  }
-
-  .bho img {
-    margin: 0 auto; /* Imposta la margine laterale automatica per centrare l'immagine */
-    display: block; /* Assicura che l'immagine sia centrata */
+@media (max-width: 425px) {
+  .tab-abus img {
+    display: none;
   }
 }

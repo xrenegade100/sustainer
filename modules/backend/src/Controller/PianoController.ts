@@ -31,7 +31,6 @@ class PianoController {
       );
       if (piano) {
         const arr = { piano, acquisto };
-        console.log(arr);
         return res.status(200).json(arr);
       }
     }
@@ -41,11 +40,6 @@ class PianoController {
   // metodo che mi consentirà di acquistare un piano diverso da quello che già ha l'utente
   static AcquistoPianoIMP = async (req: Request, res: Response) => {
     const { titoloPiano, prezzoPiano } = req.body;
-
-    console.log('identificativo: ', req.sessionID);
-    console.log('la mail è: ', req.session!.authenticated);
-    console.log('l id utente è: ', req.session!.id_user);
-    console.log('il prezzo del piano è: ', Number(prezzoPiano.substring(1)));
     const session = await stripe.checkout.sessions.create({
       customer_email: req.session!.authenticated,
       line_items: [
@@ -61,15 +55,25 @@ class PianoController {
         },
       ],
       mode: 'payment',
-      success_url: 'http://localhost:5173/modifica-piano',
+      success_url: `http://localhost:5000/registraPianoAcquistato?id_piano=${
+        req.body.idPiano
+      }&id_utente=${req.session!.id_user}`,
       cancel_url: 'http://localhost:5173/modifica-piano',
     });
 
     if (session) {
-      res.status(200).json({ checkoutUrl: session.url, success: true });
-    } else {
-      res.status(403).json({ message: 'errore' });
+      return res.status(200).json({ checkoutUrl: session.url, success: true });
     }
+    return res.status(403).json({ message: 'errore' });
+  };
+
+  static RegistraPianoAcquistatoIMP = async (req: Request, res: Response) => {
+    serviziPianoImpl.AcquistoPiano(
+      Number(req.query.id_utente),
+      Number(req.query.id_piano),
+    );
+
+    res.status(200).redirect('http://localhost:5173/modifica-piano');
   };
 }
 
