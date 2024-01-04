@@ -1,5 +1,4 @@
 import serviziAmministratore from './serviziAmministratore';
-import ComunicazioneDAO from '../../DAO/ComunicazioneDAO';
 import AmministratoreDAO from '../../DAO/AmministratoreDAO';
 
 class ServiziAmministratoreImpl implements serviziAmministratore {
@@ -11,26 +10,6 @@ class ServiziAmministratoreImpl implements serviziAmministratore {
     }
     return null;
   }
-
-  // invio comunicazione
-  /*static async invioComunicazioneIMP(
-    id_amministratore: number,
-    email: string,
-    messaggio: string,
-    data_comunicazione: Date,
-  ) {
-    // eslint-disable-next-line max-len
-    const comunicazione = await ComunicazioneDAO.inviaComunicazione(
-      id_amministratore,
-      email,
-      messaggio,
-      data_comunicazione,
-    );
-    if (comunicazione) {
-      return comunicazione;
-    }
-    return null;
-  }*/
 
   // visualizza utenti
   static async visualizzaUtentiIMP() {

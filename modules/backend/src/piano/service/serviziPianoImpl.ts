@@ -35,7 +35,11 @@ class serviziPianoImpl implements serviziPiano {
 
   //funzione che effettua l'acquisto di un piano
   static async AcquistoPiano(id_utente: number, id_piano: number) {
-    await PianoDAO.AcquistoPiano(id_utente, id_piano); // richiamo il metodo AcquistoPiano del PianoDAO
+    const piano = await PianoDAO.AcquistoPiano(id_utente, id_piano); // richiamo il metodo AcquistoPiano del PianoDAO
+    if (piano) {
+      return piano;
+    }
+    return null;
   }
 }
 
