@@ -3,8 +3,9 @@ import React, { useState } from 'react';
 import '../styles/CardPiano.css';
 import { Button, SIZE } from 'baseui/button';
 import { loadStripe } from '@stripe/stripe-js';
+import { Navigate, useNavigate } from 'react-router-dom';
 
-const fetchCheckout = async (titolo, prezzo) => {
+const fetchCheckout = async (titolo, prezzo, idPiano) => {
   try {
     const stripe = await loadStripe(
       'pk_test_51OURU6DecXgXrLSFmXl0Zo7y1yCQzOVyQUZ5ew1trbRBrh9oHv93n73XitLXt6zt47wZL4yKWSjJ7m8wnKdEPg9B00Q0FdvOLx',
@@ -18,6 +19,7 @@ const fetchCheckout = async (titolo, prezzo) => {
       body: JSON.stringify({
         titoloPiano: titolo,
         prezzoPiano: prezzo,
+        idPiano: idPiano,
       }),
     });
     const session = await response.json();
@@ -38,8 +40,14 @@ const Card = ({
   bgColorButton,
   textColorButton,
   buttonText,
+  idPlan,
+  loggato,
 }) => {
   const [email, setEmail] = useState('');
+  const navigate = useNavigate();
+  const redirect = async () => {
+    navigate('/login');
+  };
 
   return (
     <div
@@ -55,7 +63,9 @@ const Card = ({
       <Button
         style={{ backgroundColor: bgColorButton, color: textColorButton }}
         size={SIZE.large}
-        onClick={() => [fetchCheckout(title, price)]}
+        onClick={
+          loggato ? () => [fetchCheckout(title, price, idPlan)] : redirect
+        }
       >
         {buttonText}
       </Button>

@@ -9,6 +9,7 @@ const Piani = () => {
   const tipoPiano = ['free', 'standard', 'premium', 'business', 'enterprise'];
 
   const [data, setData] = useState([]);
+  const [loggato, setLoggato] = useState(true);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -23,6 +24,29 @@ const Piani = () => {
     };
     fetchData();
     console.log(data);
+  }, []);
+
+  useEffect(() => {
+    const fetchLogin = async () => {
+      try {
+        const response = await fetch('http://localhost:5000/verificaLogin', {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          method: 'POST',
+          credentials: 'include',
+        });
+        const result = await response.json();
+        if (!result.user) {
+          setLoggato(false);
+        } else {
+          setLoggato(true);
+        }
+      } catch (error) {
+        console.error('Errore durante la fetch:', error);
+      }
+    };
+    fetchLogin();
   }, []);
 
   console.log(data);
@@ -47,16 +71,16 @@ const Piani = () => {
             <div className="slider-piani">
               <div className="slider">
                 <div className="slide">
-                  {renderCardBasedOnType(tipi[0], prezzi[0])}
+                  {renderCardBasedOnType(tipi[0], prezzi[0], loggato)}
                 </div>
                 <div className="slide">
-                  {renderCardBasedOnType(tipi[1], prezzi[1])}
+                  {renderCardBasedOnType(tipi[1], prezzi[1], loggato)}
                 </div>
                 <div className="slide">
-                  {renderCardBasedOnType(tipi[2], prezzi[2])}
+                  {renderCardBasedOnType(tipi[2], prezzi[2], loggato)}
                 </div>
                 <div className="slide">
-                  {renderCardBasedOnType(tipi[3], prezzi[3])}
+                  {renderCardBasedOnType(tipi[3], prezzi[3], loggato)}
                 </div>
               </div>
             </div>
@@ -68,7 +92,7 @@ const Piani = () => {
   );
 };
 
-const renderCardBasedOnType = (tipi, prezzi) => {
+const renderCardBasedOnType = (tipi, prezzi, loggato) => {
   const euroValue = `€${prezzi}`;
   console.log(euroValue);
   console.log(prezzi);
@@ -87,6 +111,8 @@ const renderCardBasedOnType = (tipi, prezzi) => {
             'Salvataggio parametri e metrche degli addestramenti',
           ]}
           circleIcon={circleCheckWhite}
+          loggato={loggato}
+          buttonText="Acquista"
         />
       );
     case 'Standard':
@@ -103,6 +129,8 @@ const renderCardBasedOnType = (tipi, prezzi) => {
             'Salvataggio parametri e metrche degli addestramenti',
           ]}
           circleIcon={circleCheckWhite}
+          loggato={loggato}
+          buttonText="Acquista"
         />
       );
     case 'Premium':
@@ -119,6 +147,8 @@ const renderCardBasedOnType = (tipi, prezzi) => {
             'Salvataggio parametri e metrche degli addestramenti',
           ]}
           circleIcon={circleCheckWhite}
+          loggato={loggato}
+          buttonText="Acquista"
         />
       );
     case 'Business':
@@ -135,6 +165,8 @@ const renderCardBasedOnType = (tipi, prezzi) => {
             'Salvataggio parametri e metrche degli addestramenti',
           ]}
           circleIcon={circleCheckWhite}
+          loggato={loggato}
+          buttonText="Acquista"
         />
       );
     case 'Enterprise':
@@ -154,6 +186,7 @@ const renderCardBasedOnType = (tipi, prezzi) => {
           textColor="#FFFFFF"
           bgColorButton="#FFFFFF"
           textColorButton="#222222"
+          buttonText="Richiedi preventivo"
         />
       );
     // Aggiungi altri casi per altri tipi di piano
