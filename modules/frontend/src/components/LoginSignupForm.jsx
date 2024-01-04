@@ -3,7 +3,6 @@ import React, { useEffect, useState } from 'react';
 import { useStyletron } from 'baseui';
 import { useNavigate } from 'react-router-dom';
 import { Tabs, Tab, FILL } from 'baseui/tabs-motion';
-import { Checkbox, STYLE_TYPE, LABEL_PLACEMENT } from 'baseui/checkbox';
 import { Input } from 'baseui/input';
 import { Button, SIZE } from 'baseui/button';
 import SHA256 from 'crypto-js/sha256';
@@ -126,21 +125,6 @@ const LoginSignupForm = () => {
                   type="password"
                 />
               </div>
-              <Checkbox
-                checked={remember}
-                checkmarkType={STYLE_TYPE.toggle_round}
-                onChange={(e) => setRemember(e.target.checked)}
-                labelPlacement={LABEL_PLACEMENT.right}
-                overrides={{
-                  Toggle: {
-                    style: () => ({
-                      backgroundColor: remember ? '#2467d1' : '#fff',
-                    }),
-                  },
-                }}
-              >
-                Ricordami
-              </Checkbox>
               <div className="buttonsgupin">
                 <Button
                   isLoading={isLoading}
@@ -153,7 +137,7 @@ const LoginSignupForm = () => {
               {showSnackbar && (
                 <div className={css({ position: 'relative' })}>
                   <SnackbarElement
-                    message={
+                    message={(
                       <div
                         className={css({
                           display: 'flex',
@@ -163,7 +147,7 @@ const LoginSignupForm = () => {
                       >
                         {snackbarMessage}
                       </div>
-                    }
+                    )}
                     focus={false}
                     overrides={{
                       Root: {
