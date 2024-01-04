@@ -6,10 +6,16 @@
 
 @import url('https://fonts.googleapis.com/css?family=Lato');
 
-.app {
+.pianiView {
   display: flex;
   flex-direction: column;
   height: 80vh;
+  width: 100%;
+}
+
+.spacer {
+  width: 100%;
+  height: 20px;
 }
 
 .row {
@@ -39,10 +45,31 @@
   overflow: hidden;
 }
 
+.slider-piani {
+  overflow-x: scroll;
+  display: flex;
+  width: 1000px;
+}
+
+.slider-piani::-webkit-scrollbar {
+  height: 12px;
+}
+
+.slider-piani::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+.slider-piani::-webkit-scrollbar-thumb {
+  background: #888;
+}
+
+.slider-piani::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
 .slider {
   display: flex;
   width: 1000px;
-  animation: 20s sliding infinite;
 }
 
 .slide {
@@ -82,3 +109,142 @@
 ::-webkit-scrollbar-track {
   background-color: #eee;
 } */
+
+@media (max-width: 1500px) {
+  .row {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    margin-bottom: 20px;
+  }
+
+  .piani-section {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .title {
+    font-family: Lato;
+    font-size: 24px;
+    font-style: normal;
+    font-variant: normal;
+    font-weight: 700;
+    line-height: 28px;
+  }
+
+  .slider-piani {
+    width: 100%;
+    overflow: hidden;
+    margin-top: 20px;
+  }
+
+  .slider-piani {
+    overflow-x: scroll;
+    display: flex;
+    width: 100%;
+  }
+
+  .slider-piani::-webkit-scrollbar {
+    height: 12px;
+  }
+
+  .slider-piani::-webkit-scrollbar-track {
+    background: #f1f1f1;
+  }
+
+  .slider-piani::-webkit-scrollbar-thumb {
+    background: #888;
+  }
+
+  .slider-piani::-webkit-scrollbar-thumb:hover {
+    background: #555;
+  }
+
+  .slider {
+    display: flex;
+    width: 100%;
+  }
+
+  .slide {
+    flex: 0 0 40%;
+    margin-right: 0px;
+  }
+}
+
+/* For landscape phones and down */
+@media (max-width: 430px) {
+  .row {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    margin-bottom: 20px;
+  }
+
+  .piani-section {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .title {
+    font-family: Lato;
+    font-size: 24px;
+    font-style: normal;
+    font-variant: normal;
+    font-weight: 700;
+    line-height: 28px;
+  }
+
+  .slider-piani {
+    width: 100%;
+    overflow: hidden;
+    margin-top: 20px;
+  }
+
+  .slider-piani {
+    overflow-x: scroll;
+    display: flex;
+    width: 100%;
+  }
+
+  .slider-piani::-webkit-scrollbar {
+    height: 12px;
+  }
+
+  .slider-piani::-webkit-scrollbar-track {
+    background: #f1f1f1;
+  }
+
+  .slider-piani::-webkit-scrollbar-thumb {
+    background: #888;
+  }
+
+  .slider-piani::-webkit-scrollbar-thumb:hover {
+    background: #555;
+  }
+
+  .slider {
+    display: flex;
+    width: 100%;
+  }
+
+  .slide {
+    flex: 0 0 100%;
+    margin-right: 0px;
+  }
+}
+
+/* For portrait phones and down */
+@media (max-width: 375px) {
+}
+
+/* For smaller devices and down */
+@media (max-width: 320px) {
+}

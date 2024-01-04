@@ -37,7 +37,7 @@ const Piani = () => {
       <div className="header">
         <Navbar />
       </div>
-      <div className="app">
+      <div className="pianiView">
         <div className="row">
           <h1 className="title">Scegli il tuo Piano</h1>
         </div>
@@ -76,6 +76,7 @@ const renderCardBasedOnType = (tipi, prezzi) => {
     case 'Free':
       return (
         <CardPiano
+          bgColor="#FFFFFF"
           title={tipi}
           subtitle="Piano Free"
           price={euroValue}
@@ -91,6 +92,7 @@ const renderCardBasedOnType = (tipi, prezzi) => {
     case 'Standard':
       return (
         <CardPiano
+          bgColor="#FFFFFF"
           title={tipi}
           subtitle="Piano Standard"
           price={euroValue}
@@ -106,6 +108,7 @@ const renderCardBasedOnType = (tipi, prezzi) => {
     case 'Premium':
       return (
         <CardPiano
+          bgColor="#FFFFFF"
           title={tipi}
           subtitle="Piano Premium"
           price={euroValue}
@@ -121,6 +124,7 @@ const renderCardBasedOnType = (tipi, prezzi) => {
     case 'Business':
       return (
         <CardPiano
+          bgColor="#FFFFFF"
           title={tipi}
           subtitle="Piano Business"
           price={euroValue}
