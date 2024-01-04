@@ -5,9 +5,8 @@ import { Input } from 'baseui/input';
 import { Button, SIZE } from 'baseui/button';
 import SHA256 from 'crypto-js/sha256';
 import { SnackbarElement } from 'baseui/snackbar';
-import { useNavigate } from 'react-router-dom';
 
-const RegisterForm = ({ onSubmit }) => {
+const RegisterForm = () => {
   const [nome, setNome] = useState('');
   const [cognome, setCognome] = useState('');
   const [emailr, setEmailr] = useState('');
@@ -16,9 +15,8 @@ const RegisterForm = ({ onSubmit }) => {
   const [showSnackbar, setShowSnackbar] = useState(false);
   const [snackbarMessage, setSnackbarMessage] = useState('');
   const [css] = useStyletron();
-  const navigate = useNavigate();
 
-  //metodo per la snackbar
+  // metodo per la snackbar
   useEffect(() => {
     let timer;
     if (showSnackbar) {
@@ -63,8 +61,7 @@ const RegisterForm = ({ onSubmit }) => {
     }
 
     // Password validation
-    const passwordRegex =
-      /^(?=.*[A-Z])(?=.*[!@#$%^&*()_+{}\[\]:;<>,.?~\\/-])[A-Za-z0-9!@#$%^&*()_+{}\[\]:;<>,.?~\\/-]{8,64}$/;
+    const passwordRegex = /^(?=.*[A-Z])(?=.*[!@#$%^&*()_+{}[\]:;<>,.?~\\/-])[A-Za-z0-9!@#$%^&*()_+{}[\]:;<>,.?~\\/-]{8,64}$/;
     if (!passwordRegex.test(passwordr)) {
       setSnackbarMessage(
         'La password deve contenere almeno 8 caratteri tra cui: 1 lettera maisucola 1 carattere speciale',
@@ -157,7 +154,7 @@ const RegisterForm = ({ onSubmit }) => {
       {showSnackbar && (
         <div className={css({ position: 'relative' })}>
           <SnackbarElement
-            message={
+            message={(
               <div
                 className={css({
                   display: 'flex',
@@ -167,7 +164,7 @@ const RegisterForm = ({ onSubmit }) => {
               >
                 {snackbarMessage}
               </div>
-            }
+            )}
             focus={false}
             overrides={{
               Root: {
@@ -183,8 +180,6 @@ const RegisterForm = ({ onSubmit }) => {
     </div>
   );
 };
-RegisterForm.propTypes = {
-  onSubmit: () => {},
-};
+RegisterForm.propTypes = {};
 
 export default RegisterForm;

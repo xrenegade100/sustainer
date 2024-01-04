@@ -13,7 +13,7 @@ const Footer = () => {
     <div className="footer">
       <table className="tabella">
         <tr className="row1">
-          <td className="col1">
+          <td className="col1" aria-label="Image">
             <img className="img-maniblue" src="/maniblue.png" alt="" />
           </td>
           <td className="col2">
@@ -55,12 +55,12 @@ const Footer = () => {
               <p><a href={redditProfileUrl} target="_blank" rel="noopener noreferrer">Reddit</a></p>
             </div>
           </td>
-          <td className="col5">
+          <td className="col5" aria-label="Image">
             <img className="img-susblue" src="/susblue.png" alt="" />
           </td>
         </tr>
         <tr className="row2">
-          <td className="col1">
+          <td className="col1" aria-label="Footer Image">
             <img className="img-footer" src="/footersin.png" alt="" />
           </td>
           <td className="col2">
@@ -68,7 +68,7 @@ const Footer = () => {
               <p>&copy; 2023 Sustainer. Tutti i diritti riservati.</p>
             </div>
           </td>
-          <td className="col3">
+          <td className="col3" aria-label="Footer Image">
             <img className="img-footer" src="/footerdex.png" alt="" />
           </td>
         </tr>

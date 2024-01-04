@@ -11,10 +11,8 @@ import RegisterForm from './RegisterForm';
 const LoginSignupForm = () => {
   const [activeKey, setActiveKey] = useState('0');
   const [headerTitle, setHeaderTitle] = useState('Accedi a Sustainer');
-  const [checked, setChecked] = useState(false);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [remember, setRemember] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [showSnackbar, setShowSnackbar] = useState(false);
   const [snackbarMessage, setSnackbarMessage] = useState('');
@@ -71,8 +69,6 @@ const LoginSignupForm = () => {
       setIsLoading(false);
       return;
     }
-
-    const data = await response.json();
     navigate('/homepage');
   };
 
