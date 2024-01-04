@@ -29,16 +29,24 @@ server.use(
     },
   }),
 );
-
+//utente
 server.use('/login', UtenteController.loginIMP);
 server.use('/logout', UtenteController.logout);
 server.use('/verificaLogin', UtenteController.verificaLogin);
 server.use('/register', UtenteController.registrazioneIMP);
+// fineutente
 
+// piano
 server.use('/piani', PianoController.getTipiPianoIMP);
 server.use('/modificaPiano', PianoController.visulizzaPianoIMP);
 server.use('/checkout', PianoController.AcquistoPianoIMP);
+server.use(
+  '/registraPianoAcquistato',
+  PianoController.RegistraPianoAcquistatoIMP,
+);
+// finepiano
 
+// amministratore
 server.use('/loginAm', AmministratoreController.login);
 server.use('/logoutAm', AmministratoreController.logout);
 server.use('/cancellaUtenteAm', AmministratoreController.cancellaUtente);
@@ -48,6 +56,6 @@ server.use(
 );
 server.use('/visualizzaUtentiAm', AmministratoreController.visualizzaUtenti);
 server.use('/verificaLoginAm', AmministratoreController.verificaLoginAm);
-
+//fineamministratore
 export default server;
 export { key };

@@ -3,22 +3,7 @@ import serviziAmministratoreImpl from '../account/service/serviziAmministratoreI
 
 class AmministratoreController {
   static verificaLoginAm = async (req: Request, res: Response) => {
-    console.log(
-      'Identificativo in verifica login AMMINISTRATORE : ',
-      req.sessionID,
-    );
-    console.log(
-      'sono in verifica login AMMINISTRATORE: ',
-      req.session!.authenticated,
-    );
     if (req.session!.authenticated) {
-      console.log('Sei gia autenticato come admin');
-      console.log(
-        'id admin:',
-        req.session!.id_admin,
-        'aut: ',
-        req.session!.authenticated,
-      );
       return res.status(200).json({
         success: true,
         user: req.session!.authenticated,
@@ -30,17 +15,11 @@ class AmministratoreController {
 
   // login
   static login = async (req: Request, res: Response) => {
-    console.log('Ciao, sei nel login amministratore');
     const { email, password } = req.body;
     const admin = await serviziAmministratoreImpl.loginIMP(email, password);
     if (admin) {
       req.session!.authenticated = admin.get_email();
       req.session!.id_admin = admin.get_id_amministratore();
-      console.log(
-        'Ho messo gli attributi nella sessione:',
-        req.session!.authenticated,
-        req.session!.id_admin,
-      );
       return res.status(200).json({
         success: true,
         user: req.session!.authenticated,
@@ -49,22 +28,6 @@ class AmministratoreController {
     }
     return res.status(403).json({ message: 'amministratore non trovato' });
   };
-
-  // invio comunicazione
-  /*static inviaComunicazione = async (req: Request, res: Response) => {
-    const { idAmministratore, emails, messaggio, data_comunicazione } =
-      req.body;
-    const comunicazione = await serviziAmministratoreImpl.invioComunicazioneIMP(
-      idAmministratore,
-      emails,
-      messaggio,
-      data_comunicazione,
-    );
-    if (comunicazione) {
-      return res.status(200).json({ comunicazione });
-    }
-    return res.status(403).json({ message: 'comunicazione non inviata' });
-  };*/
 
   // visualizza utenti
   static visualizzaUtenti = async (req: Request, res: Response) => {
@@ -109,7 +72,6 @@ class AmministratoreController {
       // Distruggi la sessione
       req.session!.destroy((err) => {
         if (err) {
-          console.error('Errore durante il logout:', err);
           return res
             .status(500)
             .json({ success: false, message: 'Errore durante il logout' });
@@ -121,7 +83,6 @@ class AmministratoreController {
           .json({ success: true, message: 'Logout effettuato con successo' });
       });
     } catch (error) {
-      console.error('Errore durante il logout:', error);
       return res
         .status(500)
         .json({ success: false, message: 'Errore durante il logout' });
