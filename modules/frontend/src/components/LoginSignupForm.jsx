@@ -117,6 +117,7 @@ const LoginSignupForm = () => {
                 <Input
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
+                  placeholder="password"
                   clearable
                   type="password"
                 />

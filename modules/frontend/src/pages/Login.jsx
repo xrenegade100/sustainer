@@ -8,9 +8,7 @@ const Login = () => (
   <div className="header">
     <NavbarLogin />
     <div className="main">
-      <div className="">
-        <LoginSignupForm />
-      </div>
+      <LoginSignupForm />
     </div>
   </div>
 );

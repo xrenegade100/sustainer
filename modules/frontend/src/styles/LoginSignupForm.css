@@ -6,17 +6,18 @@
   font-family: Lato;
 }
 
+
 .form{
-  width:100%;
-  height: 500px;
+  width: 1500px;
+  height: 550px;
   display:flex;
   justify-content:center;
   align-items:center;
 }
 
 .cardLogin{
-  width:45%;
-  height: 100%;
+  width:500px;
+  height: 550px;
   background-color:#fff;
   border-radius:10px 0px 0px 10px;
   display:flex;
@@ -51,13 +52,14 @@
 }
 
 .email{
+  margin-top: 15%;
   margin-bottom: 5%;
   height:40%;
 }
 
 .password{
   margin-bottom: 5%;
-  height:40%;
+  height: 40%;
 }
 
 .nome{
@@ -92,7 +94,7 @@
 }
 
 .img{
-  width:55%;
+  width:60%;
   height:100%;
   display:flex;
   justify-content:center;
@@ -104,6 +106,81 @@
   width:100%;
   height:100%;
   border-radius: 0px 0px 0px 0px;
+}
+
+
+@media (max-width: 1440px) {
+  .form{
+    width: 1200px;
+    height: 500px;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+  }
+
+  .cardLogin{
+    width:400px;
+    height: 450px;
+    background-color:#fff;
+    border-radius:10px 0px 0px 10px;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    flex-direction:column;
+  }
+
+  .img{
+    width:100%;
+    height:100%;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    border-radius: 0px 0px 0px 0px;
+  }
+  
+  .img img{
+    width:100%;
+    height:100%;
+    border-radius: 0px 0px 0px 0px;
+  }
+
+}
+
+@media (max-width: 768px) {
+  .form{
+    width: 600px;
+    height: 500px;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    flex-direction: column-reverse;
+  }
+
+  .cardLogin{
+    width:400px;
+    height: 450px;
+    background-color:#fff;
+    border-radius:10px 0px 0px 10px;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    flex-direction:column;
+  }
+
+  .img{
+    width:100%;
+    height:100%;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    border-radius: 0px 0px 0px 0px;
+  }
+  
+  .img img{
+    width:100%;
+    height:100%;
+    border-radius: 0px 0px 0px 0px;
+  }
 }
 
 /* For landscape phones and down */
@@ -129,7 +206,8 @@
      height:auto;
   }
 }
- 
+
+
 /* For portrait phones and down */
 @media (max-width: 375px) {
   .form {
@@ -141,12 +219,17 @@
      height: 90%;
   }
 }
+
+
+
+ 
+
  
  /* For smaller devices and down */
  @media (max-width: 320px) {
   .cardLogin{
-     width:90%;
-     height: 90%;
+     width:80%;
+     height: 80%;
   }
  
   .form-header-title{
