@@ -6,7 +6,7 @@
 
 .navbar {
   background-color: #2467d1;
-  padding-bottom: 1%;
+  padding: 1%;
 }
 
 .text-black {
@@ -27,7 +27,6 @@
 
 .navbar ul {
   list-style-type: none;
-  padding-top: 0%;
 }
 
 .navbar li {
@@ -96,26 +95,22 @@
 
 @media (max-width: 1440px) {
   .navbar li {
-    padding-top: 0.5%;
+    margin-top: -1%;
   }
   .img-avatar {
     padding: 5px;
   }
 }
-@media (max-width: 1210px) {
-  .navbar li {
-    padding-top: 0.2%;
-  }
-  .logo {
-    margin-top: 0.7%;
-  }
-}
 @media (max-width: 1060px) {
-  .navbar ul {
-    padding-bottom: 1%;
+  .navbar li {
+    margin-top: -1.8%;
   }
-  .logo {
-    padding-top: 0.5%;
+  .text-white {
+    font-size: 1.2em;
+  }
+  .img-avatar {
+    width: 45px;
+    height: 45px;
   }
 }
 /* Aggiunta di media query per rendere la navbar responsiva */
@@ -135,15 +130,15 @@
   .toggle_Menu {
     position: absolute;
     display: block;
-    top: 2%;
+    top: 1.5%;
     right: 2%;
     margin-left: 5%;
   }
   .img-avatar {
     position: absolute;
     display: block;
-    margin-top: -7.3%;
-    right: 5%;
+    margin-top: -6.6%;
+    right: 4%;
     margin-left: 5%;
   }
   .dropdown-content {
@@ -176,28 +171,33 @@
     top: 0.9%;
   }
 }
-@media (max-width: 420px) {
+@media (max-width: 425px) {
   .img-avatar {
-    width: 37px;
-    height: 37px;
+    width: 35px;
+    height: 35px;
+    right: 5%;
+    top: 0.5%;
   }
   .toggle_Menu {
-    top: 0.5%;
+    top: 0%;
   }
 }
 @media (max-width: 390px) {
   .img-avatar {
-    width: 35px;
-    height: 35px;
+    width: 30px;
+    height: 30px;
     margin-right: 3%;
-  }
-  .toggle_Menu {
-    top: 0.3%;
+    top: 2px;
   }
 }
 @media (max-width: 320px) {
+  .toggle_Menu {
+    margin-top: -1%;
+  }
   .img-avatar {
-    width: 30px;
-    height: 30px;
+    width: 25px;
+    height: 25px;
+    margin-right: 5%;
+    top: 2px;
   }
 }
