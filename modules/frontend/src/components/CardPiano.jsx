@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import '../styles/CardPiano.css';
 import { Button, SIZE } from 'baseui/button';
 import { loadStripe } from '@stripe/stripe-js';
-import { Navigate, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 const fetchCheckout = async (titolo, prezzo, idPiano) => {
   try {

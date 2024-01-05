@@ -133,7 +133,7 @@ const LoginSignupForm = () => {
               {showSnackbar && (
                 <div className={css({ position: 'relative' })}>
                   <SnackbarElement
-                    message={(
+                    message={
                       <div
                         className={css({
                           display: 'flex',
@@ -143,7 +143,7 @@ const LoginSignupForm = () => {
                       >
                         {snackbarMessage}
                       </div>
-                    )}
+                    }
                     focus={false}
                     overrides={{
                       Root: {

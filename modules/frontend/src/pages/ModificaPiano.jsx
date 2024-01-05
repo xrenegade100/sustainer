@@ -100,15 +100,6 @@ const ModificaPiano = () => {
                 <div className="slider2">
                   <div className="slide2">
                     {renderCardBasedOnType(
-                      tipi[0],
-                      idPiani[0],
-                      prezzi[0],
-                      pianoUtente,
-                      true,
-                    )}
-                  </div>
-                  <div className="slide2">
-                    {renderCardBasedOnType(
                       tipi[1],
                       idPiani[1],
                       prezzi[1],

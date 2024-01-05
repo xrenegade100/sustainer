@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import '../styles/Piani.css';
 import Navbar from '../components/Navbar';
 import CardPiano from '../components/CardPiano';
@@ -10,6 +11,7 @@ const Piani = () => {
 
   const [data, setData] = useState([]);
   const [loggato, setLoggato] = useState(true);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -41,6 +43,7 @@ const Piani = () => {
           setLoggato(false);
         } else {
           setLoggato(true);
+          navigate('/modifica-piano');
         }
       } catch (error) {
         console.error('Errore durante la fetch:', error);
@@ -112,7 +115,7 @@ const renderCardBasedOnType = (tipi, prezzi, loggato) => {
           ]}
           circleIcon={circleCheckWhite}
           loggato={loggato}
-          buttonText="Acquista"
+          buttonText="Registrati"
         />
       );
     case 'Standard':
