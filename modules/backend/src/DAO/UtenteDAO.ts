@@ -34,7 +34,8 @@ class UtenteDAO {
         utente[0].email,
         utente[0].password,
       );
-      utenteLoggato.set_id_utente(utente[0].id_utente); // setto l'id richiamando la funzione set_id_utente
+      utenteLoggato.set_id_utente(utente[0].id_utente);
+      // setto l'id richiamando la funzione set_id_utente
       return utenteLoggato; // ritorno l'utente
     }
     return null;

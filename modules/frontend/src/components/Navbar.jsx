@@ -9,6 +9,7 @@ const Navbar = () => {
   const [isUserAuthenticated, setIsUserAuthenticated] = useState(false);
   const [isAdmin, setIsAdmin] = useState(false);
   const [isNavbarVisible, setIsNavbarVisible] = useState(false);
+  const navigate = useNavigate();
 
   const handleMenuClick = () => {
     setIsNavbarVisible((prevState) => !prevState);

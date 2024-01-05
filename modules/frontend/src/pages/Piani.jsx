@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import '../styles/Piani.css';
 import Navbar from '../components/Navbar';
 import CardPiano from '../components/CardPiano';
@@ -10,6 +11,7 @@ const Piani = () => {
 
   const [data, setData] = useState([]);
   const [loggato, setLoggato] = useState(true);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -41,6 +43,7 @@ const Piani = () => {
           setLoggato(false);
         } else {
           setLoggato(true);
+          navigate('/modifica-piano');
         }
       } catch (error) {
         console.error('Errore durante la fetch:', error);
@@ -93,9 +96,6 @@ const Piani = () => {
 };
 
 const renderCardBasedOnType = (tipi, prezzi, loggato) => {
-  const euroValue = `€${prezzi}`;
-  console.log(euroValue);
-  console.log(prezzi);
   switch (tipi) {
     case 'Free':
       return (
@@ -103,7 +103,7 @@ const renderCardBasedOnType = (tipi, prezzi, loggato) => {
           bgColor="#FFFFFF"
           title={tipi}
           subtitle="Piano Free"
-          price={euroValue}
+          price={prezzi}
           phrases={[
             'SI pubblicità',
             '1 Addestramento al giorno',
@@ -112,7 +112,7 @@ const renderCardBasedOnType = (tipi, prezzi, loggato) => {
           ]}
           circleIcon={circleCheckWhite}
           loggato={loggato}
-          buttonText="Acquista"
+          buttonText="Registrati"
         />
       );
     case 'Standard':
@@ -121,7 +121,7 @@ const renderCardBasedOnType = (tipi, prezzi, loggato) => {
           bgColor="#FFFFFF"
           title={tipi}
           subtitle="Piano Standard"
-          price={euroValue}
+          price={prezzi}
           phrases={[
             'NO Pubblicità',
             '2 Addestramenti al giorno',
@@ -139,7 +139,7 @@ const renderCardBasedOnType = (tipi, prezzi, loggato) => {
           bgColor="#FFFFFF"
           title={tipi}
           subtitle="Piano Premium"
-          price={euroValue}
+          price={prezzi}
           phrases={[
             'NO Pubblicità',
             '3 Addestramenti al giorno',
@@ -157,7 +157,7 @@ const renderCardBasedOnType = (tipi, prezzi, loggato) => {
           bgColor="#FFFFFF"
           title={tipi}
           subtitle="Piano Business"
-          price={euroValue}
+          price={prezzi}
           phrases={[
             'No Pubblicità',
             '4 Adeestramenti al giorno',
@@ -175,7 +175,7 @@ const renderCardBasedOnType = (tipi, prezzi, loggato) => {
           bgColor="#2467D1"
           title={tipi}
           subtitle="Piano Enterprise"
-          price="€*"
+          price="*"
           phrases={[
             'NO Pubblicità',
             'Scegli il numero di addestramenti',

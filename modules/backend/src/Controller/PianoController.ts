@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
 import serviziPianoImpl from '../piano/service/serviziPianoImpl';
+
 const stripe = require('stripe')(
   'sk_test_51OURU6DecXgXrLSFz9LkEnm04LN5rAerDrbdfBM1fgSYZTrDiIxGFgnrbKYJS8HF4OR1usty0boZCaAJh5O0OxoR00q7yvc8gZ',
 );
@@ -16,9 +17,9 @@ class PianoController {
   };
 
   // metodo che mi consentirà di acquistare il piano free
-  static AcquistoPianoFreeIMP = async (id_utente: number) => {
+  static AcquistoPianoFreeIMP = async (idUtente: number) => {
     // richiamo il metodo AcquistoPianoFree del serviziPianoImpl
-    await serviziPianoImpl.AcquistoPianoFree(id_utente);
+    await serviziPianoImpl.AcquistoPianoFree(idUtente);
   };
 
   static visulizzaPianoIMP = async (req: Request, res: Response) => {
@@ -49,7 +50,7 @@ class PianoController {
             product_data: {
               name: titoloPiano,
             },
-            unit_amount: Number(prezzoPiano.substring(1)) * 100,
+            unit_amount: Number(prezzoPiano) * 100,
           },
           quantity: 1,
         },
