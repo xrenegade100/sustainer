@@ -100,7 +100,7 @@ const Navbar = () => {
           credentials: 'include',
         });
         const response = await verifica.json();
-        if (response.admin_id) {
+        if (response.adminId) {
           setIsAdmin(true);
         } else {
           setIsAdmin(false);
