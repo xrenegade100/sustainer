@@ -19,7 +19,7 @@ class AmministratoreDAO {
         amministratore[0].email,
         amministratore[0].password,
       );
-      amministratoreLoggato.setIdAmministratore(amministratore[0].idAmministratore);
+      amministratoreLoggato.setIdAmministratore(amministratore[0].id_amministratore);
       return amministratoreLoggato;
     }
     return null;

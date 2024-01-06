@@ -20,6 +20,8 @@ class amministratoreController {
     if (admin) {
       req.session!.authenticated = admin.getEmail();
       req.session!.idAdmin = admin.getIdAmministratore();
+      console.log(req.session!.idAdmin);
+      console.log(admin.getIdAmministratore());
       return res.status(200).json({
         success: true,
         user: req.session!.authenticated,

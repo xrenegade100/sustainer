@@ -1,6 +1,4 @@
 class Amministratore {
-  id: any;
-
   // creo il costruttore
   constructor(nome: string, cognome: string, email: string, password: string) {
     this.idAmministratore = 0;
