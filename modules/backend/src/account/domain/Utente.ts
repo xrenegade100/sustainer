@@ -3,7 +3,7 @@
 class Utente {
   // creo il costruttore
   constructor(nome: string, cognome: string, email: string, password: string) {
-    this.id_utente = 0;
+    this.idUtente = 0;
     this.nome = nome;
     this.cognome = cognome;
     this.email = email;
@@ -11,7 +11,7 @@ class Utente {
   }
 
   // creo gli attributi
-  private id_utente: number;
+  private idUtente: number;
 
   private nome: string;
 
@@ -22,44 +22,44 @@ class Utente {
   private password: string;
 
   // creo i metodi get
-  public get_id_utente(): number {
-    return this.id_utente;
+  public getIdUtente(): number {
+    return this.idUtente;
   }
 
-  public get_nome(): string {
+  public getNome(): string {
     return this.nome;
   }
 
-  public get_cognome(): string {
+  public getCognome(): string {
     return this.cognome;
   }
 
-  public get_email(): string {
+  public getEmail(): string {
     return this.email;
   }
 
-  public get_password(): string {
+  public getPassword(): string {
     return this.password;
   }
 
   // creo i metodi set
-  public set_id_utente(id_utente: number): void {
-    this.id_utente = id_utente;
+  public setIdUtente(idUtente: number): void {
+    this.idUtente = idUtente;
   }
 
-  public set_nome(nome: string): void {
+  public setNome(nome: string): void {
     this.nome = nome;
   }
 
-  public set_cognome(cognome: string): void {
+  public setCognome(cognome: string): void {
     this.cognome = cognome;
   }
 
-  public set_email(email: string): void {
+  public setEmail(email: string): void {
     this.email = email;
   }
 
-  public set_password(password: string): void {
+  public setPassword(password: string): void {
     this.password = password;
   }
 }

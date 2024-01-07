@@ -1,4 +1,4 @@
-import AmministratoreDAO from '../../DAO/amministratoreDAO';
+import AmministratoreDAO from '../../dao/AmministratoreDAO';
 import serviziAmministratore from './serviziAmministratore';
 
 class ServiziAmministratoreImpl implements serviziAmministratore {

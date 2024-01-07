@@ -1,5 +1,3 @@
-import Piano from '../domain/Piano';
+interface ServiziPiano {}
 
-interface serviziPiano {}
-
-export default serviziPiano;
+export default ServiziPiano;

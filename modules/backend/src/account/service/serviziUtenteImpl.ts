@@ -1,14 +1,15 @@
 import serviziUtente from './serviziUtente';
-import UtenteDAO from '../../DAO/UtenteDAO';
-import Utente from '../domain/Utente';
+import UtenteDAO from '../../dao/UtenteDAO';
 
-class serviziUtenteImpl implements serviziUtente {
+class ServiziUtenteImpl implements serviziUtente {
   // metodo che uso per la login
   static async login(email: string, password: string) {
-    const utentelogin = await UtenteDAO.login(email, password); // richiamo il metodo login del UtenteDAO
-    if (utentelogin) {
+    // richiamo il metodo login del UtenteDAO
+    const utenteLogin = await UtenteDAO.login(email, password);
+
+    if (utenteLogin) {
       // se l'utente esiste
-      return utentelogin; // ritorno l'utente
+      return utenteLogin; // ritorno l'utente
     }
     return null; // altrimenti ritorno null
   }
@@ -20,18 +21,20 @@ class serviziUtenteImpl implements serviziUtente {
     email: string,
     password: string,
   ) {
-    await UtenteDAO.registrazione(nome, cognome, email, password); // richiamo il metodo registrazione del UtenteDAO
+    // richiamo il metodo registrazione del UtenteDAO
+    await UtenteDAO.registrazione(nome, cognome, email, password);
   }
 
   // metodo che uso per il ritorna id dell'utente in base all'email
   static async getIdUtente(email: string) {
-    const id_utente = await UtenteDAO.getIdUtente(email); // richiamo il metodo getIdUtente del UtenteDAO
+    // richiamo il metodo getIdUtente del UtenteDAO
+    const idUtente = await UtenteDAO.getIdUtente(email);
     // se l'id_utente esiste
-    if (id_utente) {
-      return id_utente; // ritorno l'id_utente
+    if (idUtente) {
+      return idUtente; // ritorno l'id_utente
     }
     return 0;
   }
 }
 
-export default serviziUtenteImpl;
+export default ServiziUtenteImpl;

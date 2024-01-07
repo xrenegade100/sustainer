@@ -1,18 +1,14 @@
-import express, {} from 'express';
+import express from 'express';
 import session from 'express-session';
 import morgan from 'morgan';
 import helmet from 'helmet';
 import cors from 'cors';
-import UtenteController from './Controller/UtenteController';
-import PianoController from './Controller/PianoController';
-import AmministratoreController from './Controller/amministratoreController';
+import PianoController from './controller/pianoController';
+import UtenteController from './controller/utenteController';
+import AmministratoreController from './controller/amministratoreController';
 
 const server = express();
 
-// Morgan is a HTTP request logger middleware for Node.js.
-// It simplifies the process of logging requests to your application.
-// You might think of Morgan as a helper that collects logs from your server,
-// such as your request logs.
 const key = 'keyboard cat';
 server.use(morgan('dev', { skip: () => process.env.NODE_ENV === 'test' })); // skip request logging during tests
 server.use(helmet());
@@ -30,32 +26,55 @@ server.use(
   }),
 );
 // utente
-server.use('/login', UtenteController.loginIMP);
+server.use('/login', (req, res) => {
+  UtenteController.loginIMP(req, res);
+});
 server.use('/logout', UtenteController.logout);
-server.use('/verificaLogin', UtenteController.verificaLogin);
-server.use('/register', UtenteController.registrazioneIMP);
-// fineutente
+server.use('/verificaLogin', (req, res) => {
+  UtenteController.verificaLogin(req, res);
+});
+server.use('/register', (req, res) => {
+  UtenteController.registrazioneIMP(req, res);
+});
+// fineUtente
 
 // piano
-server.use('/piani', PianoController.getTipiPianoIMP);
-server.use('/modificaPiano', PianoController.visulizzaPianoIMP);
-server.use('/checkout', PianoController.AcquistoPianoIMP);
-server.use(
-  '/registraPianoAcquistato',
-  PianoController.RegistraPianoAcquistatoIMP,
-);
-// finepiano
+server.use('/piani', (req, res) => {
+  PianoController.getTipiPianoIMP(req, res);
+});
+server.use('/modificaPiano', (req, res) => {
+  PianoController.visulizzaPianoIMP(req, res);
+});
+server.use('/piani', (req, res) => {
+  PianoController.getTipiPianoIMP(req, res);
+});
+server.use('/checkout', (req, res) => {
+  PianoController.AcquistoPianoIMP(req, res);
+});
+server.use('/checkout', (req, res) => {
+  PianoController.AcquistoPianoIMP(req, res);
+});
+server.use('/registraPianoAcquistato', (req, res) => {
+  PianoController.RegistraPianoAcquistatoIMP(req, res);
+});
 
 // amministratore
-server.use('/loginAm', AmministratoreController.login);
-server.use('/logoutAm', AmministratoreController.logout);
-server.use('/cancellaUtenteAm', AmministratoreController.cancellaUtente);
-server.use(
-  '/modificaInformazioniUtenteAm',
-  AmministratoreController.modificaInformazioniUtente,
-);
-/* server.use('/visualizzaUtentiAm', AmministratoreController.visualizzaUtenti); */
-server.use('/verificaLoginAm', AmministratoreController.verificaLoginAm);
-// fineamministratore
+server.use('/loginAm', (req, res) => {
+  AmministratoreController.login(req, res);
+});
+server.use('/logoutAm', (req, res) => {
+  AmministratoreController.logout(req, res);
+});
+server.use('/cancellaUtenteAm', (req, res) => {
+  AmministratoreController.cancellaUtente(req, res);
+});
+server.use('/modificaInformazioniUtenteAm', (req, res) => {
+  AmministratoreController.modificaInformazioniUtente(req, res);
+});
+server.use('/verificaLoginAm', (req, res) => {
+  AmministratoreController.verificaLoginAm(req, res);
+});
+// fineAmministratore
+
 export default server;
 export { key };

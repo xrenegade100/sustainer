@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 import serviziAmministratoreImpl from '../account/service/serviziAmministratoreImpl';
 
-class amministratoreController {
+class AmministratoreController {
   static verificaLoginAm = async (req: Request, res: Response) => {
     if (req.session!.authenticated) {
       return res.status(200).json({
@@ -20,8 +20,6 @@ class amministratoreController {
     if (admin) {
       req.session!.authenticated = admin.getEmail();
       req.session!.idAdmin = admin.getIdAmministratore();
-      console.log(req.session!.idAdmin);
-      console.log(admin.getIdAmministratore());
       return res.status(200).json({
         success: true,
         user: req.session!.authenticated,
@@ -43,12 +41,13 @@ class amministratoreController {
   // modifica informazioni utente
   static modificaInformazioniUtente = async (req: Request, res: Response) => {
     const { email, nuovoNome, nuovoCognome } = req.body;
-    // eslint-disable-next-line max-len
-    const utenteModificato = await serviziAmministratoreImpl.modificaInformazioniUtenteIMP(
-      email,
-      nuovoNome,
-      nuovoCognome,
-    );
+    // eslint-disable-next-line max-len, operator-linebreak
+    const utenteModificato =
+      await serviziAmministratoreImpl.modificaInformazioniUtenteIMP(
+        email,
+        nuovoNome,
+        nuovoCognome,
+      );
     if (utenteModificato) {
       return res.status(200).json({ utenteModificato });
     }
@@ -92,4 +91,4 @@ class amministratoreController {
   };
 }
 
-export default amministratoreController;
+export default AmministratoreController;

@@ -2,7 +2,7 @@
 /* eslint-disable no-unused-vars */
 import { RowDataPacket } from 'mysql2/promise';
 import db from '../db/poolDB';
-import Utente from '../account/domain/Utente';
+import Utente from '../account/domain/utente';
 
 class UtenteDAO {
   // creo il metodo per la registrazione di un utente
@@ -34,7 +34,7 @@ class UtenteDAO {
         utente[0].email,
         utente[0].password,
       );
-      utenteLoggato.set_id_utente(utente[0].id_utente);
+      utenteLoggato.setIdUtente(utente[0].id_utente);
       // setto l'id richiamando la funzione set_id_utente
       return utenteLoggato; // ritorno l'utente
     }
@@ -49,6 +49,7 @@ class UtenteDAO {
     // ritorno un oggetto mappato con tutti gli utenti
     return utenti.map(
       (utente) =>
+        // eslint-disable-next-line implicit-arrow-linebreak
         new Utente(utente.nome, utente.cognome, utente.email, utente.password),
     );
   }

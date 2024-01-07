@@ -1,5 +1,3 @@
-interface serviziAmministratore {
+interface ServiziAmministratore {}
 
-}
-
-export default serviziAmministratore;
+export default ServiziAmministratore;

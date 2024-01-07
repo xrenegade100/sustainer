@@ -3,74 +3,72 @@
 class Piano {
   // creo il costruttore
   constructor(
-    id_piano: number,
+    idPiano: number,
     tipo: number,
     prezzo: number,
-    limite_salvataggi_modelli: number,
-    limite_addestramenti_modelli: number,
+    limiteSalvataggiModelli: number,
+    limiteAddestramentiModelli: number,
   ) {
-    this.id_piano = id_piano;
+    this.idPiano = idPiano;
     this.tipo = tipo;
     this.prezzo = prezzo;
-    this.limite_salvataggi_modelli = limite_salvataggi_modelli;
-    this.limite_addestramenti_modelli = limite_addestramenti_modelli;
+    this.limiteSalvataggiModelli = limiteSalvataggiModelli;
+    this.limiteAddestramentiModelli = limiteAddestramentiModelli;
   }
 
   // creo gli attributi
-  private id_piano: number;
+  private idPiano: number;
 
   private tipo: number;
 
   private prezzo: number;
 
-  private limite_salvataggi_modelli: number;
+  private limiteSalvataggiModelli: number;
 
-  private limite_addestramenti_modelli: number;
+  private limiteAddestramentiModelli: number;
 
   // creo i metodi get
-  public get_id_piano(): number {
-    return this.id_piano;
+  public getIdPiano(): number {
+    return this.idPiano;
   }
 
-  public get_tipo(): number {
+  public getTipo(): number {
     return this.tipo;
   }
 
-  public get_prezzo(): number {
+  public getPrezzo(): number {
     return this.prezzo;
   }
 
-  public get_limite_salvataggi_modelli(): number {
-    return this.limite_salvataggi_modelli;
+  public getLimiteSalvataggiModelli(): number {
+    return this.limiteSalvataggiModelli;
   }
 
-  public get_limite_addestramenti_modelli(): number {
-    return this.limite_addestramenti_modelli;
+  public getLimiteAddestramentiModelli(): number {
+    return this.limiteAddestramentiModelli;
   }
 
   // creo i metodi set
-  public set_id_piano(id_piano: number): void {
-    this.id_piano = id_piano;
+  public setIdPiano(idPiano: number): void {
+    this.idPiano = idPiano;
   }
 
-  public set_tipo(tipo: number): void {
+  public setTipo(tipo: number): void {
     this.tipo = tipo;
   }
 
-  public set_prezzo(prezzo: number): void {
+  public setPrezzo(prezzo: number): void {
     this.prezzo = prezzo;
   }
 
-  public set_limite_salvataggi_modelli(
-    limite_salvataggi_modelli: number,
-  ): void {
-    this.limite_salvataggi_modelli = this.limite_salvataggi_modelli;
+  public setLimiteSalvataggiModelli(limiteSalvataggiModelli: number): void {
+    this.limiteSalvataggiModelli = limiteSalvataggiModelli;
   }
 
-  public set_limite_addestramenti_modelli(
-    limite_addestramenti_modelli: number,
+  public setLimiteAddestramentiModelli(
+    limiteAddestramentiModelli: number,
   ): void {
-    this.limite_addestramenti_modelli = limite_addestramenti_modelli;
+    this.limiteAddestramentiModelli = limiteAddestramentiModelli;
   }
 }
 

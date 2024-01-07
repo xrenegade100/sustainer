@@ -2,43 +2,43 @@
 
 class Acquisto {
   // creo il costruttore
-  constructor(id_utente: number, id_piano: number, data_acquisto: Date) {
-    this.id_utente = id_utente;
-    this.id_piano = id_piano;
-    this.data_acquisto = data_acquisto;
+  constructor(idUtente: number, idPiano: number, dataAcquisto: Date) {
+    this.idUtente = idUtente;
+    this.idPiano = idPiano;
+    this.dataAcquisto = dataAcquisto;
   }
 
   // creo gli attributi
-  private id_utente: number;
+  private idUtente: number;
 
-  private id_piano: number;
+  private idPiano: number;
 
-  private data_acquisto: Date;
+  private dataAcquisto: Date;
 
   // creo i metodi get
-  public get_id_utente(): number {
-    return this.id_utente;
+  public getIdUtente(): number {
+    return this.idUtente;
   }
 
-  public get_id_piano(): number {
-    return this.id_piano;
+  public getIdPiano(): number {
+    return this.idPiano;
   }
 
-  public get_data_acquisto(): Date {
-    return this.data_acquisto;
+  public getDataAcquisto(): Date {
+    return this.dataAcquisto;
   }
 
   // creo i metodi set
-  public set_id_utente(id_utente: number): void {
-    this.id_utente = id_utente;
+  public setIdUtente(idUtente: number): void {
+    this.idUtente = idUtente;
   }
 
-  public set_id_piano(id_piano: number): void {
-    this.id_piano = id_piano;
+  public setIdPiano(idPiano: number): void {
+    this.idPiano = idPiano;
   }
 
-  public set_data_acquisto(data_acquisto: Date): void {
-    this.data_acquisto = data_acquisto;
+  public setdataAcquisto(dataAcquisto: Date): void {
+    this.dataAcquisto = dataAcquisto;
   }
 }
 

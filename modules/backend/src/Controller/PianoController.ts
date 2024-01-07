@@ -25,10 +25,10 @@ class PianoController {
   static visulizzaPianoIMP = async (req: Request, res: Response) => {
     if (req.session!.authenticated) {
       const acquisto = await serviziPianoImpl.gelUltimoAcquistoUtente(
-        req.session!.id_user,
+        req.session!.idUser,
       );
       const piano = await serviziPianoImpl.getPianoUtente(
-        acquisto!.get_id_piano(),
+        acquisto!.getIdPiano(),
       );
       if (piano) {
         const arr = { piano, acquisto };
@@ -56,9 +56,9 @@ class PianoController {
         },
       ],
       mode: 'payment',
-      success_url: `http://localhost:5000/registraPianoAcquistato?id_piano=${
+      success_url: `http://localhost:5000/registraPianoAcquistato?idPiano=${
         req.body.idPiano
-      }&id_utente=${req.session!.id_user}`,
+      }&idUtente=${req.session!.idUser}`,
       cancel_url: 'http://localhost:5173/modifica-piano',
     });
 
@@ -70,8 +70,8 @@ class PianoController {
 
   static RegistraPianoAcquistatoIMP = async (req: Request, res: Response) => {
     serviziPianoImpl.AcquistoPiano(
-      Number(req.query.id_utente),
-      Number(req.query.id_piano),
+      Number(req.query.idUtente),
+      Number(req.query.idPiano),
     );
 
     res.status(200).redirect('http://localhost:5173/modifica-piano');

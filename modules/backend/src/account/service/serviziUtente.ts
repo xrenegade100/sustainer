@@ -1,6 +1,3 @@
-/* eslint-disable no-unused-vars */
-import Utente from '../domain/Utente';
+interface ServiziUtente {}
 
-interface serviziUtente {}
-
-export default serviziUtente;
+export default ServiziUtente;

@@ -4,7 +4,10 @@ import Amministratore from '../account/domain/amministratore';
 
 class AmministratoreDAO {
   // creo il metodo per il login
-  static async login(email: string, password: string): Promise<Amministratore | null> {
+  static async login(
+    email: string,
+    password: string,
+  ): Promise<Amministratore | null> {
     const conn = await db();
 
     const [rows] = await conn.query(
@@ -19,7 +22,9 @@ class AmministratoreDAO {
         amministratore[0].email,
         amministratore[0].password,
       );
-      amministratoreLoggato.setIdAmministratore(amministratore[0].id_amministratore);
+      amministratoreLoggato.setIdAmministratore(
+        amministratore[0].id_amministratore,
+      );
       return amministratoreLoggato;
     }
     return null;
@@ -49,7 +54,11 @@ class AmministratoreDAO {
 
   // creo il metodo per la modifica delle informazioni degli utenti registrati
   // eslint-disable-next-line max-len
-  static async modificaInformazioniUtente(email: string, nuovoNome: string, nuovoCognome: string): Promise<void> {
+  static async modificaInformazioniUtente(
+    email: string,
+    nuovoNome: string,
+    nuovoCognome: string,
+  ): Promise<void> {
     const conn = await db();
 
     await conn.query(
@@ -59,26 +68,29 @@ class AmministratoreDAO {
   }
 
   // creo il metodo per la cancellazione di un utente registrato
-  static async cancellaUtente(email: string) : Promise<void> {
+  static async cancellaUtente(email: string): Promise<void> {
     const conn = await db();
 
-    await conn.query(
-      'DELETE FROM utente WHERE email = ?',
-      [email],
-    );
+    await conn.query('DELETE FROM utente WHERE email = ?', [email]);
   }
 
   // creo il metodo per inviare una comunicazione
   // eslint-disable-next-line max-len
-  static async inviaComunicazione(idAmministratore: number, emails: string[], messaggio: string): Promise<void> {
+  static async inviaComunicazione(
+    idAmministratore: number,
+    emails: string[],
+    messaggio: string,
+  ): Promise<void> {
     const conn = await db();
 
-    emails.forEach(async (emailItem) => {
-      await conn.query(
-        'INSERT INTO comunicazione (id_amministratore, email, messaggio, data_comunicazione) VALUES (?, ?, ?, ?)',
-        [idAmministratore, emailItem, messaggio, new Date()],
-      );
-    });
+    await Promise.all(
+      emails.map(async (emailItem) => {
+        await conn.query(
+          'INSERT INTO comunicazione (id_amministratore, email, messaggio, data_comunicazione) VALUES (?, ?, ?, ?)',
+          [idAmministratore, emailItem, messaggio, new Date()],
+        );
+      }),
+    );
   }
 }
 export default AmministratoreDAO;
