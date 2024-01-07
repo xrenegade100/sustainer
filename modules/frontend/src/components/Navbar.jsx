@@ -3,14 +3,12 @@ import { Menu } from 'baseui/icon';
 import { Link } from 'react-router-dom';
 import useViewportWidth from '../utils/useViewport';
 import '../styles/Navbar.css';
-import { useNavigate } from 'react-router-dom';
 
 const Navbar = () => {
   const [isDropdownVisible, setIsDropdownVisible] = useState(false);
   const [isUserAuthenticated, setIsUserAuthenticated] = useState(false);
   const [isAdmin, setIsAdmin] = useState(false);
   const [isNavbarVisible, setIsNavbarVisible] = useState(false);
-  const navigate = useNavigate();
   const [navigationItems, setNavigationItems] = useState([
     'community',
     'cloud',
@@ -43,18 +41,10 @@ const Navbar = () => {
   };
 
   const handleAvatarClick = () => {
-    console.log('Avatar clicked');
     setIsDropdownVisible((prevState) => !prevState);
   };
 
-  const handleDropdownKeyDown = (event) => {
-    if (event.key === 'Enter') {
-      console.log('Enter key pressed');
-    }
-  };
-
   const handleLogout = async () => {
-    console.error('Entro in navbar logout');
     try {
       const response = await fetch('http://localhost:5000/logout', {
         method: 'POST',
@@ -65,15 +55,18 @@ const Navbar = () => {
         setIsUserAuthenticated(false);
         // Altri passaggi di pulizia, reindirizzamento, ecc., se necessario
       } else {
+        // eslint-disable-next-line no-console
         console.error('Errore durante il logout:', response.statusText);
       }
     } catch (error) {
+      // eslint-disable-next-line no-console
       console.error('Errore durante il logout:', error);
     }
-    navigate('/homepage'); // Reindirizzo l'utente alla homepage
+    window.location.reload('/homepage'); // Reindirizzo l'utente alla homepage
   };
 
   const handleLogoutAm = async () => {
+    // eslint-disable-next-line no-console
     console.error('Entro in navbar logout');
     try {
       const response = await fetch('http://localhost:5000/logoutAm', {
@@ -85,12 +78,14 @@ const Navbar = () => {
         setIsUserAuthenticated(false);
         // Altri passaggi di pulizia, reindirizzamento, ecc., se necessario
       } else {
+        // eslint-disable-next-line no-console
         console.error('Errore durante il logout:', response.statusText);
       }
     } catch (error) {
+      // eslint-disable-next-line no-console
       console.error('Errore durante il logout:', error);
     }
-    navigate('/homepage'); // Reindirizzo l'admin alla homepage
+    window.location.reload('/homepage'); // Reindirizzo l'admin alla homepage
   };
 
   useEffect(() => {
@@ -113,6 +108,7 @@ const Navbar = () => {
           setIsAdmin(false);
         }
       } catch (error) {
+        // eslint-disable-next-line no-console
         console.error('Errore durante la verifica del login:', error);
       }
     }
@@ -133,6 +129,7 @@ const Navbar = () => {
           setIsAdmin(false);
         }
       } catch (error) {
+        // eslint-disable-next-line no-console
         console.error('Errore durante la verifica del login:', error);
       }
     }
@@ -172,9 +169,13 @@ const Navbar = () => {
               </Link>
             </li>
             <li>
-              <Link onClick={handleLogoutAm}>
+              <button
+                type="button"
+                className="logout-button-admin"
+                onClick={handleLogoutAm}
+              >
                 <span className="text-white">Esci</span>
-              </Link>
+              </button>
             </li>
           </>
         ) : (
@@ -184,7 +185,6 @@ const Navbar = () => {
               role="button"
               tabIndex="0"
               onClick={handleAvatarClick}
-              onKeyDown={handleDropdownKeyDown}
             >
               <img className="img-avatar" src="/Avatar.png" alt="" />
               {isDropdownVisible && (
@@ -200,9 +200,13 @@ const Navbar = () => {
                       <Link to="/" className="text-black">
                         Il mio storico
                       </Link>
-                      <Link onClick={handleLogout}>
+                      <button
+                        type="button"
+                        className="logout-button"
+                        onClick={handleLogout}
+                      >
                         <span className="text-black">Esci</span>
-                      </Link>
+                      </button>
                     </>
                   ) : (
                     <Link to="/login" className="text-black">
@@ -213,7 +217,7 @@ const Navbar = () => {
               )}
             </li>
             {navigationItems.map((element) => (
-              <li className="elements">
+              <li className="elements" key={element}>
                 <Link
                   to={element === 'home' ? '/homepage' : `/${element}`}
                   className="text-white"
@@ -224,14 +228,8 @@ const Navbar = () => {
             ))}
           </>
         )}
-        <div
-          className="toggle_Menu"
-          role="button"
-          tabIndex="0"
-          onClick={handleMenuClick}
-          onKeyDown={handleDropdownKeyDown}
-        >
-          <Menu size="35px" color="white" />
+        <div className="toggle_Menu">
+          <Menu size="35px" color="white" onClick={handleMenuClick} />
         </div>
       </ul>
     </nav>

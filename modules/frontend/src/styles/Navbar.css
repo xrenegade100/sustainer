@@ -57,6 +57,38 @@
 
 /* Navbar.css */
 
+.logout-button {
+  font-size: 16px;
+  text-align: left;
+  border-radius: 0%;
+  width: 100%;
+  border-color: transparent;
+  background-color: white;
+  transition: background-color 0.3s;
+  padding: 7px;
+}
+
+.logout-button:hover {
+  cursor: pointer;
+  background-color: #f0f0f0;
+  transition: background-color 0.3s;
+}
+
+.logout-button-admin {
+  font-size: 16px;
+  text-align: left;
+  border-radius: 0%;
+  width: 100%;
+  border-color: transparent;
+  background-color: transparent;
+  transition: background-color 0.3s;
+  padding: 14px 16px;
+}
+
+.logout-button-admin:hover {
+  cursor: pointer;
+}
+
 .dropdown-content {
   display: block;
   position: absolute;
@@ -89,8 +121,13 @@
   height: 100%;
   text-align: left;
 }
+
 .toggle_Menu {
   display: none;
+}
+
+.toggle_Menu:hover {
+  cursor: pointer;
 }
 
 @media (max-width: 1440px) {
