@@ -1,6 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { Menu } from 'baseui/icon';
 import { Link } from 'react-router-dom';
+import useViewportWidth from '../utils/useViewport';
 import '../styles/Navbar.css';
 import { useNavigate } from 'react-router-dom';
 
@@ -10,6 +11,32 @@ const Navbar = () => {
   const [isAdmin, setIsAdmin] = useState(false);
   const [isNavbarVisible, setIsNavbarVisible] = useState(false);
   const navigate = useNavigate();
+  const [navigationItems, setNavigationItems] = useState([
+    'community',
+    'cloud',
+    'storico',
+    'addestra',
+    'piani',
+    'home',
+  ]);
+
+  const menuBig = useRef([
+    'community',
+    'cloud',
+    'storico',
+    'addestra',
+    'piani',
+    'home',
+  ]);
+  const menuSmall = useRef([
+    'home',
+    'piani',
+    'addestra',
+    'storico',
+    'cloud',
+    'community',
+  ]);
+  const { viewportWidth } = useViewportWidth();
 
   const handleMenuClick = () => {
     setIsNavbarVisible((prevState) => !prevState);
@@ -114,6 +141,14 @@ const Navbar = () => {
     funzioneVerificaA();
   }, []);
 
+  useEffect(() => {
+    if (viewportWidth > 850) {
+      setNavigationItems(menuBig.current);
+    } else {
+      setNavigationItems(menuSmall.current);
+    }
+  }, [viewportWidth]);
+
   return (
     <nav className={`navbar ${isNavbarVisible ? 'visible' : ''}`}>
       <ul>
@@ -177,36 +212,16 @@ const Navbar = () => {
                 </div>
               )}
             </li>
-            <li className="elements">
-              <Link to="/community" className="text-white">
-                Community
-              </Link>
-            </li>
-            <li className="elements">
-              <Link to="/cloud" className="text-white">
-                Cloud
-              </Link>
-            </li>
-            <li className="elements">
-              <Link to="/storico" className="text-white">
-                Storico
-              </Link>
-            </li>
-            <li className="elements">
-              <Link to="/addestra" className="text-white">
-                Addestra
-              </Link>
-            </li>
-            <li className="elements">
-              <Link to="/piani" className="text-white">
-                Piani
-              </Link>
-            </li>
-            <li className="elements">
-              <Link to="/" className="text-white">
-                Home
-              </Link>
-            </li>
+            {navigationItems.map((element) => (
+              <li className="elements">
+                <Link
+                  to={element === 'home' ? '/homepage' : `/${element}`}
+                  className="text-white"
+                >
+                  {element.charAt(0).toUpperCase() + element.slice(1)}
+                </Link>
+              </li>
+            ))}
           </>
         )}
         <div
