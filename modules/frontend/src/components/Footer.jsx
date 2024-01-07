@@ -4,9 +4,11 @@ import '../styles/Footer.css'; // Importa il file di stile CSS per la navbar
 
 const Footer = () => {
   const emailAddress = 'contact@sustainer.com';
-  const linkedinProfileUrl = 'https://www.linkedin.com/in/tuo_profilo/';
-  const instagramProfileUrl = 'https://www.instagram.com/tuo_profilo/';
-  const githubProfileUrl = 'https://www.github.com/tuo_profilo/';
+  // eslint-disable-next-line operator-linebreak
+  const linkedinProfileUrl =
+    'https://it.linkedin.com/in/alfonso-cannavale-62150b229';
+  const instagramProfileUrl = 'https://www.instagram.com/cannavale_alfonso/';
+  const githubProfileUrl = 'https://github.com/alfcan';
   const redditProfileUrl = 'https://www.reddit.com/tuo_profilo/';
 
   return (
@@ -18,7 +20,9 @@ const Footer = () => {
           </td>
           <td className="col2">
             <div className="link">
-              <p><a href={`mailto:${emailAddress}`}>{emailAddress}</a></p>
+              <p>
+                <a href={`mailto:${emailAddress}`}>{emailAddress}</a>
+              </p>
             </div>
           </td>
           <td className="col3">
@@ -49,10 +53,42 @@ const Footer = () => {
           <td className="col4">
             <div className="link">
               <p className="titleF">Socials</p>
-              <p><a href={linkedinProfileUrl} target="_blank" rel="noopener noreferrer">Linkedin</a></p>
-              <p><a href={instagramProfileUrl} target="_blank" rel="noopener noreferrer">Instagram</a></p>
-              <p><a href={githubProfileUrl} target="_blank" rel="noopener noreferrer">Github</a></p>
-              <p><a href={redditProfileUrl} target="_blank" rel="noopener noreferrer">Reddit</a></p>
+              <p>
+                <a
+                  href={linkedinProfileUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Linkedin
+                </a>
+              </p>
+              <p>
+                <a
+                  href={instagramProfileUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Instagram
+                </a>
+              </p>
+              <p>
+                <a
+                  href={githubProfileUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Github
+                </a>
+              </p>
+              <p>
+                <a
+                  href={redditProfileUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Reddit
+                </a>
+              </p>
             </div>
           </td>
           <td className="col5" aria-label="Image">

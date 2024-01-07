@@ -61,10 +61,8 @@ const Card = ({
         <p className="text-period">/Mese</p>
       </div>
       {giorniRestanti > 0 ? (
-        <p className="GiorniRestanti">
-          ({giorniRestanti}
-          giorni rimanenti )
-        </p>
+        // eslint-disable-next-line react/jsx-one-expression-per-line
+        <p className="GiorniRestanti">({giorniRestanti} giorni rimanenti )</p>
       ) : null}
       <Button
         style={{ backgroundColor: bgColorButton, color: textColorButton }}

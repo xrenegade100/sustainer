@@ -40,7 +40,7 @@ const LoginAmForm = () => {
     return () => {
       clearTimeout(timer);
     };
-  }, [showSnackbar]);
+  }, [navigate, showSnackbar]);
 
   const handleSubmit = async () => {
     setIsLoading(true);
@@ -102,7 +102,8 @@ const LoginAmForm = () => {
           {showSnackbar && (
             <div className={css({ position: 'relative' })}>
               <SnackbarElement
-                message={(
+                message={
+                  // eslint-disable-next-line react/jsx-wrap-multilines
                   <div
                     className={css({
                       display: 'flex',
@@ -112,7 +113,7 @@ const LoginAmForm = () => {
                   >
                     {snackbarMessage}
                   </div>
-                )}
+                }
                 focus={false}
                 overrides={{
                   Root: {

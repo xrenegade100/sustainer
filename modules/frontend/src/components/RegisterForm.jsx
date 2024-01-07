@@ -50,7 +50,7 @@ const RegisterForm = () => {
       return;
     }
 
-    const emailRegex = /^[A-z0-9._%+-]+@[A-z0-9.-]+\.[A-z]{2,319}$/;
+    const emailRegex = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,319}$/;
     if (!emailRegex.test(emailr)) {
       setSnackbarMessage(
         'Email non rispetta il formato corretto (es. mario@rossi.it)',
@@ -60,8 +60,10 @@ const RegisterForm = () => {
       return;
     }
 
-    // Password validation
-    const passwordRegex = /^(?=.*[A-Z])(?=.*[!@#$%^&*()_+{}[\]:;<>,.?~\\/-])[A-Za-z0-9!@#$%^&*()_+{}[\]:;<>,.?~\\/-]{8,64}$/;
+    // validazione Password
+    // eslint-disable-next-line operator-linebreak
+    const passwordRegex =
+      /^(?=.*[A-Z])(?=.*[!@#$%^&*()_+{}[\]:;<>,.?~\\/-])[A-Za-z0-9!@#$%^&*()_+{}[\]:;<>,.?~\\/-]{8,64}$/;
     if (!passwordRegex.test(passwordr)) {
       setSnackbarMessage(
         'La password deve contenere almeno 8 caratteri tra cui: 1 lettera maisucola 1 carattere speciale',
@@ -154,7 +156,8 @@ const RegisterForm = () => {
       {showSnackbar && (
         <div className={css({ position: 'relative' })}>
           <SnackbarElement
-            message={(
+            message={
+              // eslint-disable-next-line react/jsx-wrap-multilines
               <div
                 className={css({
                   display: 'flex',
@@ -164,7 +167,7 @@ const RegisterForm = () => {
               >
                 {snackbarMessage}
               </div>
-            )}
+            }
             focus={false}
             overrides={{
               Root: {

@@ -44,7 +44,7 @@ const LoginSignupForm = () => {
     return () => {
       clearTimeout(timer);
     };
-  }, [showSnackbar]);
+  }, [showSnackbar, navigate]);
 
   const handleSubmit = async () => {
     setIsLoading(true);
@@ -135,6 +135,7 @@ const LoginSignupForm = () => {
                 <div className={css({ position: 'relative' })}>
                   <SnackbarElement
                     message={
+                      // eslint-disable-next-line react/jsx-wrap-multilines
                       <div
                         className={css({
                           display: 'flex',

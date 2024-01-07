@@ -9,10 +9,13 @@ const NavbarLogin = () => {
       <ul>
         <img className="logo" src="/Logo.png" alt="" />
         {location.pathname === '/login' || location.pathname === '/loginAm' ? (
-          <li><Link to="/" className="text-white"> Home </Link></li>
-        ) : (
-          null
-        )}
+          <li>
+            <Link to="/" className="text-white">
+              {' '}
+              Home{' '}
+            </Link>
+          </li>
+        ) : null}
       </ul>
     </nav>
   );

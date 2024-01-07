@@ -7,8 +7,6 @@ import circleCheck from '../assets/circle_check.svg';
 import circleCheckWhite from '../assets/circle_check_white.svg';
 
 const Piani = () => {
-  const tipoPiano = ['free', 'standard', 'premium', 'business', 'enterprise'];
-
   const [data, setData] = useState([]);
   const [loggato, setLoggato] = useState(true);
   const navigate = useNavigate();
@@ -21,11 +19,11 @@ const Piani = () => {
 
         setData(result);
       } catch (error) {
+        // eslint-disable-next-line no-console
         console.error('Errore durante la fetch:', error);
       }
     };
     fetchData();
-    console.log(data);
   }, []);
 
   useEffect(() => {
@@ -52,12 +50,9 @@ const Piani = () => {
     fetchLogin();
   }, []);
 
-  console.log(data);
-
   const tipi = data.map((piano) => piano.tipo);
   const prezzi = data.map((piano) => piano.prezzo);
   tipi.push('Enterprise');
-  console.log(prezzi);
 
   return (
     <>
@@ -89,7 +84,7 @@ const Piani = () => {
             </div>
           </div>
         </div>
-        <div className="row"></div>
+        <div className="row" />
       </div>
     </>
   );

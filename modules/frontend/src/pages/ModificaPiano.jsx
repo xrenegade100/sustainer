@@ -43,6 +43,7 @@ const ModificaPiano = () => {
 
         setData(result);
       } catch (error) {
+        // eslint-disable-next-line no-console
         console.error('Errore durante la fetch:', error);
       }
     };
@@ -63,6 +64,7 @@ const ModificaPiano = () => {
 
         await setPianoUtente(result);
       } catch (error) {
+        // eslint-disable-next-line no-console
         console.error('Errore durante la fetch:', error);
       }
     };
@@ -70,7 +72,7 @@ const ModificaPiano = () => {
   }, []);
 
   const tipi = data.map((piano) => piano.tipo);
-  const idPiani = data.map((piano) => piano.id_piano);
+  const idPiani = data.map((piano) => piano.idPiano);
   const prezzi = data.map((piano) => piano.prezzo);
 
   tipi.push('Enterprise');
@@ -84,7 +86,7 @@ const ModificaPiano = () => {
   ) => {
     let differenzaInGiorni = new Date();
     if (pianoUtente.acquisto) {
-      const dataAcquisto = new Date(pianoUtente.acquisto.data_acquisto);
+      const dataAcquisto = new Date(pianoUtente.acquisto.dataAcquisto);
       dataAcquisto.setDate(dataAcquisto.getDate() + 30);
 
       const diffInMillisec = dataAcquisto.getTime();
@@ -111,7 +113,7 @@ const ModificaPiano = () => {
               ]}
               circleIcon={circleCheckWhite}
               buttonText={
-                pianoUtente.piano.id_piano <= idPianoF ? 'Upgrade' : 'Downgrade'
+                pianoUtente.piano.idPiano <= idPianoF ? 'Upgrade' : 'Downgrade'
               }
               idPlan={idPianoF}
               loggato={loggatoF}
@@ -132,7 +134,7 @@ const ModificaPiano = () => {
               ]}
               circleIcon={circleCheckWhite}
               buttonText={
-                pianoUtente.piano.id_piano <= idPianoF ? 'Upgrade' : 'Downgrade'
+                pianoUtente.piano.idPiano <= idPianoF ? 'Upgrade' : 'Downgrade'
               }
               idPlan={idPianoF}
               loggato={loggatoF}
@@ -153,7 +155,7 @@ const ModificaPiano = () => {
               ]}
               circleIcon={circleCheckWhite}
               buttonText={
-                pianoUtente.piano.id_piano <= idPianoF ? 'Upgrade' : 'Downgrade'
+                pianoUtente.piano.idPiano <= idPianoF ? 'Upgrade' : 'Downgrade'
               }
               idPlan={idPianoF}
               loggato={loggatoF}
