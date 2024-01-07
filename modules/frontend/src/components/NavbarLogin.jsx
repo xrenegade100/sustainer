@@ -6,13 +6,12 @@ const NavbarLogin = () => {
   const location = useLocation();
   return (
     <nav className="navbar">
-      <ul>
+      <ul className="ul-nav">
         <img className="logo" src="/Logo.png" alt="" />
         {location.pathname === '/login' || location.pathname === '/loginAm' ? (
-          <li>
+          <li className="pulsante-home">
             <Link to="/" className="text-white">
-              {' '}
-              Home{' '}
+              Home
             </Link>
           </li>
         ) : null}

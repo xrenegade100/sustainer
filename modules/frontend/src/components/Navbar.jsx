@@ -180,9 +180,9 @@ const Navbar = () => {
           </>
         ) : (
           <>
-            <li
+            <button
+              type="button"
               className="dropdown-li"
-              role="button"
               tabIndex="0"
               onClick={handleAvatarClick}
             >
@@ -215,7 +215,7 @@ const Navbar = () => {
                   )}
                 </div>
               )}
-            </li>
+            </button>
             {navigationItems.map((element) => (
               <li className="elements" key={element}>
                 <Link

@@ -53,6 +53,10 @@
 
 .dropdown-li {
   position: relative;
+  float: right;
+  background-color: transparent;
+  border: none;
+  padding: 18px 5px;
 }
 
 /* Navbar.css */
@@ -137,21 +141,41 @@
   .img-avatar {
     padding: 5px;
   }
+  .dropdown-li {
+    padding: 0;
+  }
 }
+
 @media (max-width: 1060px) {
+  .ul-nav {
+    display: flex;
+  }
   .navbar li {
     margin-top: -1.8%;
   }
   .text-white {
     font-size: 1.2em;
+    float: right;
+  }
+  .pulsante-home {
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
   }
   .img-avatar {
     width: 45px;
     height: 45px;
   }
+  .dropdown-li {
+    margin: -1%;
+    padding: 0px;
+  }
 }
 /* Aggiunta di media query per rendere la navbar responsiva */
 @media (max-width: 850px) {
+  .dropdown-li {
+    float: right;
+  }
   .elements {
     display: none; /* Nascondi la navbar di default */
     background-color: #2467d1;
@@ -165,10 +189,11 @@
     text-align: center;
   }
   .toggle_Menu {
+    float: right;
     position: absolute;
     display: block;
-    top: 1.5%;
-    right: 2%;
+    top: 1%;
+    right: 8%;
     margin-left: 5%;
   }
   .img-avatar {
