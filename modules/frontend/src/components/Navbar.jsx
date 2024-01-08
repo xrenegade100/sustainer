@@ -152,23 +152,23 @@ const Navbar = () => {
         <img className="logo" src="/Logo.png" alt="" />
         {isAdmin ? (
           <>
-            <li>
+            <li className="elements">
               <Link to="/admin/dashboard" className="text-white">
                 Gestione Utenti
               </Link>
             </li>
-            <li>
+            <li className="elements">
               <Link to="/admin/users" className="text-white">
                 Comunicazioni
               </Link>
               {/* Altri link o elementi specifici per l'amministratore */}
             </li>
-            <li>
+            <li className="elements">
               <Link to="/admin/dashboard" className="text-white">
                 Gestione Piani
               </Link>
             </li>
-            <li>
+            <li className="elements">
               <button
                 type="button"
                 className="logout-button-admin"
