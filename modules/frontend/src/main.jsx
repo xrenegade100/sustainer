@@ -7,25 +7,36 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import Login from './pages/Login';
 import Homepage from './pages/Homepage';
 import RegisterForm from './components/RegisterForm';
+import Piani from './pages/Piani';
+import ModificaPiano from './pages/ModificaPiano';
+import LoginAmministratore from './pages/LoginAmministratore';
 
-//Qui fare il routing frontend, quindi aggiungere qui le pagine jsx qui
+// Qui fare il routing frontend, quindi aggiungere qui le pagine jsx qui
 const router = createBrowserRouter([
   {
     path: '/',
-    element: <div>Home Page</div>,
+    element: <Homepage />,
   },
   {
     path: '/login',
-    element: <Login />, //passare la pagina jsx con le <>
+    element: <Login />, // passare la pagina jsx con le <>
   },
 
   {
     path: '/homepage',
-    element: <Homepage />, //passare la pagina jsx con le <>
+    element: <Homepage />, // passare la pagina jsx con le <>
   },
   {
-    path: '/Register',
-    element: <RegisterForm />, //passare la pagina jsx con le <>
+    path: '/piani',
+    element: <Piani />, //passare la pagina jsx con le <>
+  },
+  {
+    path: '/loginAm',
+    element: <LoginAmministratore />, //passare la pagina jsx con le <>
+  },
+  {
+    path: '/modifica-piano',
+    element: <ModificaPiano />, //passare la pagina jsx con le <>
   },
 ]);
 

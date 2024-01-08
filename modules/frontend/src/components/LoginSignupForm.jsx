@@ -1,49 +1,82 @@
-import { Link } from 'react-router-dom';
-
-import React, { useState } from 'react';
-import '../styles/LoginSignupForm.css';
+import { SnackbarElement } from 'baseui/snackbar';
+import React, { useEffect, useState } from 'react';
+import { useStyletron } from 'baseui';
+import { useNavigate } from 'react-router-dom';
 import { Tabs, Tab, FILL } from 'baseui/tabs-motion';
-import { Checkbox, STYLE_TYPE, LABEL_PLACEMENT } from 'baseui/checkbox';
 import { Input } from 'baseui/input';
 import { Button, SIZE } from 'baseui/button';
+import SHA256 from 'crypto-js/sha256';
 import RegisterForm from './RegisterForm';
 
-const LoginSignupForm = ({ onSubmit }) => {
+const LoginSignupForm = () => {
   const [activeKey, setActiveKey] = useState('0');
-  const [checked, setChecked] = useState(false);
+  const [headerTitle, setHeaderTitle] = useState('Accedi a Sustainer');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [remember, setRemember] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [showSnackbar, setShowSnackbar] = useState(false);
+  const [snackbarMessage, setSnackbarMessage] = useState('');
+  const [css] = useStyletron();
+  const navigate = useNavigate();
+
+  // metodo per la snackbar
+  useEffect(() => {
+    async function funzioneVerifica() {
+      const verifica = await fetch('http://localhost:5000/verificaLogin', {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        method: 'POST',
+        credentials: 'include',
+      });
+      const response = await verifica.json();
+      if (response.user) {
+        navigate('/homepage');
+      }
+    }
+    funzioneVerifica();
+    let timer;
+    if (showSnackbar) {
+      timer = setTimeout(() => {
+        setShowSnackbar(false);
+      }, 3500);
+    }
+    return () => {
+      clearTimeout(timer);
+    };
+  }, [showSnackbar, navigate]);
 
   const handleSubmit = async () => {
     setIsLoading(true);
+    const hashValue = SHA256(password).toString();
+
     const response = await fetch('http://localhost:5000/login', {
       headers: {
         'Content-Type': 'application/json',
       },
       method: 'POST',
+      credentials: 'include',
       body: JSON.stringify({
         email,
-        password,
+        password: hashValue,
       }),
     });
-  
+
     setIsLoading(false);
     if (!response.ok) {
-      alert('Credeziali errate');
+      setSnackbarMessage('Credenziali errate');
+      setShowSnackbar(true);
+      setIsLoading(false);
       return;
     }
-
-    const data = await response.json();
-    alert(JSON.stringify(data));
+    navigate('/homepage');
   };
 
   return (
     <div className="form">
-      <div className="card">
+      <div className="cardLogin">
         <div className="form-header">
-          <span className="form-header-title">Accedi a Sustainer</span>
+          <span className="form-header-title">{headerTitle}</span>
         </div>
         <div className="form-body">
           <Tabs
@@ -63,25 +96,15 @@ const LoginSignupForm = ({ onSubmit }) => {
             }}
             onChange={(val) => {
               setActiveKey(val.activeKey);
+              setHeaderTitle(
+                val.activeKey === '0'
+                  ? 'Accedi a Sustainer'
+                  : 'Registrati a Sustainer',
+              );
             }}
           >
             <Tab title="Accedi">
-              <div className="login">
-                <Checkbox
-                  checked={checked}
-                  checkmarkType={STYLE_TYPE.toggle_round}
-                  onChange={(e) => setChecked(e.target.checked)}
-                  labelPlacement={LABEL_PLACEMENT.right}
-                  overrides={{
-                    Toggle: {
-                      style: () => ({
-                        backgroundColor: checked ? '#2467d1' : '#fff',
-                      }),
-                    },
-                  }}
-                >
-                  Amministratore
-                </Checkbox>
+              <div className="email">
                 <Input
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
@@ -89,38 +112,57 @@ const LoginSignupForm = ({ onSubmit }) => {
                   clearable
                   type="email"
                 />
+              </div>
+              <div className="password">
                 <Input
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
+                  placeholder="password"
                   clearable
                   type="password"
                 />
-                <Checkbox
-                  checked={remember}
-                  checkmarkType={STYLE_TYPE.toggle_round}
-                  onChange={(e) => setRemember(e.target.checked)}
-                  labelPlacement={LABEL_PLACEMENT.right}
-                  overrides={{
-                    Toggle: {
-                      style: () => ({
-                        backgroundColor: remember ? '#2467d1' : '#fff',
-                      }),
-                    },
-                  }}
-                >
-                  Ricordami
-                </Checkbox>
+              </div>
+              <div className="buttonsgupin">
                 <Button
                   isLoading={isLoading}
                   onClick={handleSubmit}
                   size={SIZE.large}
                 >
-                  ACCEDI
+                  Accedi
                 </Button>
               </div>
+              {showSnackbar && (
+                <div className={css({ position: 'relative' })}>
+                  <SnackbarElement
+                    message={
+                      // eslint-disable-next-line react/jsx-wrap-multilines
+                      <div
+                        className={css({
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                        })}
+                      >
+                        {snackbarMessage}
+                      </div>
+                    }
+                    focus={false}
+                    overrides={{
+                      Root: {
+                        style: {
+                          position: 'absolute',
+                          top: '20px',
+                        },
+                      },
+                    }}
+                  />
+                </div>
+              )}
             </Tab>
             <Tab title="Registrati">
-              <RegisterForm />  
+              <div className="reg">
+                <RegisterForm />
+              </div>
             </Tab>
           </Tabs>
         </div>
@@ -130,10 +172,6 @@ const LoginSignupForm = ({ onSubmit }) => {
       </div>
     </div>
   );
-};
-
-LoginSignupForm.propTypes = {
-  onSubmit: () => {},
 };
 
 export default LoginSignupForm;

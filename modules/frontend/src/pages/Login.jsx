@@ -1,15 +1,16 @@
 import React from 'react';
 import LoginSignupForm from '../components/LoginSignupForm';
+import '../styles/Navbar.css';
 import '../styles/Login.css';
+import NavbarLogin from '../components/NavbarLogin';
 
-const Login = () => {
-  return (
+const Login = () => (
+  <div className="header">
+    <NavbarLogin />
     <div className="main">
-      <div className="">
-        <LoginSignupForm />
-      </div>
+      <LoginSignupForm />
     </div>
-  );
-};
+  </div>
+);
 
 export default Login;
