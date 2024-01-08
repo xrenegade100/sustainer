@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
-import serviziUtenteImpl from '../account/service/serviziUtenteImpl';
-import PianoController from './pianoController';
+import serviziUtenteImpl from '../account/service/ServiziUtenteImpl';
+import PianoController from './PianoController';
 
 class UtenteController {
   // metodo che mi servirà per verificare se l'utente è loggato

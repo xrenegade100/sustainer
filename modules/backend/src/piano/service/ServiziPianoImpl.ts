@@ -1,5 +1,5 @@
-import serviziPiano from './serviziPiano';
-import PianoDAO from '../../dao/PianoDAO';
+import serviziPiano from './ServiziPiano';
+import PianoDAO from '../../DAO/PianoDAO';
 
 class ServiziPianoImpl implements serviziPiano {
   // metodo che ritorna tutti i piani

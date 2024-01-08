@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import serviziAmministratoreImpl from '../account/service/serviziAmministratoreImpl';
+import serviziAmministratoreImpl from '../account/service/ServiziAmministratoreImpl';
 
 class AmministratoreController {
   static verificaLoginAm = async (req: Request, res: Response) => {

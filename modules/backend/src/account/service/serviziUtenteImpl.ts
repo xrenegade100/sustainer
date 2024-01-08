@@ -1,5 +1,5 @@
-import serviziUtente from './serviziUtente';
-import UtenteDAO from '../../dao/UtenteDAO';
+import serviziUtente from './ServiziUtente';
+import UtenteDAO from '../../DAO/UtenteDAO';
 
 class ServiziUtenteImpl implements serviziUtente {
   // metodo che uso per la login

@@ -3,9 +3,9 @@ import session from 'express-session';
 import morgan from 'morgan';
 import helmet from 'helmet';
 import cors from 'cors';
-import PianoController from './controller/pianoController';
-import UtenteController from './controller/utenteController';
-import AmministratoreController from './controller/amministratoreController';
+import PianoController from './Controller/PianoController';
+import UtenteController from './Controller/UtenteController';
+import AmministratoreController from './Controller/AmministratoreController';
 
 const server = express();
 

@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import serviziPianoImpl from '../piano/service/serviziPianoImpl';
+import serviziPianoImpl from '../piano/service/ServiziPianoImpl';
 
 const stripe = require('stripe')(
   'sk_test_51OURU6DecXgXrLSFz9LkEnm04LN5rAerDrbdfBM1fgSYZTrDiIxGFgnrbKYJS8HF4OR1usty0boZCaAJh5O0OxoR00q7yvc8gZ',
