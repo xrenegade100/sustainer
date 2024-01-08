@@ -1,0 +1,107 @@
+.card {
+  width: 330px;
+  height: 410px;
+  border: 1px solid #ddd;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.title-card {
+  font-family: Lato;
+  font-size: 28px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.subtitle-card {
+  font-family: Lato;
+  font-size: 14px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.text {
+  font-family: Lato;
+  font-size: 16px;
+  line-height: 1.5;
+  text-align: center;
+}
+
+/* Card.css */
+
+.card {
+  width: 330px;
+  height: 410px;
+  border: 1px solid #ddd;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: flex-start;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.title-card {
+  font-size: 24px;
+  margin-bottom: 10px;
+}
+
+.subtitle {
+  font-size: 18px;
+  color: #888;
+  margin-bottom: 10px;
+}
+
+.price {
+  display: flex;
+}
+
+.text-price {
+  font-size: 56px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.text-period {
+  font-size: 12px;
+  font-weight: 200;
+  text-align: center;
+  margin-bottom: 10px;
+  display: flex;
+  align-items: flex-end;
+}
+
+.phrase-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.phrase-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.phrase-item span {
+  margin-left: 5%;
+  font-size: 14px medium;
+}
+
+.icon {
+  margin-right: 8px;
+  color: #5cb85c; /* colore verde (puoi cambiare con quello desiderato) */
+}
+
+.phrase-text {
+  font-size: 14px;
+}
+.card Button {
+  width: 100%;
+  background-color: #2467d1;
+}
