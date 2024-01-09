@@ -76,6 +76,22 @@ class PianoController {
 
     res.status(200).redirect('http://localhost:5173/modifica-piano');
   };
+
+  static AnnullaPianoIMP = async (req: Request, res: Response) => {
+    const acquisto = await serviziPianoImpl.gelUltimoAcquistoUtente(
+      req.session!.idUser,
+    );
+    if (acquisto) {
+      await serviziPianoImpl.annullaPiano(
+        acquisto.getIdUtente(),
+        acquisto.getIdPiano(),
+      );
+      return res
+        .status(200)
+        .json({ message: 'piano annullato', status: 'success' });
+    }
+    return res.status(403).json({ message: 'errore' });
+  };
 }
 
 export default PianoController;

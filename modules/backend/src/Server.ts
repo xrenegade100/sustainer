@@ -57,6 +57,9 @@ server.use('/checkout', (req, res) => {
 server.use('/registraPianoAcquistato', (req, res) => {
   PianoController.RegistraPianoAcquistatoIMP(req, res);
 });
+server.use('/annullaPiano', (req, res) => {
+  PianoController.AnnullaPianoIMP(req, res);
+});
 
 // amministratore
 server.use('/loginAm', (req, res) => {

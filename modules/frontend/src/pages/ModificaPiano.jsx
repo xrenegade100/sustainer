@@ -27,7 +27,7 @@ const ModificaPiano = () => {
       }
     };
     fetchData();
-  }, []);
+  }, [navigate]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -77,13 +77,7 @@ const ModificaPiano = () => {
 
   tipi.push('Enterprise');
 
-  const renderCardBasedOnType = (
-    tipiF,
-    idPianoF,
-    prezziF,
-    pianoUtenteF,
-    loggatoF,
-  ) => {
+  const renderCardBasedOnType = (tipiF, idPianoF, prezziF, loggatoF) => {
     let differenzaInGiorni = new Date();
     if (pianoUtente.acquisto) {
       const dataAcquisto = new Date(pianoUtente.acquisto.dataAcquisto);
@@ -184,6 +178,8 @@ const ModificaPiano = () => {
               textColorButton="#222222"
               buttonText="Annulla piano"
               giorniRestanti={Math.round(differenzaInGiorni)}
+              attivo={pianoUtente.acquisto.attivo ? 'attivo' : 'non attivo'}
+              annullato
             />
           );
         // Aggiungi altri casi per altri tipi di piano
