@@ -10,6 +10,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@mui/material": "^5.15.3",
     "@stripe/stripe-js": "^2.2.2",
     "baseui": "^0.0.0-next-186f23406",
     "crypto-js": "^4.2.0",
@@ -17,11 +18,15 @@
     "jsonwebtoken": "^9.0.2",
     "localforage": "^1.10.0",
     "match-sorter": "^6.3.1",
+    "prop-types": "^15.8.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.21.1",
+    "react-step-progress-bar": "^1.0.3",
+    "rsuite": "^5.49.0",
     "sort-by": "^1.2.0",
     "stripe": "^14.10.0",
+    "styled-components": "^6.1.8",
     "styletron-engine-monolithic": "^1.0.0",
     "styletron-react": "^6.1.1"
   },
@@ -36,6 +41,6 @@
     "eslint-plugin-react": "^7.33.2",
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-react-refresh": "^0.4.5",
-    "vite": "^5.0.8"
+    "vite": "^5.0.11"
   }
 }
