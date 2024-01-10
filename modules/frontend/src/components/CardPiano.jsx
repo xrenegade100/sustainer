@@ -3,7 +3,6 @@ import React from 'react';
 import '../styles/CardPiano.css';
 import { Button, SIZE } from 'baseui/button';
 import { loadStripe } from '@stripe/stripe-js';
-import { useNavigate } from 'react-router-dom';
 
 const fetchCheckout = async (titolo, prezzo, idPianoF) => {
   try {
@@ -83,8 +82,9 @@ const Card = ({
       <p className="text-period">/Mese</p>
     </div>
     {giorniRestanti > 0 ? (
-      // eslint-disable-next-line react/jsx-one-expression-per-line
       <p className="GiorniRestanti">({giorniRestanti} giorni rimanenti )</p>
+    ) : giorniRestanti === 0 ? (
+      <p className="GiorniRestanti">scade oggi!</p>
     ) : null}
     {attivo ? (
       // eslint-disable-next-line react/jsx-one-expression-per-line

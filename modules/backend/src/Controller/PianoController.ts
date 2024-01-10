@@ -77,6 +77,7 @@ class PianoController {
     res.status(200).redirect('http://localhost:5173/modifica-piano');
   };
 
+  // --------- metodo che mi consente di annullare il piano ----------
   static AnnullaPianoIMP = async (req: Request, res: Response) => {
     const acquisto = await serviziPianoImpl.gelUltimoAcquistoUtente(
       req.session!.idUser,
@@ -89,6 +90,38 @@ class PianoController {
       return res
         .status(200)
         .json({ message: 'piano annullato', status: 'success' });
+    }
+    return res.status(403).json({ message: 'errore' });
+  };
+
+  // metodo che mi consente di calcolare la differenza tra due date
+  // se il piano è scaduto setto il piano free
+  static differenzaGiorniIMP = async (req: Request, res: Response) => {
+    const acquisto = await serviziPianoImpl.gelUltimoAcquistoUtente(
+      req.session!.idUser,
+    );
+    if (acquisto) {
+      let dataAcquisto = new Date(acquisto.getDataAcquisto());
+      dataAcquisto.setDate(dataAcquisto.getDate() + 30);
+
+      let diffInMillisec = dataAcquisto.getTime();
+      let milli = 1000 * 3600 * 24;
+
+      let differenzaInGiorni = (diffInMillisec - new Date().getTime()) / milli;
+
+      if (differenzaInGiorni < -1) {
+        serviziPianoImpl.AcquistoPianoFree(acquisto.getIdUtente());
+
+        dataAcquisto = new Date(acquisto.getDataAcquisto());
+        dataAcquisto.setDate(dataAcquisto.getDate() + 30);
+
+        diffInMillisec = dataAcquisto.getTime();
+        milli = 1000 * 3600 * 24;
+
+        differenzaInGiorni = (diffInMillisec - new Date().getTime()) / milli;
+      }
+
+      return res.status(200).json(differenzaInGiorni);
     }
     return res.status(403).json({ message: 'errore' });
   };
