@@ -78,7 +78,7 @@
 .cardForm{
     width: 30%;
     height: 400px;
-    background-color: #E8E8E8;
+    background-color: rgb(250, 248, 248);
     border-radius: 5px;
     border-style: none;
     padding: 10px;
@@ -86,7 +86,7 @@
 }
 
 .cardForm .cfetitle{
-    margin-bottom: 5%;
+    margin-bottom: 15%;
 }
 
 .cardForm .cferow1 h3{
@@ -94,15 +94,28 @@
 }
 
 .cardForm .cferow1 .nadgg{
+    margin-left: 20%;
     margin-bottom: 3%;
+    width: 60%;
 }
 
+.cardForm .cferow1 .nadgg .nadgginput{
+    width: 100%;
+    height: 30px;
+    border-radius: 5px;
+}
 
+.cardForm .cferow2 .nsvgg{
+    margin-left: 20%;
+    margin-bottom: 3%;
+    width: 60%;
+}
 
-
-
-
-
+.cardForm .cferow2 .nsvgg .nsvgginput{
+    width: 100%;
+    height: 30px;
+    border-radius: 5px;
+}
 
 .buttonPE {
     display: flex;

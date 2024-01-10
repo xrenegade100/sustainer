@@ -15,6 +15,7 @@ const FormEnterprise = () => {
         <h3>Numero di addestramenti giornalieri desiderati</h3>
         <div className="nadgg">
           <Input
+            className="nadgginput"
             value={naddestramenti}
             onChange={(e) => setLimiteAddestramenti(e.target.value)}
             placeholder="10"
@@ -26,6 +27,7 @@ const FormEnterprise = () => {
           <h3>Numero di salvataggi in memoria desiderati</h3>
           <div className="nsvgg">
             <Input
+              className="nsvgginput"
               value={nsalvataggi}
               onChange={(e) => setLimiteSalvataggi(e.target.value)}
               placeholder="10"
