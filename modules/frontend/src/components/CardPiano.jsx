@@ -90,14 +90,15 @@ const Card = ({
       // eslint-disable-next-line react/jsx-one-expression-per-line
       <p className="attivo">{attivo} al rinnovo automatico </p>
     ) : null}
-    <Button
-      style={{ backgroundColor: bgColorButton, color: textColorButton }}
-      size={SIZE.large}
-      onClick={() => [options(title, price, idPlan, loggato, annullato)]}
-    >
-      {buttonText}
-    </Button>
-
+    {attivo === 'non attivo' ? null : (
+      <Button
+        style={{ backgroundColor: bgColorButton, color: textColorButton }}
+        size={SIZE.large}
+        onClick={() => [options(title, price, idPlan, loggato, annullato)]}
+      >
+        {buttonText}
+      </Button>
+    )}
     <ul className="phrase-list">
       {phrases?.map((phrase, index) => (
         <li key={index} className="phrase-item">
