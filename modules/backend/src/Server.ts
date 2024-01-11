@@ -45,18 +45,20 @@ server.use('/piani', (req, res) => {
 server.use('/modificaPiano', (req, res) => {
   PianoController.visulizzaPianoIMP(req, res);
 });
-server.use('/piani', (req, res) => {
-  PianoController.getTipiPianoIMP(req, res);
-});
-server.use('/checkout', (req, res) => {
-  PianoController.AcquistoPianoIMP(req, res);
-});
 server.use('/checkout', (req, res) => {
   PianoController.AcquistoPianoIMP(req, res);
 });
 server.use('/registraPianoAcquistato', (req, res) => {
   PianoController.RegistraPianoAcquistatoIMP(req, res);
 });
+server.use('/annullaPiano', (req, res) => {
+  PianoController.AnnullaPianoIMP(req, res);
+});
+server.use('/differenzaGiorni', (req, res) => {
+  PianoController.differenzaGiorniIMP(req, res);
+});
+
+// finePiano
 
 // amministratore
 server.use('/loginAm', (req, res) => {

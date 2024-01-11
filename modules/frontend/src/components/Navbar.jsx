@@ -62,7 +62,7 @@ const Navbar = () => {
       // eslint-disable-next-line no-console
       console.error('Errore durante il logout:', error);
     }
-    window.location.reload('/homepage'); // Reindirizzo l'utente alla homepage
+    window.location.replace('/homepage'); // Reindirizzo l'utente alla homepage
   };
 
   const handleLogoutAm = async () => {
