@@ -186,6 +186,7 @@ const ModificaPiano = () => {
               buttonText="Annulla piano"
               giorniRestanti={Math.round(differenzaGiorni)}
               attivo={pianoUtente.acquisto.attivo ? 'attivo' : 'non attivo'}
+              annullato={pianoUtente.acquisto.attivo}
             />
           );
         // Aggiungi altri casi per altri tipi di piano

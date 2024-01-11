@@ -1,5 +1,5 @@
 import { RowDataPacket } from 'mysql2';
-import db from '../db/poolDB';
+import db from '../db/PoolDB';
 import Piano from '../piano/domain/Piano';
 import Acquisto from '../piano/domain/Acquisto';
 
@@ -94,6 +94,7 @@ class PianoDAO {
 
   static async annullaPiano(idUtente: number, idPiano: number) {
     const conn = await db();
+    console.log(idUtente, idPiano);
     const [rows] = await conn.query(
       'UPDATE susdb.acquisto SET attivo = 0 WHERE id_utente = ? AND id_piano = ?',
       [idUtente, idPiano],
