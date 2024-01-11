@@ -43,6 +43,14 @@ class ServiziPianoImpl implements serviziPiano {
     }
     return null;
   }
+
+  static async annullaPiano(idUtente: number, idPiano: number) {
+    const piano = await PianoDAO.annullaPiano(idUtente, idPiano);
+    if (piano) {
+      return piano;
+    }
+    return null;
+  }
 }
 
 export default ServiziPianoImpl;

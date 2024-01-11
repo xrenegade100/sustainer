@@ -2,10 +2,16 @@
 
 class Acquisto {
   // creo il costruttore
-  constructor(idUtente: number, idPiano: number, dataAcquisto: Date) {
+  constructor(
+    idUtente: number,
+    idPiano: number,
+    dataAcquisto: Date,
+    attivo: boolean,
+  ) {
     this.idUtente = idUtente;
     this.idPiano = idPiano;
     this.dataAcquisto = dataAcquisto;
+    this.attivo = attivo;
   }
 
   // creo gli attributi
@@ -14,6 +20,8 @@ class Acquisto {
   private idPiano: number;
 
   private dataAcquisto: Date;
+
+  private attivo: boolean;
 
   // creo i metodi get
   public getIdUtente(): number {
@@ -28,6 +36,10 @@ class Acquisto {
     return this.dataAcquisto;
   }
 
+  public getAttivo(): boolean {
+    return this.attivo;
+  }
+
   // creo i metodi set
   public setIdUtente(idUtente: number): void {
     this.idUtente = idUtente;
@@ -39,6 +51,10 @@ class Acquisto {
 
   public setdataAcquisto(dataAcquisto: Date): void {
     this.dataAcquisto = dataAcquisto;
+  }
+
+  public setAttivo(attivo: boolean): void {
+    this.attivo = attivo;
   }
 }
 

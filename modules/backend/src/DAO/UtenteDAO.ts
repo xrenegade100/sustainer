@@ -1,8 +1,8 @@
 /* eslint-disable camelcase */
 /* eslint-disable no-unused-vars */
 import { RowDataPacket } from 'mysql2/promise';
-import db from '../db/poolDB';
-import Utente from '../account/domain/utente';
+import db from '../db/PoolDB';
+import Utente from '../account/domain/Utente';
 
 class UtenteDAO {
   // creo il metodo per la registrazione di un utente

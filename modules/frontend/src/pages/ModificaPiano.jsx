@@ -9,6 +9,7 @@ import circleCheckWhite from '../assets/circle_check_white.svg';
 const ModificaPiano = () => {
   const [data, setData] = useState([]);
   const [pianoUtente, setPianoUtente] = useState('Vuoto');
+  const [differenzaGiorni, setDifferenzaGiorni] = useState(0);
 
   const navigate = useNavigate();
 
@@ -26,8 +27,47 @@ const ModificaPiano = () => {
         navigate('/piani');
       }
     };
+
+    const fetchDifferenza = async () => {
+      try {
+        const response = await fetch('http://localhost:5000/differenzaGiorni', {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          method: 'POST',
+          credentials: 'include',
+        });
+        const result = await response.json();
+
+        setDifferenzaGiorni(result);
+      } catch (error) {
+        // eslint-disable-next-line no-console
+        console.error('Errore durante la fetch:', error);
+      }
+    };
+
+    const fetchPianoUtente = async () => {
+      try {
+        const response = await fetch('http://localhost:5000/modificaPiano', {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          method: 'POST',
+          credentials: 'include',
+        });
+        const result = await response.json();
+
+        await setPianoUtente(result);
+      } catch (error) {
+        // eslint-disable-next-line no-console
+        console.error('Errore durante la fetch:', error);
+      }
+    };
+
+    fetchPianoUtente();
+    fetchDifferenza();
     fetchData();
-  }, []);
+  }, [navigate]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -50,52 +90,13 @@ const ModificaPiano = () => {
     fetchData();
   }, []);
 
-  useEffect(() => {
-    const fetchPianoUtente = async () => {
-      try {
-        const response = await fetch('http://localhost:5000/modificaPiano', {
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          method: 'POST',
-          credentials: 'include',
-        });
-        const result = await response.json();
-
-        await setPianoUtente(result);
-      } catch (error) {
-        // eslint-disable-next-line no-console
-        console.error('Errore durante la fetch:', error);
-      }
-    };
-    fetchPianoUtente();
-  }, []);
-
   const tipi = data.map((piano) => piano.tipo);
   const idPiani = data.map((piano) => piano.idPiano);
   const prezzi = data.map((piano) => piano.prezzo);
 
   tipi.push('Enterprise');
 
-  const renderCardBasedOnType = (
-    tipiF,
-    idPianoF,
-    prezziF,
-    pianoUtenteF,
-    loggatoF,
-  ) => {
-    let differenzaInGiorni = new Date();
-    if (pianoUtente.acquisto) {
-      const dataAcquisto = new Date(pianoUtente.acquisto.dataAcquisto);
-      dataAcquisto.setDate(dataAcquisto.getDate() + 30);
-
-      const diffInMillisec = dataAcquisto.getTime();
-      const milli = 1000 * 3600 * 24;
-
-      // Se vuoi la differenza in giorni, puoi convertire i millisecondi in giorni
-      differenzaInGiorni = (diffInMillisec - new Date().getTime()) / milli;
-    }
-
+  const renderCardBasedOnType = (tipiF, idPianoF, prezziF, loggatoF) => {
     if (pianoUtente.piano) {
       switch (tipiF) {
         case 'Standard':
@@ -183,7 +184,9 @@ const ModificaPiano = () => {
               bgColorButton="#FFFFFF"
               textColorButton="#222222"
               buttonText="Annulla piano"
-              giorniRestanti={Math.round(differenzaInGiorni)}
+              giorniRestanti={Math.round(differenzaGiorni)}
+              attivo={pianoUtente.acquisto.attivo ? 'attivo' : 'non attivo'}
+              annullato={pianoUtente.acquisto.attivo}
             />
           );
         // Aggiungi altri casi per altri tipi di piano
