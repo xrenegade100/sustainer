@@ -187,6 +187,7 @@ const ModificaPiano = () => {
               giorniRestanti={Math.round(differenzaGiorni)}
               attivo={pianoUtente.acquisto.attivo ? 'attivo' : 'non attivo'}
               annullato={pianoUtente.acquisto.attivo}
+              idPlan={pianoUtente.acquisto.idPiano}
             />
           );
         // Aggiungi altri casi per altri tipi di piano
