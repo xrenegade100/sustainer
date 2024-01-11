@@ -1,5 +1,5 @@
 import { RowDataPacket } from 'mysql2';
-import db from '../db/poolDB';
+import db from '../db/PoolDB';
 import Piano from '../piano/domain/Piano';
 import Acquisto from '../piano/domain/Acquisto';
 
