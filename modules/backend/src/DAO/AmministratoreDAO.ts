@@ -1,6 +1,6 @@
 import { RowDataPacket } from 'mysql2/promise';
-import db from '../db/PoolDB';
-import Amministratore from '../account/domain/Amministratore';
+import db from '../db/poolDB';
+import Amministratore from '../account/domain/amministratore';
 
 class AmministratoreDAO {
   // creo il metodo per il login

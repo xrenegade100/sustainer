@@ -3,6 +3,7 @@ import React from 'react';
 import '../styles/CardPiano.css';
 import { Button, SIZE } from 'baseui/button';
 import { loadStripe } from '@stripe/stripe-js';
+import { useNavigate } from 'react-router-dom';
 
 const fetchCheckout = async (titolo, prezzo, idPianoF) => {
   try {
@@ -28,35 +29,6 @@ const fetchCheckout = async (titolo, prezzo, idPianoF) => {
   }
 };
 
-const fetchAnnullaPiano = async () => {
-  try {
-    const response = await fetch('http://localhost:5000/annullaPiano', {
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      method: 'POST',
-      credentials: 'include',
-    });
-    const result = await response.json();
-    if (result.status === 'success') {
-      window.location.replace('/piani');
-    }
-  } catch (error) {
-    console.error('Errore durante la fetch:', error);
-  }
-};
-
-function options(title, price, idPlan, loggato, annullato) {
-  if (loggato) {
-    fetchCheckout(title, price, idPlan);
-  } else if (annullato) {
-    alert('piano annullato');
-    fetchAnnullaPiano();
-  } else {
-    window.location.replace('/login');
-  }
-}
-
 const Card = ({
   title,
   subtitle,
@@ -71,43 +43,47 @@ const Card = ({
   idPlan,
   loggato,
   giorniRestanti,
-  attivo,
-  annullato,
-}) => (
-  <div className="card" style={{ backgroundColor: bgColor, color: textColor }}>
-    <h2 className="title-card">{title}</h2>
-    <h4 className="subtitle-card">{subtitle}</h4>
-    <div className="price">
-      <p className="text-price">€{price}</p>
-      <p className="text-period">/Mese</p>
-    </div>
-    {giorniRestanti > 0 ? (
-      <p className="GiorniRestanti">({giorniRestanti} giorni rimanenti )</p>
-    ) : giorniRestanti === 0 ? (
-      <p className="GiorniRestanti">scade oggi!</p>
-    ) : null}
-    {attivo ? (
-      // eslint-disable-next-line react/jsx-one-expression-per-line
-      <p className="attivo">{attivo} al rinnovo automatico </p>
-    ) : null}
-    {attivo === 'non attivo' ? null : (
+}) => {
+  const navigate = useNavigate();
+  const redirect = async () => {
+    navigate('/login');
+  };
+
+  return (
+    <div
+      className="card"
+      style={{ backgroundColor: bgColor, color: textColor }}
+    >
+      <h2 className="title-card">{title}</h2>
+      <h4 className="subtitle-card">{subtitle}</h4>
+      <div className="price">
+        <p className="text-price">€{price}</p>
+        <p className="text-period">/Mese</p>
+      </div>
+      {giorniRestanti > 0 ? (
+        // eslint-disable-next-line react/jsx-one-expression-per-line
+        <p className="GiorniRestanti">({giorniRestanti} giorni rimanenti )</p>
+      ) : null}
       <Button
         style={{ backgroundColor: bgColorButton, color: textColorButton }}
         size={SIZE.large}
-        onClick={() => [options(title, price, idPlan, loggato, annullato)]}
+        onClick={
+          loggato ? () => [fetchCheckout(title, price, idPlan)] : redirect
+        }
       >
         {buttonText}
       </Button>
-    )}
-    <ul className="phrase-list">
-      {phrases?.map((phrase, index) => (
-        <li key={index} className="phrase-item">
-          <img src={circleIcon} alt="circleCheck" />
-          <span className="phrase-text">{phrase}</span>
-        </li>
-      ))}
-    </ul>
-  </div>
-);
+
+      <ul className="phrase-list">
+        {phrases?.map((phrase, index) => (
+          <li key={index} className="phrase-item">
+            <img src={circleIcon} alt="circleCheck" />
+            <span className="phrase-text">{phrase}</span>
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+};
 
 export default Card;

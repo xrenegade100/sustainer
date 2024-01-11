@@ -1,5 +1,5 @@
 import { RowDataPacket } from 'mysql2';
-import db from '../db/PoolDB';
+import db from '../db/poolDB';
 import Piano from '../piano/domain/Piano';
 import Acquisto from '../piano/domain/Acquisto';
 
@@ -31,8 +31,8 @@ class PianoDAO {
       'SELECT id_piano FROM susdb.piano WHERE tipo = "Free"', // query che ritorna l'id del piano free
     )) as RowDataPacket[]; // assegno a id_piano i risultati della query
     await conn.query(
-      'INSERT INTO acquisto(id_utente, id_piano, data_acquisto, attivo) VALUES (?, ?, ?, ?)', // query che inserisce un acquisto nel db
-      [idUtente, idPiano[0][0].id_piano, new Date(), true], // parametri della query
+      'INSERT INTO acquisto(id_utente, id_piano, data_acquisto) VALUES (?, ?, ?)', // query che inserisce un acquisto nel db
+      [idUtente, idPiano[0][0].id_piano, new Date()], // parametri della query
     );
   }
 
@@ -48,7 +48,6 @@ class PianoDAO {
       acquisto[0].id_utente,
       acquisto[0].id_piano,
       acquisto[0].data_acquisto,
-      acquisto[0].attivo,
     );
   }
 
@@ -75,8 +74,8 @@ class PianoDAO {
   static async AcquistoPiano(idUtente: number, idPiano: number) {
     const conn = await db(); // connessione al db
     const [rows] = await conn.query(
-      'INSERT INTO acquisto(id_utente, id_piano, data_acquisto, attivo) VALUES (?, ?, ?, ?)', // query che inserisce un acquisto nel db
-      [idUtente, idPiano, new Date(), true], // parametri della query
+      'INSERT INTO acquisto(id_utente, id_piano, data_acquisto) VALUES (?, ?, ?)', // query che inserisce un acquisto nel db
+      [idUtente, idPiano, new Date()], // parametri della query
     );
     return rows;
   }
@@ -90,19 +89,6 @@ class PianoDAO {
     );
     const piano = rows as RowDataPacket[];
     return piano[0].id_piano;
-  }
-
-  static async annullaPiano(idUtente: number, idPiano: number) {
-    const conn = await db();
-    console.log(idUtente, idPiano);
-    const [rows] = await conn.query(
-      'UPDATE susdb.acquisto SET attivo = 0 WHERE id_utente = ? AND id_piano = ?',
-      [idUtente, idPiano],
-    );
-    if (rows) {
-      return true;
-    }
-    return false;
   }
 }
 
