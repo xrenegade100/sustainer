@@ -23,6 +23,8 @@ const FormEnterprise = () => {
             type="number"
           />
         </div>
+        <br />
+        <br />
         <div className="cferow2">
           <h3>Numero di salvataggi in memoria desiderati</h3>
           <div className="nsvgg">

@@ -6,7 +6,7 @@ import '../styles/Navbar.css';
 import ProgressEnterprise from '../components/ProgressEnterprise';
 
 const PianoEnterprise = () => (
-  <>
+  <div className="container">
     <div className="header">
       <Navbar />
     </div>
@@ -16,10 +16,10 @@ const PianoEnterprise = () => (
       </div>
       <ProgressEnterprise />
     </div>
-    <div className="footer">
+    <div className="footerPE">
       <Footer />
     </div>
-  </>
+  </div>
 );
 
 export default PianoEnterprise;

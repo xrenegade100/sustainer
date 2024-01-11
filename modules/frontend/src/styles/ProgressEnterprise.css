@@ -79,7 +79,7 @@
     width: 30%;
     height: 400px;
     background-color: rgb(250, 248, 248);
-    border-radius: 5px;
+    border-radius: 8px;
     border-style: none;
     padding: 10px;
     text-align: center;
@@ -131,7 +131,7 @@
     color: white;
     border-radius: 5px;
     border-style: none;
-    font-size: 24px;
+    font-size: 22px;
     cursor: pointer;
   }
 
@@ -149,6 +149,26 @@
     background-color: #2467d1
 }
 
+@media screen and (max-width: 768px) {
+    .cfetitle h2{
+        font-size: 28px;
+    }
+    .cardForm{
+        width: 80%;
+        border-color: #2466d12e;
+        border-style: solid;
+    }
+    
+    .buttonPE Button {
+        width: 18%;
+        height: auto;
+        color: white;
+        border-radius: 5px;
+        border-style: none;
+        font-size: 18px;
+        cursor: pointer;
+      }
+}
 
 
 
@@ -158,4 +178,84 @@
         height: 15px;
         font-size: 6px;
     }
+}
+
+@media screen and (max-width:425px){
+    .indexedStep{
+        width: 20px;
+        height: 20px;
+        font-size: 10px;
+    }
+
+    .titolo h1{
+        font-size: 22px;
+    }
+
+    .cfetitle h2{
+        font-size: 18px;
+    }
+
+    .cardForm{
+        width: 50%;
+    }
+
+    .buttonPE Button {
+        width: 20%;
+        height: auto;
+        color: white;
+        border-radius: 5px;
+        border-style: none;
+        font-size: 14px;
+        cursor: pointer;
+      }
+}
+
+@media screen and (max-width:375px){
+    .titolo h1{
+        font-size: 20px;
+    }
+
+    .cfetitle h2{
+        font-size: 18px;
+    }
+
+    .cardForm{
+        width: 60%;
+    }
+
+    .buttonPE Button {
+        width: 20%;
+        height: auto;
+        color: white;
+        border-radius: 5px;
+        border-style: none;
+        font-size: 14px;
+        cursor: pointer;
+      }
+    
+}
+
+@media screen and (max-width:320px){
+    .titolo h1{
+        font-size: 18px;
+    }
+
+    .cfetitle h2{
+        font-size: 18px;
+    }
+
+    .cardForm{
+        width: 90%;
+    }
+
+    .buttonPE Button {
+        width: 20%;
+        height: auto;
+        color: white;
+        border-radius: 5px;
+        border-style: none;
+        font-size: 14px;
+        cursor: pointer;
+      }
+    
 }
