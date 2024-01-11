@@ -2,8 +2,9 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { Button, SIZE } from 'baseui/button';
 import { ProgressBar, Step } from 'react-step-progress-bar';
-import FormEnterprise from './FormEnterprise'; // Importa la componente FormEnterprise
+import FormEnterprise from './FormEnterprise';
 import '../styles/ProgressEnterprise.css';
+import CardLoadingPrev from './CardLoadingPrev';
 
 const PageNumber = ({
   accomplished,
@@ -32,13 +33,36 @@ PageNumber.propTypes = {
   onPageNumberClick: PropTypes.func.isRequired,
 };
 
-const ProgressEnterprise = ({ onPageNumberClick }) => {
+const ProgressEnterprise = () => {
   const [currentStep, setCurrentStep] = useState(1);
+  const [formData, setFormData] = useState({});
 
-  const handleNextClick = () => {
-    if (currentStep < 3) {
-      setCurrentStep(currentStep + 1);
+  const handleNextClick = async () => {
+    if (currentStep === 1) {
+      try {
+        // Esegui la fetch con il tuo modello
+        const response = await fetch('http://localhost:5000//creaPreventivo', {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          method: 'POST',
+          credentials: 'include',
+          body: JSON.stringify(formData), // Assicurati che formData abbia la struttura corretta
+        });
+
+        if (response.ok) {
+          const data = await response.json();
+          console.log('Risposta dal backend:', data);
+        } else {
+          console.error('Errore nella richiesta al backend:', response.statusText);
+        }
+      } catch (error) {
+        console.error('Errore nella fetch:', error);
+      }
     }
+
+    // Aumenta il valore di currentStep
+    setCurrentStep(currentStep + 1);
   };
 
   const handlePrevClick = () => {
@@ -47,22 +71,14 @@ const ProgressEnterprise = ({ onPageNumberClick }) => {
     }
   };
 
-  const getStepPercentage = () => {
-    switch (currentStep) {
-      case 1:
-        return 0;
-      case 2:
-        return 50;
-      case 3:
-        return 100;
-      default:
-        return 0;
-    }
+  const handleFormSubmit = (formDataFromChild) => {
+    // La funzione di callback passata al FormEnterprise per gestire i dati del form
+    setFormData(formDataFromChild);
   };
 
   return (
     <>
-      <ProgressBar percent={getStepPercentage()}>
+      <ProgressBar percent={currentStep * 50}>
         {[1, 2, 3].map((pageNumber, index) => (
           <Step key={pageNumber}>
             {({ accomplished }) => (
@@ -70,42 +86,40 @@ const ProgressEnterprise = ({ onPageNumberClick }) => {
                 accomplished={accomplished}
                 index={index}
                 pageNumber={pageNumber}
-                onPageNumberClick={onPageNumberClick}
+                onPageNumberClick={(pageNum) => setCurrentStep(pageNum)}
               />
             )}
           </Step>
         ))}
       </ProgressBar>
 
-      {/* Condizionalmente renderizza FormEnterprise solo quando currentStep è 1 */}
-      {currentStep === 1 && (
+      {currentStep === 1 ? (
         <div className="formlimiti">
-          <FormEnterprise />
+          <FormEnterprise onSubmit={handleFormSubmit} />
+          <div className="buttonPE">
+            <Button
+              className="btnback"
+              onClick={handlePrevClick}
+              size={SIZE.large}
+            >
+              Indietro
+            </Button>
+            <Button
+              className="btnnext"
+              onClick={handleNextClick}
+              size={SIZE.large}
+            >
+              Avanti
+            </Button>
+          </div>
+        </div>
+      ) : (
+        <div className="cardLoading">
+          <CardLoadingPrev />
         </div>
       )}
-
-      <div className="buttonPE">
-        <Button
-          className="btnback"
-          onClick={handlePrevClick}
-          size={SIZE.large}
-        >
-          Indietro
-        </Button>
-        <Button
-          className="btnnext"
-          onClick={handleNextClick}
-          size={SIZE.large}
-        >
-          Avanti
-        </Button>
-      </div>
     </>
   );
-};
-
-ProgressEnterprise.propTypes = {
-  onPageNumberClick: PropTypes.func.isRequired,
 };
 
 export default ProgressEnterprise;

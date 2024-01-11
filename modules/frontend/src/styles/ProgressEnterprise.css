@@ -126,7 +126,7 @@
   /* Stile opzionale per i bottoni */
   .buttonPE Button {
     margin: 0 20px; /* Aggiungi spazi tra i bottoni se necessario */
-    width: 10%;
+    width: 50%;
     height: auto;
     color: white;
     border-radius: 5px;
@@ -141,12 +141,40 @@
   }
 
   .buttonPE .btnback{
+    width: 120px;
     background-color: #DCDCDC;
     color: #222222;
   }
 
   .buttonPE .btnnext{
+    width: 120px;
     background-color: #2467d1
+}
+
+
+.cardLoading{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    margin-top: 5%;
+}
+
+.cardLoad{
+    width: 400px;
+    height: 200px;
+    background-color: rgb(250, 248, 248);
+    border-radius: 8px;
+    border-style: none;
+    padding: 10px;
+    text-align: center;
+}
+
+.cardLoad h3{
+    margin-top: 15%;
+    margin-bottom: 5%;
+
 }
 
 @media screen and (max-width: 768px) {
