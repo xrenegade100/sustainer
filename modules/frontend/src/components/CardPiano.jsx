@@ -28,6 +28,7 @@ const fetchCheckout = async (titolo, prezzo, idPianoF) => {
   }
 };
 
+//funzione che annulla il piano
 const fetchAnnullaPiano = async () => {
   try {
     const response = await fetch('http://localhost:5000/annullaPiano', {
