@@ -1,10 +1,11 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { Menu } from 'baseui/icon';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import useViewportWidth from '../utils/useViewport';
 import '../styles/Navbar.css';
 
 const Navbar = () => {
+  const navigate = useNavigate();
   const [isDropdownVisible, setIsDropdownVisible] = useState(false);
   const [isUserAuthenticated, setIsUserAuthenticated] = useState(false);
   const [isAdmin, setIsAdmin] = useState(false);
@@ -85,7 +86,7 @@ const Navbar = () => {
       // eslint-disable-next-line no-console
       console.error('Errore durante il logout:', error);
     }
-    window.location.reload('/homepage'); // Reindirizzo l'admin alla homepage
+    window.location.replace('/homepage'); // Reindirizzo l'admin alla homepage
   };
 
   useEffect(() => {
@@ -136,7 +137,7 @@ const Navbar = () => {
 
     funzioneVerifica();
     funzioneVerificaA();
-  }, []);
+  }, [navigate]);
 
   useEffect(() => {
     if (viewportWidth > 850) {
@@ -164,7 +165,7 @@ const Navbar = () => {
               {/* Altri link o elementi specifici per l'amministratore */}
             </li>
             <li className="elements">
-              <Link to="/admin/dashboard" className="text-white">
+              <Link to="/gestionePiani" className="text-white">
                 Gestione Piani
               </Link>
             </li>
