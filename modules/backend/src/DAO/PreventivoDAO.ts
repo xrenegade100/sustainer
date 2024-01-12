@@ -4,18 +4,22 @@ import Preventivo from '../preventivo/domain/Preventivo';
 
 class PreventivoDAO {
   // funzione asincrona che ritorna un preventivo in base al suo id
-  static async getPreventivo(idPreventivo: number) {
+  static async getPreventivo(idUtente: number) {
     const conn = await db(); // connessione al db
-    const [rows] = await conn.query('SELECT * FROM preventivo WHERE id_preventivo = ?', idPreventivo); // query che ritorna il preventivo con id = idPreventivo
-    const preventivo = rows as RowDataPacket[]; // assegno a preventivo i risultati della query
-    return new Preventivo(
-      preventivo[0].id_preventivo,
-      preventivo[0].id_utente,
-      preventivo[0].limiti_addestramenti,
-      preventivo[0].limiti_salvataggi,
-      preventivo[0].prezzo,
-      preventivo[0].stato,
-    ); // ritorno un oggetto di tipo Preventivo
+    try {
+      const [rows] = await conn.query('SELECT * FROM preventivo WHERE id_utente = ?', idUtente); // query che ritorna il preventivo con id = idPreventivo
+      const preventivo = rows as RowDataPacket[]; // assegno a preventivo i risultati della query
+      return new Preventivo(
+        preventivo[0].id_preventivo,
+        preventivo[0].id_utente,
+        preventivo[0].limiti_addestramenti,
+        preventivo[0].limiti_salvataggi,
+        preventivo[0].prezzo,
+        preventivo[0].stato,
+      );
+    } catch (error) {
+      return null;
+    }
   }
 
   // funzione asincrona che crea un preventivo
@@ -23,20 +27,11 @@ class PreventivoDAO {
     idUtente: number,
     limitiAddestramenti: number,
     limitiSalvataggi: number,
-    prezzo: number,
-    stato: string,
   ) {
     const conn = await db(); // connessione al db
-    const [rows] = await conn.query('INSERT INTO preventivo(id_utente, limiti_addestramenti, limiti_salvataggi, prezzo, stato) VALUES(?, ?, ?, 0, ?)', [idUtente, limitiAddestramenti, limitiSalvataggi, prezzo, stato]); // query che crea un preventivo
-    const preventivo = rows as RowDataPacket[]; // assegno a preventivo i risultati della query
-    return new Preventivo(
-      preventivo[0].id_preventivo,
-      preventivo[0].id_utente,
-      preventivo[0].limiti_addestramenti,
-      preventivo[0].limiti_salvataggi,
-      preventivo[0].prezzo,
-      preventivo[0].stato,
-    ); // ritorno un oggetto di tipo Preventivo
+    // eslint-disable-next-line max-len
+    await conn.query('INSERT INTO preventivo(id_utente, limiti_addestramenti, limiti_salvataggi, prezzo, stato) VALUES(?, ?, ?, ?, ?)', [idUtente, limitiAddestramenti, limitiSalvataggi, 0, 'In lavorazione']); // query che crea un preventivo // ritorno un oggetto di tipo Preventivo
+    return null;
   }
 
   // funzione asincrona che elimina un preventivo
@@ -55,12 +50,13 @@ class PreventivoDAO {
   }
 
   // funzione asincrona che ritorna l'id del preventivo
-  static async getIdPreventivo(idUtente: number) {
+  /* static async getIdPreventivo(idUtente: number) {
     const conn = await db(); // connessione al db
-    const [rows] = await conn.query('SELECT id_preventivo FROM preventivo WHERE id_utente = ?', idUtente); // query che ritorna l'id del preventivo
+    const [rows] = await conn.query('SELECT id_preventivo FROM preventivo WHERE id_utente = ?'
+    , idUtente); // query che ritorna l'id del preventivo
     const preventivo = rows as RowDataPacket[]; // assegno a preventivo i risultati della query
     return preventivo[0].id_preventivo; // ritorno l'id del preventivo
-  }
+  } */
 
   // funzione asincrona che ritorna i limiti di addestramenti di un preventivo
   // dove l'id preventivo è uguale a idPreventivo

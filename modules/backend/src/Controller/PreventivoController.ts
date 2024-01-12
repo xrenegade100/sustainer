@@ -3,20 +3,34 @@ import ServiziPreventivoImpl from '../preventivo/service/ServiziPreventivoImpl';
 
 class PreventivoController {
   static creaPreventivoIMP = async (req: Request, res: Response) => {
-    const {
-      idUtente, limitiAddestramenti, limitiSalvataggi, prezzo, stato,
-    } = req.body;
-    const preventivo = await ServiziPreventivoImpl.creaPreventivo(
-      idUtente,
+    if (req.body.limitiAddestramenti && req.body.limitiSalvataggi) {
+      const {
+        limitiAddestramenti, limitiSalvataggi,
+      } = req.body;
+      const preventivo = await ServiziPreventivoImpl.creaPreventivo(
+      req.session!.idUser,
       limitiAddestramenti,
       limitiSalvataggi,
-      prezzo,
-      stato,
-    );
+      );
+      if (preventivo) {
+        return res.status(200).json(preventivo);
+      }
+      return res.status(403).json({ message: 'preventivo non creato' });
+    }
+
+    const preventivo = await ServiziPreventivoImpl.getPreventivo(req.session!.idUser);
     if (preventivo) {
       return res.status(200).json(preventivo);
     }
-    return res.status(403).json({ message: 'preventivo non creato' });
+    return res.status(403).json({ message: 'preventivo non trovato' });
+  };
+
+  static controllaPreventivoIMP = async (req: Request, res: Response) => {
+    const preventivo = await ServiziPreventivoImpl.getPreventivo(req.session!.idUser);
+    if (preventivo) {
+      return res.status(200).json(preventivo);
+    }
+    return res.status(403).json({ message: 'preventivo non trovato' });
   };
 
   static eliminaPreventivoIMP = async (req: Request, res: Response) => {
@@ -37,6 +51,7 @@ class PreventivoController {
     return res.status(403).json({ message: 'preventivo non recuperato' });
   };
 
+  /*
   static getIdPreventivoIMP = async (req: Request, res: Response) => {
     const { idUtente } = req.body;
     const preventivo = await ServiziPreventivoImpl.getIdPreventivo(idUtente);
@@ -45,6 +60,7 @@ class PreventivoController {
     }
     return res.status(403).json({ message: 'preventivo non recuperato' });
   };
+  */
 
   static getLimitiAddestramentiIMP = async (req: Request, res: Response) => {
     const { idPreventivo } = req.body;

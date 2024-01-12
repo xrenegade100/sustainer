@@ -7,16 +7,12 @@ class ServiziPreventivoImpl implements serviziPreventivo {
     idUtente: number,
     limitiAddestramenti: number,
     limitiSalvataggi: number,
-    prezzo: number,
-    stato: string,
   ) {
     // richiamo il metodo creaPreventivo del PreventivoDAO
     const preventivo = await PreventivoDAO.creaPreventivo(
       idUtente,
       limitiAddestramenti,
       limitiSalvataggi,
-      prezzo,
-      stato,
     );
     if (preventivo) {
       return preventivo;
@@ -45,14 +41,14 @@ class ServiziPreventivoImpl implements serviziPreventivo {
   }
 
   // metodo che mi consente di recuperare l'id di un preventivo
-  static async getIdPreventivo(idUtente: number) {
+  /* static async getIdPreventivo(idUtente: number) {
     // richiamo il metodo getIdPreventivo del PreventivoDAO
     const preventivo = await PreventivoDAO.getIdPreventivo(idUtente);
     if (preventivo) {
       return preventivo;
     }
     return null;
-  }
+  } */
 
   // metodo che mi consente di recuperare i limiti di addestramento di un preventivo
   static async getLimitiAddestramenti(idPreventivo: number) {

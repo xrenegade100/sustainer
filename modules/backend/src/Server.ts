@@ -6,6 +6,7 @@ import cors from 'cors';
 import PianoController from './Controller/PianoController';
 import UtenteController from './Controller/UtenteController';
 import AmministratoreController from './Controller/AmministratoreController';
+import PreventivoController from './Controller/PreventivoController';
 
 const server = express();
 
@@ -56,6 +57,14 @@ server.use('/checkout', (req, res) => {
 });
 server.use('/registraPianoAcquistato', (req, res) => {
   PianoController.RegistraPianoAcquistatoIMP(req, res);
+});
+
+server.use('/creaPreventivo', (req, res) => {
+  PreventivoController.creaPreventivoIMP(req, res);
+});
+
+server.use('/verificaPreventivo', (req, res) => {
+  PreventivoController.controllaPreventivoIMP(req, res);
 });
 
 // amministratore
