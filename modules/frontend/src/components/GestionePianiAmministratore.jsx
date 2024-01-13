@@ -81,6 +81,7 @@ const GestioneAmministratorePiani = () => {
       body: JSON.stringify({
         stato,
         prezzo,
+        currentPreventivo,
       }),
     });
     const data = await response.json();
@@ -90,7 +91,7 @@ const GestioneAmministratorePiani = () => {
   };
 
   if (!preventivi) {
-    return <div>Loading...</div>;
+    return <div>Nessun preventivo presente</div>;
   }
 
   return (
@@ -140,18 +141,19 @@ const GestioneAmministratorePiani = () => {
                 <span className="close" onClick={closeModal}>
                   &times;
                 </span>
-                <h2>Modifica Preventivo</h2>
+                <h2 className="titoloModal">Modifica Preventivo</h2>
               </div>
               <div className="modal-body">
                 <form onSubmit={handleSubmit}>
                   <div>
-                    <h2>
-                      Modifica Preventivo: {currentPreventivo.idPreventivo}{' '}
-                    </h2>
+                    <h3 className="TextIdPreventivo">
+                      Id preventivo: {currentPreventivo.idPreventivo}
+                    </h3>
                   </div>
-                  <div>
-                    <label htmlFor="stato">Stato:</label>
+                  <div className="DivStato">
+                    <label className="statoLabel">Stato del preventivo</label>
                     <select
+                      className="selectStato"
                       id="stato"
                       name="stato"
                       value={currentPreventivo.stato}
@@ -162,19 +164,18 @@ const GestioneAmministratorePiani = () => {
                       <option value="Rifiutato">Rifiutato</option>
                     </select>
                   </div>
-                  <div>
-                    <label htmlFor="prezzo">Prezzo:</label>
+                  <div className="DivPrezzo">
+                    <label className="prezzoLabel">Prezzo del preventivo</label>
                     <input
-                      id="prezzo"
-                      name="prezzo"
+                      className="inputPrezzo"
+                      value={prezzo}
+                      placeholder="Inserisci il prezzo"
                       type="number"
-                      value={currentPreventivo.prezzo}
                       onChange={(e) => handlePriceChange(e, currentPreventivo)}
                     />
                   </div>
-                  <button type="submit">Modifica</button>
-                  <button type="button" onClick={closeModal}>
-                    Chiudi
+                  <button type="submit" className="bottonePreventiviForm">
+                    Modifica
                   </button>
                 </form>
               </div>
