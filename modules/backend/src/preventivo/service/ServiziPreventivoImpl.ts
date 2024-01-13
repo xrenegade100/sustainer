@@ -118,5 +118,23 @@ class ServiziPreventivoImpl implements serviziPreventivo {
     }
     return null;
   }
+
+  // metodo che mi consente di modificare un preventivo
+  static async ModificaPreventivo(
+    stato: string,
+    prezzo: number,
+    idPreventivo: number,
+  ) {
+    // richiamo il metodo ModificaPreventivo del PreventivoDAO
+    const preventivo = await PreventivoDAO.ModificaPreventivo(
+      stato,
+      prezzo,
+      idPreventivo,
+    );
+    if (preventivo) {
+      return preventivo;
+    }
+    return null;
+  }
 }
 export default ServiziPreventivoImpl;

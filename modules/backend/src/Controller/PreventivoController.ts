@@ -54,7 +54,9 @@ class PreventivoController {
   };
 
   static getPreventivoIMP = async (req: Request, res: Response) => {
-    const preventivo = await ServiziPreventivoImpl.getPreventivo(req.session!.idUser);
+    const preventivo = await ServiziPreventivoImpl.getPreventivo(
+      req.session!.idUser,
+    );
     if (preventivo) {
       return res.status(200).json(preventivo);
     }
@@ -62,7 +64,9 @@ class PreventivoController {
   };
 
   static getIdPreventivoIMP = async (req: Request, res: Response) => {
-    const preventivo = await ServiziPreventivoImpl.getIdPreventivo(req.session!.idUser);
+    const preventivo = await ServiziPreventivoImpl.getIdPreventivo(
+      req.session!.idUser,
+    );
     if (preventivo) {
       return res.status(200).json(preventivo);
     }
@@ -90,7 +94,9 @@ class PreventivoController {
   };
 
   static getPrezzoIMP = async (req: Request, res: Response) => {
-    const preventivo = await ServiziPreventivoImpl.getPrezzo(req.session!.idUser);
+    const preventivo = await ServiziPreventivoImpl.getPrezzo(
+      req.session!.idUser,
+    );
     if (preventivo) {
       return res.status(200).json(preventivo);
     }
@@ -100,7 +106,9 @@ class PreventivoController {
   static getStatoIMP = async (req: Request, res: Response) => {
     // Verifica che req.session e req.session!.idUser siano definiti
     if (req.session && req.session!.idUser) {
-      const preventivo = await ServiziPreventivoImpl.getStato(req.session!.idUser);
+      const preventivo = await ServiziPreventivoImpl.getStato(
+        req.session!.idUser,
+      );
       if (preventivo) {
         return res.status(200).json(preventivo);
       }
@@ -132,6 +140,22 @@ class PreventivoController {
       return res.status(200).json(preventivo);
     }
     return res.status(403).json({ message: 'preventivo non aggiornato' });
+  };
+
+  static ModificaPreventivoIMP = async (req: Request, res: Response) => {
+    const { stato, prezzo, currentPreventivo } = req.body;
+    const preventivo = await ServiziPreventivoImpl.ModificaPreventivo(
+      stato,
+      prezzo,
+      currentPreventivo.idPreventivo,
+    );
+    console.log(stato);
+    console.log(prezzo);
+    console.log(currentPreventivo.idPreventivo);
+    if (preventivo) {
+      return res.status(200).json(preventivo);
+    }
+    return res.status(403).json({ message: 'preventivo non modificato' });
   };
 }
 

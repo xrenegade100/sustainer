@@ -80,6 +80,9 @@ server.use('/verificaPreventivo', (req, res) => {
 server.use('/preventivi', (req, res) => {
   PreventivoController.TuttiPreventiviIMP(req, res);
 });
+server.use('/preventivoModificato', (req, res) => {
+  PreventivoController.ModificaPreventivoIMP(req, res);
+});
 
 // fine preventivo
 

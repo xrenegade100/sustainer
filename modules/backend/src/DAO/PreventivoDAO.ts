@@ -9,14 +9,15 @@ class PreventivoDAO {
     const [rows] = await conn.query('SELECT * FROM preventivo'); // query che ritorna tutti i preventivi
     const preventivi = rows as RowDataPacket[]; // assegno a preventivi i risultati della query
     return preventivi.map(
-      (preventivo) => new Preventivo(
-        preventivo.id_preventivo,
-        preventivo.id_utente,
-        preventivo.limiti_addestramenti,
-        preventivo.limiti_salvataggi,
-        preventivo.prezzo,
-        preventivo.stato,
-      ),
+      (preventivo) =>
+        new Preventivo(
+          preventivo.id_preventivo,
+          preventivo.id_utente,
+          preventivo.limiti_addestramenti,
+          preventivo.limiti_salvataggi,
+          preventivo.prezzo,
+          preventivo.stato,
+        ),
     ); // ritorno un array di oggetti di tipo Preventivo
   }
 
@@ -175,6 +176,26 @@ class PreventivoDAO {
       preventivo[0].prezzo,
       preventivo[0].stato,
     ); // ritorno un oggetto di tipo Preventivo
+  }
+
+  // funzione asincrona che modifica un preventivo
+  static async ModificaPreventivo(
+    stato: string,
+    prezzo: number,
+    idPreventivo: number,
+  ) {
+    if (!prezzo || prezzo < 0) {
+      prezzo = 0;
+    }
+    if (!stato) {
+      stato = 'In lavorazione';
+    }
+    const conn = await db(); // connessione al db
+    await conn.query(
+      'UPDATE preventivo SET stato = ?, prezzo = ? WHERE id_preventivo = ?',
+      [stato, prezzo, idPreventivo],
+    ); // query che modifica un preventivo
+    return null;
   }
 }
 export default PreventivoDAO;
