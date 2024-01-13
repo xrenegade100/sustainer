@@ -52,19 +52,26 @@ export function checkCsvColumns(filePath: string): Promise<boolean> {
   return new Promise((resolve, reject) => {
     const requiredColumns = 2; // Numero minimo di colonne richieste
 
-    fs.createReadStream(filePath)
-      .pipe(csv())
-      .on('headers', (headers) => {
-        // Verifica il numero di colonne
-        if (headers.length >= requiredColumns) {
-          resolve(true);
-        } else {
-          resolve(false);
-        }
-      })
-      .on('error', (error) => {
-        reject(error);
-      });
+    const checkSeparator = (separator: string) => {
+      fs.createReadStream(filePath)
+        .pipe(csv({ separator }))
+        .on('headers', (headers) => {
+          // Verifica il numero di colonne
+          if (headers.length >= requiredColumns) {
+            resolve(true);
+          } else {
+            resolve(false);
+          }
+        })
+        .on('error', (error) => {
+          reject(error);
+        });
+    };
+
+    // Controlla con il separatore con i vari separatori
+    checkSeparator(';');
+    checkSeparator('.');
+    checkSeparator(',');
   });
 }
 
