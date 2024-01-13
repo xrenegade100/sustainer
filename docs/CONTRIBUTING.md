@@ -60,6 +60,7 @@ Ambiti supportati:
 
 - `backend`
 - `frontend`
+- `front&back`
 
 ### Body
 
