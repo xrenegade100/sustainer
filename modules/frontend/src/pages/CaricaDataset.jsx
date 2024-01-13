@@ -115,7 +115,7 @@ const CaricaDataset = () => {
       if (response.ok) {
         setSnackbarMessage('File caricato con successo');
         setShowSnackbar(true);
-        navigate('');
+        navigate('/inserimentoparametri');
       } else if (response.status === 400) {
         setSnackbarMessage('Errore: il contenuto del file non è valido');
         setShowSnackbar(true);
