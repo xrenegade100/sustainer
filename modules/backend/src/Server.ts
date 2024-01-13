@@ -65,6 +65,15 @@ server.use('/differenzaGiorni', (req, res) => {
 server.use('/creaPreventivo', (req, res) => {
   PreventivoController.creaPreventivoIMP(req, res);
 });
+server.use('/preventivoUtente', (req, res) => {
+  PreventivoController.getPreventivoIMP(req, res);
+});
+server.use('/statoPreventivo', (req, res) => {
+  PreventivoController.getStatoIMP(req, res);
+});
+server.use('/eliminaPreventivo', (req, res) => {
+  PreventivoController.eliminaPreventivoIMP(req, res);
+});
 server.use('/verificaPreventivo', (req, res) => {
   PreventivoController.controllaPreventivoIMP(req, res);
 });

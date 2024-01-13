@@ -44,9 +44,8 @@ class PreventivoController {
   };
 
   static eliminaPreventivoIMP = async (req: Request, res: Response) => {
-    const { idPreventivo } = req.body;
     const preventivo = await ServiziPreventivoImpl.eliminaPreventivo(
-      idPreventivo,
+      req.session!.idUser,
     );
     if (preventivo) {
       return res.status(200).json(preventivo);
@@ -55,29 +54,24 @@ class PreventivoController {
   };
 
   static getPreventivoIMP = async (req: Request, res: Response) => {
-    const { idPreventivo } = req.body;
-    const preventivo = await ServiziPreventivoImpl.getPreventivo(idPreventivo);
+    const preventivo = await ServiziPreventivoImpl.getPreventivo(req.session!.idUser);
     if (preventivo) {
       return res.status(200).json(preventivo);
     }
     return res.status(403).json({ message: 'preventivo non recuperato' });
   };
 
-  /*
   static getIdPreventivoIMP = async (req: Request, res: Response) => {
-    const { idUtente } = req.body;
-    const preventivo = await ServiziPreventivoImpl.getIdPreventivo(idUtente);
+    const preventivo = await ServiziPreventivoImpl.getIdPreventivo(req.session!.idUser);
     if (preventivo) {
       return res.status(200).json(preventivo);
     }
     return res.status(403).json({ message: 'preventivo non recuperato' });
   };
-  */
 
   static getLimitiAddestramentiIMP = async (req: Request, res: Response) => {
-    const { idPreventivo } = req.body;
     const preventivo = await ServiziPreventivoImpl.getLimitiAddestramenti(
-      idPreventivo,
+      req.session!.idUser,
     );
     if (preventivo) {
       return res.status(200).json(preventivo);
@@ -86,9 +80,8 @@ class PreventivoController {
   };
 
   static getLimitiSalvataggiIMP = async (req: Request, res: Response) => {
-    const { idPreventivo } = req.body;
     const preventivo = await ServiziPreventivoImpl.getLimitiSalvataggi(
-      idPreventivo,
+      req.session!.idUser,
     );
     if (preventivo) {
       return res.status(200).json(preventivo);
@@ -97,8 +90,7 @@ class PreventivoController {
   };
 
   static getPrezzoIMP = async (req: Request, res: Response) => {
-    const { idPreventivo } = req.body;
-    const preventivo = await ServiziPreventivoImpl.getPrezzo(idPreventivo);
+    const preventivo = await ServiziPreventivoImpl.getPrezzo(req.session!.idUser);
     if (preventivo) {
       return res.status(200).json(preventivo);
     }
@@ -106,12 +98,16 @@ class PreventivoController {
   };
 
   static getStatoIMP = async (req: Request, res: Response) => {
-    const { idPreventivo } = req.body;
-    const preventivo = await ServiziPreventivoImpl.getStato(idPreventivo);
-    if (preventivo) {
-      return res.status(200).json(preventivo);
+    // Verifica che req.session e req.session!.idUser siano definiti
+    if (req.session && req.session!.idUser) {
+      const preventivo = await ServiziPreventivoImpl.getStato(req.session!.idUser);
+      if (preventivo) {
+        return res.status(200).json(preventivo);
+      }
+      return res.status(403).json({ message: 'preventivo non recuperato' });
     }
-    return res.status(403).json({ message: 'preventivo non recuperato' });
+    // Se req.session o req.session!.idUser sono undefined, restituisci un errore 403
+    return res.status(403).json({ message: 'Utente non autenticato' });
   };
 
   static aggiornaStatoIMP = async (req: Request, res: Response) => {

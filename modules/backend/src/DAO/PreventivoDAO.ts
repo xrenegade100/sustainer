@@ -9,15 +9,14 @@ class PreventivoDAO {
     const [rows] = await conn.query('SELECT * FROM preventivo'); // query che ritorna tutti i preventivi
     const preventivi = rows as RowDataPacket[]; // assegno a preventivi i risultati della query
     return preventivi.map(
-      (preventivo) =>
-        new Preventivo(
-          preventivo.id_preventivo,
-          preventivo.id_utente,
-          preventivo.limiti_addestramenti,
-          preventivo.limiti_salvataggi,
-          preventivo.prezzo,
-          preventivo.stato,
-        ),
+      (preventivo) => new Preventivo(
+        preventivo.id_preventivo,
+        preventivo.id_utente,
+        preventivo.limiti_addestramenti,
+        preventivo.limiti_salvataggi,
+        preventivo.prezzo,
+        preventivo.stato,
+      ),
     ); // ritorno un array di oggetti di tipo Preventivo
   }
 
@@ -59,11 +58,11 @@ class PreventivoDAO {
   }
 
   // funzione asincrona che elimina un preventivo
-  static async eliminaPreventivo(idPreventivo: number) {
+  static async eliminaPreventivo(idUtente: number) {
     const conn = await db(); // connessione al db
     const [rows] = await conn.query(
-      'DELETE FROM preventivo WHERE id_preventivo = ?',
-      idPreventivo,
+      'DELETE FROM preventivo WHERE id_utente = ?',
+      idUtente,
     ); // query che elimina un preventivo
     const preventivo = rows as RowDataPacket[]; // assegno a preventivo i risultati della query
     return new Preventivo(
@@ -77,32 +76,34 @@ class PreventivoDAO {
   }
 
   // funzione asincrona che ritorna l'id del preventivo
-  /* static async getIdPreventivo(idUtente: number) {
+  static async getIdPreventivo(idUtente: number) {
     const conn = await db(); // connessione al db
-    const [rows] = await conn.query('SELECT id_preventivo FROM preventivo WHERE id_utente = ?'
-    , idUtente); // query che ritorna l'id del preventivo
+    const [rows] = await conn.query(
+      'SELECT id_preventivo FROM preventivo WHERE id_utente = ?',
+      idUtente,
+    ); // query che ritorna l'id del preventivo
     const preventivo = rows as RowDataPacket[]; // assegno a preventivo i risultati della query
     return preventivo[0].id_preventivo; // ritorno l'id del preventivo
-  } */
+  }
 
   // funzione asincrona che ritorna i limiti di addestramenti di un preventivo
   // dove l'id preventivo è uguale a idPreventivo
-  static async getLimitiAddestramenti(idPreventivo: number) {
+  static async getLimitiAddestramenti(idUtente: number) {
     const conn = await db(); // connessione al db
     const [rows] = await conn.query(
-      'SELECT limiti_addestramenti FROM preventivo WHERE id_preventivo = ?',
-      idPreventivo,
+      'SELECT limiti_addestramenti FROM preventivo WHERE id_utente = ?',
+      idUtente,
     ); // query che ritorna i limiti di addestramenti di un preventivo
     const preventivo = rows as RowDataPacket[]; // assegno a preventivo i risultati della query
     return preventivo[0].limiti_addestramenti; // ritorno i limiti di addestramenti
   }
 
   // funzione asincrona che ritorna i limiti di salvataggi di un preventivo
-  static async getLimitiSalvataggi(idPreventivo: number) {
+  static async getLimitiSalvataggi(idUtente: number) {
     const conn = await db(); // connessione al db
     const [rows] = await conn.query(
-      'SELECT limiti_salvataggi FROM preventivo WHERE id_preventivo = ?',
-      idPreventivo,
+      'SELECT limiti_salvataggi FROM preventivo WHERE id_utente = ?',
+      idUtente,
     ); // query che ritorna i limiti di salvataggi di un preventivo
     const preventivo = rows as RowDataPacket[]; // assegno a preventivo i risultati della query
     return preventivo[0].limiti_salvataggi; // ritorno i limiti di salvataggi
@@ -110,26 +111,32 @@ class PreventivoDAO {
 
   // funzione asincrona che ritorna il prezzo di un preventivo
 
-  static async getPrezzo(idPreventivo: number) {
+  static async getPrezzo(idUtente: number) {
     const conn = await db(); // connessione al db
     const [rows] = await conn.query(
-      'SELECT prezzo FROM preventivo WHERE id_preventivo = ?',
-      idPreventivo,
+      'SELECT prezzo FROM preventivo WHERE id_utente = ?',
+      idUtente,
     ); // query che ritorna il prezzo di un preventivo
     const preventivo = rows as RowDataPacket[]; // assegno a preventivo i risultati della query
     return preventivo[0].prezzo; // ritorno il prezzo
   }
 
   // funzione asincrona che ritorna lo stato di un preventivo
-  // dove l'id del preventivo è uguale a idPreventivo
-  static async getStato(idPreventivo: number) {
+  static async getStato(idUtente: number): Promise<string> {
     const conn = await db(); // connessione al db
-    const [rows] = await conn.query(
-      'SELECT stato FROM preventivo WHERE id_preventivo = ?',
-      idPreventivo,
-    ); // query che ritorna lo stato di un preventivo
-    const preventivo = rows as RowDataPacket[]; // assegno a preventivo i risultati della query
-    return preventivo[0].stato; // ritorno lo stato
+    const [rows] = await conn.query<RowDataPacket[]>(
+      'SELECT stato FROM preventivo WHERE id_utente = ?',
+      [idUtente],
+    );
+
+    // Verifica se la query ha restituito risultati
+    if (rows && rows.length > 0) {
+      const preventivo = rows[0];
+      return preventivo.stato; // ritorno lo stato
+    }
+    // Gestisci il caso in cui la query non restituisce risultati
+    console.error('Nessun risultato trovato per idUtente:', idUtente);
+    return 'Stato non disponibile';
   }
 
   // funzione asincrona che permette di inserire il prezzo di un preventivo

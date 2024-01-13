@@ -6,7 +6,7 @@ class Preventivo {
     limitiAddestramenti: number,
     limitiSalvataggi:number,
     prezzo: number,
-    stato: number,
+    stato: string,
   ) {
     this.idPreventivo = idPreventivo;
     this.idUtente = idUtente;
@@ -27,7 +27,7 @@ class Preventivo {
 
   private prezzo: number;
 
-  private stato: number;
+  private stato: string;
 
   // creo i metodi get
   public getIdPreventivo(): number {
@@ -50,7 +50,7 @@ class Preventivo {
     return this.prezzo;
   }
 
-  public getStato(): number {
+  public getStato(): string {
     return this.stato;
   }
 
@@ -71,7 +71,7 @@ class Preventivo {
     this.prezzo = prezzo;
   }
 
-  public setStato(stato: number): void {
+  public setStato(stato: string): void {
     this.stato = stato;
   }
 }

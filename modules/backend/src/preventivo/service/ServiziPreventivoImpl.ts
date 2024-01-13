@@ -30,9 +30,9 @@ class ServiziPreventivoImpl implements serviziPreventivo {
   }
 
   // metodo che mi consente di eliminare un preventivo
-  static async eliminaPreventivo(idPreventivo: number) {
+  static async eliminaPreventivo(idUtente: number) {
     // richiamo il metodo eliminaPreventivo del PreventivoDAO
-    const preventivo = await PreventivoDAO.eliminaPreventivo(idPreventivo);
+    const preventivo = await PreventivoDAO.eliminaPreventivo(idUtente);
     if (preventivo) {
       return preventivo;
     }
@@ -40,9 +40,9 @@ class ServiziPreventivoImpl implements serviziPreventivo {
   }
 
   // metodo che mi consente di recuperare un preventivo
-  static async getPreventivo(idPreventivo: number) {
+  static async getPreventivo(idUtente: number) {
     // richiamo il metodo getPreventivo del PreventivoDAO
-    const preventivo = await PreventivoDAO.getPreventivo(idPreventivo);
+    const preventivo = await PreventivoDAO.getPreventivo(idUtente);
     if (preventivo) {
       return preventivo;
     }
@@ -50,19 +50,19 @@ class ServiziPreventivoImpl implements serviziPreventivo {
   }
 
   // metodo che mi consente di recuperare l'id di un preventivo
-  /* static async getIdPreventivo(idUtente: number) {
+  static async getIdPreventivo(idUtente: number) {
     // richiamo il metodo getIdPreventivo del PreventivoDAO
     const preventivo = await PreventivoDAO.getIdPreventivo(idUtente);
     if (preventivo) {
       return preventivo;
     }
     return null;
-  } */
+  }
 
   // metodo che mi consente di recuperare i limiti di addestramento di un preventivo
-  static async getLimitiAddestramenti(idPreventivo: number) {
+  static async getLimitiAddestramenti(idUtente: number) {
     // richiamo il metodo getLimitiAddestramento del PreventivoDAO
-    const preventivo = await PreventivoDAO.getLimitiAddestramenti(idPreventivo);
+    const preventivo = await PreventivoDAO.getLimitiAddestramenti(idUtente);
     if (preventivo) {
       return preventivo;
     }
@@ -70,9 +70,9 @@ class ServiziPreventivoImpl implements serviziPreventivo {
   }
 
   // metodo che mi consente di recuperare i limiti di salvataggio di un preventivo
-  static async getLimitiSalvataggi(idPreventivo: number) {
+  static async getLimitiSalvataggi(idUtente: number) {
     // richiamo il metodo getLimitiSalvataggi del PreventivoDAO
-    const preventivo = await PreventivoDAO.getLimitiSalvataggi(idPreventivo);
+    const preventivo = await PreventivoDAO.getLimitiSalvataggi(idUtente);
     if (preventivo) {
       return preventivo;
     }
@@ -80,9 +80,9 @@ class ServiziPreventivoImpl implements serviziPreventivo {
   }
 
   // metodo che mi consente di recuperare il prezzo di un preventivo
-  static async getPrezzo(idPreventivo: number) {
+  static async getPrezzo(idUtente: number) {
     // richiamo il metodo getPrezzo del PreventivoDAO
-    const preventivo = await PreventivoDAO.getPrezzo(idPreventivo);
+    const preventivo = await PreventivoDAO.getPrezzo(idUtente);
     if (preventivo) {
       return preventivo;
     }
@@ -90,9 +90,9 @@ class ServiziPreventivoImpl implements serviziPreventivo {
   }
 
   // metodo che mi consente di recuperare lo stato di un preventivo
-  static async getStato(idPreventivo: number) {
+  static async getStato(idUtente: number) {
     // richiamo il metodo getStato del PreventivoDAO
-    const preventivo = await PreventivoDAO.getStato(idPreventivo);
+    const preventivo = await PreventivoDAO.getStato(idUtente);
     if (preventivo) {
       return preventivo;
     }
