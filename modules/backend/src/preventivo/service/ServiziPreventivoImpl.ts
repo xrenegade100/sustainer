@@ -2,6 +2,15 @@ import serviziPreventivo from './ServiziPreventivo';
 import PreventivoDAO from '../../DAO/PreventivoDAO';
 
 class ServiziPreventivoImpl implements serviziPreventivo {
+  static async TuttiPreventivi() {
+    // richiamo il metodo TuttiPreventivi del PreventivoDAO
+    const preventivi = await PreventivoDAO.getPreventivi();
+    if (preventivi) {
+      return preventivi;
+    }
+    return null;
+  }
+
   // metodo che mi consente di creare un preventivo
   static async creaPreventivo(
     idUtente: number,

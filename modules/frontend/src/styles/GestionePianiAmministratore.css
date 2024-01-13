@@ -1,0 +1,89 @@
+.headergestione {
+  padding: 20px;
+  text-align: center;
+  background-color: #f1f1f1;
+  border-radius: 10px; /* Add rounded borders */
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5); /* Add shadow */
+}
+
+.maingestione {
+  margin: 0 auto;
+  width: 80%;
+}
+
+.gestionetable {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+.gestionetable,
+.gestioneth,
+.gestionetd {
+  border: 1px solid #222222;
+}
+
+.gestioneth,
+.gestionetd {
+  padding: 15px;
+  text-align: left;
+}
+
+.gestioneth {
+  background-color: #2467d1;
+  color: white;
+}
+
+.bottonePreventivi {
+  background-color: #2467d1;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  transition-duration: 0.4s;
+  cursor: pointer;
+}
+
+.bottonePreventivi:hover {
+  background-color: white;
+  color: #2467d1;
+}
+
+.modal-content {
+  background-color: #f4f4f4; /* Adjust to match your site's colors */
+  margin: auto;
+  padding: 20px;
+  border: 1px solid #888; /* Adjust to match your site's colors */
+  width: 80%;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  transition: 0.3s;
+}
+
+.modal-header,
+.modal-footer {
+  padding: 10px 16px;
+  background-color: #5cb85c; /* Adjust to match your site's colors */
+  color: white;
+}
+
+.modal-body {
+  padding: 2px 16px;
+}
+
+.close {
+  color: white;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: #000;
+  text-decoration: none;
+  cursor: pointer;
+}

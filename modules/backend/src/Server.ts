@@ -61,13 +61,18 @@ server.use('/differenzaGiorni', (req, res) => {
 
 // finePiano
 
+// preventivo
 server.use('/creaPreventivo', (req, res) => {
   PreventivoController.creaPreventivoIMP(req, res);
 });
-
 server.use('/verificaPreventivo', (req, res) => {
   PreventivoController.controllaPreventivoIMP(req, res);
 });
+server.use('/preventivi', (req, res) => {
+  PreventivoController.TuttiPreventiviIMP(req, res);
+});
+
+// fine preventivo
 
 // amministratore
 server.use('/loginAm', (req, res) => {

@@ -2,15 +2,21 @@ import { Request, Response } from 'express';
 import ServiziPreventivoImpl from '../preventivo/service/ServiziPreventivoImpl';
 
 class PreventivoController {
+  static TuttiPreventiviIMP = async (req: Request, res: Response) => {
+    const preventivi = await ServiziPreventivoImpl.TuttiPreventivi();
+    if (preventivi) {
+      return res.status(200).json(preventivi);
+    }
+    return res.status(403).json({ message: 'preventivi non trovati' });
+  };
+
   static creaPreventivoIMP = async (req: Request, res: Response) => {
     if (req.body.limitiAddestramenti && req.body.limitiSalvataggi) {
-      const {
-        limitiAddestramenti, limitiSalvataggi,
-      } = req.body;
+      const { limitiAddestramenti, limitiSalvataggi } = req.body;
       const preventivo = await ServiziPreventivoImpl.creaPreventivo(
-      req.session!.idUser,
-      limitiAddestramenti,
-      limitiSalvataggi,
+        req.session!.idUser,
+        limitiAddestramenti,
+        limitiSalvataggi,
       );
       if (preventivo) {
         return res.status(200).json(preventivo);
@@ -18,7 +24,9 @@ class PreventivoController {
       return res.status(403).json({ message: 'preventivo non creato' });
     }
 
-    const preventivo = await ServiziPreventivoImpl.getPreventivo(req.session!.idUser);
+    const preventivo = await ServiziPreventivoImpl.getPreventivo(
+      req.session!.idUser,
+    );
     if (preventivo) {
       return res.status(200).json(preventivo);
     }
@@ -26,7 +34,9 @@ class PreventivoController {
   };
 
   static controllaPreventivoIMP = async (req: Request, res: Response) => {
-    const preventivo = await ServiziPreventivoImpl.getPreventivo(req.session!.idUser);
+    const preventivo = await ServiziPreventivoImpl.getPreventivo(
+      req.session!.idUser,
+    );
     if (preventivo) {
       return res.status(200).json(preventivo);
     }
@@ -35,7 +45,9 @@ class PreventivoController {
 
   static eliminaPreventivoIMP = async (req: Request, res: Response) => {
     const { idPreventivo } = req.body;
-    const preventivo = await ServiziPreventivoImpl.eliminaPreventivo(idPreventivo);
+    const preventivo = await ServiziPreventivoImpl.eliminaPreventivo(
+      idPreventivo,
+    );
     if (preventivo) {
       return res.status(200).json(preventivo);
     }
@@ -64,7 +76,9 @@ class PreventivoController {
 
   static getLimitiAddestramentiIMP = async (req: Request, res: Response) => {
     const { idPreventivo } = req.body;
-    const preventivo = await ServiziPreventivoImpl.getLimitiAddestramenti(idPreventivo);
+    const preventivo = await ServiziPreventivoImpl.getLimitiAddestramenti(
+      idPreventivo,
+    );
     if (preventivo) {
       return res.status(200).json(preventivo);
     }
@@ -73,7 +87,9 @@ class PreventivoController {
 
   static getLimitiSalvataggiIMP = async (req: Request, res: Response) => {
     const { idPreventivo } = req.body;
-    const preventivo = await ServiziPreventivoImpl.getLimitiSalvataggi(idPreventivo);
+    const preventivo = await ServiziPreventivoImpl.getLimitiSalvataggi(
+      idPreventivo,
+    );
     if (preventivo) {
       return res.status(200).json(preventivo);
     }
@@ -100,7 +116,10 @@ class PreventivoController {
 
   static aggiornaStatoIMP = async (req: Request, res: Response) => {
     const { idPreventivo, stato } = req.body;
-    const preventivo = await ServiziPreventivoImpl.aggiornaStato(idPreventivo, stato);
+    const preventivo = await ServiziPreventivoImpl.aggiornaStato(
+      idPreventivo,
+      stato,
+    );
     if (preventivo) {
       return res.status(200).json(preventivo);
     }
@@ -109,7 +128,10 @@ class PreventivoController {
 
   static aggiornaPrezzoIMP = async (req: Request, res: Response) => {
     const { idPreventivo, prezzo } = req.body;
-    const preventivo = await ServiziPreventivoImpl.aggiornaPrezzo(idPreventivo, prezzo);
+    const preventivo = await ServiziPreventivoImpl.aggiornaPrezzo(
+      idPreventivo,
+      prezzo,
+    );
     if (preventivo) {
       return res.status(200).json(preventivo);
     }
