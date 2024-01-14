@@ -2,9 +2,9 @@
   "name": "sustainer-backend",
   "version": "1.0.0",
   "description": "",
-  "main": "src/index.ts",
+  "main": "src/Index.ts",
   "scripts": {
-    "dev": "nodemon src/index.ts"
+    "dev": "nodemon src/Index.ts"
   },
   "keywords": [],
   "author": "",
