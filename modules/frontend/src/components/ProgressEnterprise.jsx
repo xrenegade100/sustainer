@@ -9,6 +9,7 @@ import { Input } from 'baseui/input';
 import '../styles/ProgressEnterprise.css';
 import CardLoadingPrev from './CardLoadingPrev';
 import CardPreventivo from './CardPreventivo';
+import circleCheck from '../assets/circle_check.svg';
 
 const PageNumber = ({
   accomplished,
@@ -281,27 +282,34 @@ const ProgressEnterprise = ({ onPageNumberClick }) => {
           <CardLoadingPrev />
         </div>
       ) : currentStep === 3 ? (
-        <div className="cardPreventivo">
-          <CardPreventivo />
+        <>
+          <div className="cardPreventivo">
+            <CardPreventivo
+              bgColor="#2467d1"
+              textColor="#FFFFFF"
+              circleIcon={circleCheck}
+            />
+          </div>
           <div className="buttonPE">
             <Button
-              className="btnnext"
-              // eslint-disable-next-line max-len
-              onClick={handleBuyClick} // creare metodo che rendirizza a stripe e aumentare currentstep che va a 4
-              size={SIZE.large}
-            >
-              Acquista
-            </Button>
-            <Button
-              className="btnnext"
-              // eslint-disable-next-line max-len
+              className="btnback"
+                  // eslint-disable-next-line max-len
               onClick={handleNotBuyClick} // creare metodo che rendirizza a stripe e aumentare currentstep che va a 4
               size={SIZE.large}
             >
               Rifiuta
             </Button>
+            <Button
+              className="btnnext"
+                  // eslint-disable-next-line max-len
+              onClick={handleBuyClick} // creare metodo che rendirizza a stripe e aumentare currentstep che va a 4
+              size={SIZE.large}
+            >
+              Acquista
+            </Button>
           </div>
-        </div>
+
+        </>
       ) : (
         <div className="cardPianoE">
           <CardPianoEnterprise />

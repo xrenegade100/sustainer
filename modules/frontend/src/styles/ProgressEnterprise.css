@@ -177,6 +177,15 @@
 
 }
 
+.cardPreventivo{
+    width: auto;
+    height: auto;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    margin-top: 5%;
+}
+
 @media screen and (max-width: 768px) {
     .cfetitle h2{
         font-size: 28px;

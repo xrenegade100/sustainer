@@ -3,11 +3,13 @@ import { useEffect, useState } from 'react';
 
 const CardPreventivo = ({
   // eslint-disable-next-line react/prop-types
+  bgColor,
   circleIcon,
+  textColor,
 }) => {
   const [prezzo, setPrezzo] = useState(null);
-  const [limiteSalvataggi, setLimiteSalvataggi] = useState(null);
-  const [limiteAddestramenti, setLimiteAddestramenti] = useState(null);
+  const [limitiSalvataggi, setLimitiSalvataggi] = useState(null);
+  const [limitiAddestramenti, setLimitiAddestramenti] = useState(null);
 
   useEffect(() => {
     const fetchDataPreventivo = async () => {
@@ -25,10 +27,8 @@ const CardPreventivo = ({
 
         const jsonData = await response.json();
         setPrezzo(jsonData.prezzo);
-        setLimiteSalvataggi(jsonData.limiteSalvataggi);
-        console.log('risposta save', jsonData.limiteSalvataggi);
-        setLimiteAddestramenti(jsonData.limiteAddestramenti);
-        console.log(jsonData.limiteAddestramenti);
+        setLimitiSalvataggi(jsonData.limitiSalvataggi);
+        setLimitiAddestramenti(jsonData.limitiAddestramenti);
       } catch (error) {
         console.error('Errore durante il recupero dei dati:', error.message);
       }
@@ -37,7 +37,10 @@ const CardPreventivo = ({
   }, []);
 
   return (
-    <div className="card">
+    <div
+      className="card"
+      style={{ backgroundColor: bgColor, color: textColor }}
+    >
       <div className="card-header">
         <h2>Il tuo Preventivo</h2>
       </div>
@@ -58,15 +61,19 @@ const CardPreventivo = ({
         <li className="phrase-item">
           <img src={circleIcon} alt="circleCheck" />
           <span className="phrase-text">
-            Limite salvataggi mensili:
-            {limiteSalvataggi}
+            {limitiAddestramenti} addestramenti giornalieri
           </span>
         </li>
         <li className="phrase-item">
           <img src={circleIcon} alt="circleCheck" />
           <span className="phrase-text">
-            Limite addestramenti giornalieri:
-            {limiteAddestramenti}
+            {limitiSalvataggi} salvataggi in memoria
+          </span>
+        </li>
+        <li className="phrase-item">
+          <img src={circleIcon} alt="circleCheck" />
+          <span className="phrase-text">
+            Salvataggio parametri e metriche degli addestramenti
           </span>
         </li>
       </ul>
