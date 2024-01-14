@@ -37,6 +37,9 @@ server.use('/verificaLogin', (req, res) => {
 server.use('/register', (req, res) => {
   UtenteController.registrazioneIMP(req, res);
 });
+server.use('/InfoUtente/:idUtente', (req, res) => {
+  UtenteController.getUtenteById(req, res);
+});
 // fineUtente
 
 // piano

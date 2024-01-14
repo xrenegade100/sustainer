@@ -10,6 +10,8 @@ const GestioneAmministratorePiani = () => {
   const [currentPreventivo, setCurrentPreventivo] = useState(null);
   const [stato, setStato] = useState('');
   const [prezzo, setPrezzo] = useState('');
+  const [isShown, setIsShown] = useState(false);
+  const [userInfo, setUserInfo] = useState(null);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -90,6 +92,29 @@ const GestioneAmministratorePiani = () => {
     window.location.reload();
   };
 
+  const fetchUserInfo = async (idUtente) => {
+    const response = await fetch(
+      `http://localhost:5000/InfoUtente/${idUtente}`,
+      {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      },
+    );
+    const data = await response.json();
+    setUserInfo(data);
+  };
+
+  const showUserInfo = (idUtente) => {
+    fetchUserInfo(idUtente);
+    setIsShown(true);
+  };
+
+  const hideUserInfo = () => {
+    setIsShown(false);
+  };
+
   if (!preventivi) {
     return <div>Nessun preventivo presente</div>;
   }
@@ -113,7 +138,26 @@ const GestioneAmministratorePiani = () => {
             {preventivi.map((preventivo) => (
               <tr key={preventivo.idPreventivo} className="gestionetr">
                 <td className="gestionetd">{preventivo.idPreventivo}</td>
-                <td className="gestionetd">{preventivo.idUtente}</td>
+                <td
+                  className="gestionetd"
+                  onMouseOver={() => showUserInfo(preventivo.idUtente)}
+                  onMouseOut={() => hideUserInfo()}
+                >
+                  {preventivo.idUtente}
+                  {isShown && (
+                    <div className="tooltip">
+                      {userInfo ? (
+                        <div>
+                          <p>Nome: {userInfo.nome}</p>
+                          <p>Cognome: {userInfo.cognome}</p>
+                          <p>Email: {userInfo.email}</p>
+                        </div>
+                      ) : (
+                        <div>Caricamento...</div>
+                      )}
+                    </div>
+                  )}
+                </td>
                 <td className="gestionetd">{preventivo.limitiAddestramenti}</td>
                 <td className="gestionetd">{preventivo.limitiSalvataggi}</td>
                 <td className="gestionetd">{preventivo.prezzo}</td>

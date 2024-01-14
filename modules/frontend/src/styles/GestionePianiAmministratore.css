@@ -1,4 +1,4 @@
-css .headergestione {
+.headergestione {
   top: 20%;
   position: absolute;
   padding: 20px;
@@ -176,6 +176,14 @@ css .headergestione {
   color: #000;
   text-decoration: none;
   cursor: pointer;
+}
+
+.tooltip {
+  position: absolute;
+  background-color: #f9f9f9;
+  border: 1px solid #ccc;
+  padding: 10px;
+  z-index: 1;
 }
 
 @media screen and (max-width: 850px) {
