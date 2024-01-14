@@ -1,0 +1,291 @@
+.cardForms {
+  width: 80%; /* Utilizza percentuali invece di pixel per rendere la larghezza responsive */
+  max-width: 600px; /* Specifica una larghezza massima per evitare che diventi troppo larga su schermi grandi */
+  height: auto;
+  background-color: #fff;
+  border-radius: 10px;
+  display: flex;
+  justify-content: center;
+  position: relative;
+  flex-direction: column;
+  border: 1px solid #ddd;
+  box-shadow: -5px -5px 10px rgba(0, 0, 0, 0.1), 5px 5px 10px rgba(0, 0, 0, 0.1);
+  margin: 5% auto; /* Utilizza la proprietà margin per la posizione, con 5% in alto e in basso e centrato orizzontalmente */
+  margin-top: 10%;
+}
+
+/* Aggiungi una media query per adattare la larghezza su schermi più piccoli */
+@media (max-width: 600px) {
+  .cardForms {
+    width: 90%; /* Ajusta la larghezza per schermi più piccoli */
+    margin: 0% auto; /* Modifica il margine se necessario */
+    margin-top: 15%;
+  }
+  .footerPE {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+  }
+}
+
+.bottoni {
+  display: flex;
+  justify-content: center;
+  flex-direction: row;
+}
+
+.h3 {
+  margin-bottom: 3%;
+  font-size: 1.2vw;
+}
+
+.buttonA {
+  width: 20%;
+  height: auto;
+  margin-top: 3%;
+  border-radius: 8px; /* Bordo arrotondato */
+  padding: 10px 20px;
+  font-size: 1.2vw;
+  font-weight: bold;
+  text-align: center;
+  text-decoration: none;
+  cursor: pointer;
+  background-color: #2467d1; /* Colore di sfondo */
+  color: #fff; /* Colore del testo */
+  border: none; /* Rimuove il bordo */
+  transition: background-color 0.3s, color 0.3s;
+  margin-left: 0%;
+  margin-left: 10%;
+}
+
+.formoo {
+  height: 100%;
+}
+
+.buttonI {
+  width: 20%;
+  height: auto;
+  margin-top: 3%;
+  border-radius: 8px; /* Bordo arrotondato */
+  padding: 10px 20px;
+  font-size: 1.2vw;
+  font-weight: bold;
+  text-align: center;
+  text-decoration: none;
+  cursor: pointer;
+  background-color: #dcdcdc; /* Colore di sfondo */
+  color: black; /* Colore del testo */
+  border: none; /* Rimuove il bordo */
+}
+
+.bodypar {
+  background-image: url('/Sfondo.png');
+  background-size: 65%;
+  background-position: left;
+  background-repeat: no-repeat;
+  margin: 0; /* Rimuovere il margin predefinito del body */
+}
+
+.inputTxt {
+  width: 100%;
+  height: 50px;
+  font-size: 0.8vw;
+  border-radius: 4px;
+  border: 1px solid #ddd;
+  outline: none;
+}
+
+.inputTxt:focus {
+  border-color: #2467d1; /* Colore blu per evidenziare al focus */
+  border-width: 2px;
+}
+
+.custom-select {
+  width: 100%;
+  padding: 8px;
+  border-radius: 4px;
+  border: 1px solid #ddd;
+  font-size: 0.8vw; /* Rimuove il bordo evidenziato di default */
+  outline: none;
+}
+
+.custom-select:focus {
+  border-color: #2467d1; /* Colore blu per evidenziare al focus */
+  border-width: 2px;
+}
+
+.custom-select option:hover {
+  background-color: #fff; /* Rimuove la sfumatura grigia al passaggio con le frecce */
+}
+
+.indexedStep {
+  color: rgb(190, 190, 190);
+  width: 40px;
+  height: 40px;
+  font-size: 12px;
+  background-color: rgb(255, 255, 255);
+  border-radius: 50%;
+  border-style: solid;
+  border-width: 1px;
+  border-color: rgb(206, 206, 206);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+.progress {
+  margin-top: 3%;
+}
+
+.indexedStep.accomplished {
+  background-color: #2467d1;
+  color: white;
+  border-style: none;
+}
+
+.RSPBprogressBar {
+  height: 2px;
+  width: 40%;
+  line-height: 1;
+  border-radius: 10px;
+  position: relative;
+  background-color: rgb(207, 207, 207);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 0;
+  margin: 20px auto;
+}
+
+.RSPBprogressBar .RSPBstep {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 0;
+  position: absolute;
+  transform: translateX(-50%);
+  transition-property: all;
+  transition-timing-function: ease;
+}
+
+.RSPBprogressBar .RSPBprogressBarText {
+  color: white;
+  font-size: 10px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.RSPBprogressBar .RSPBprogression {
+  position: absolute;
+  transition: width 0.3s ease;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  border-radius: 10px;
+  background: #2467d1;
+  z-index: -1;
+}
+@media (max-width: 1440px) {
+  .progress {
+    margin-top: 4%;
+  }
+}
+@media (max-width: 1024px) {
+  .progress {
+    margin-top: 5%;
+  }
+}
+@media screen and (max-width: 425px) {
+  .progress {
+    margin-top: 8%;
+  }
+  .indexedStep {
+    width: 30px;
+    height: 30px;
+  }
+  .RSPBprogressBar {
+    width: 60%;
+  }
+}
+@media screen and (max-width: 425px) {
+  .indexedStep {
+    width: 20px;
+    height: 20px;
+  }
+  .RSPBprogressBar {
+    width: 70%;
+  }
+}
+
+.indexedStep {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.stepContent {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.stepNumber1 {
+  font-size: 1.2rem;
+  margin-top: 50%;
+}
+.progressText {
+  font-size: 1.5vw; /* Utilizza vw per il dimensionamento del testo in base alla larghezza della viewport */
+  margin-top: 20%; /* Utilizza percentuali per il margine in alto */
+  color: black;
+  text-align: center;
+}
+
+/* Aggiungi una media query per adattare il design su schermi più piccoli */
+@media (max-width: 600px) {
+  .progressText {
+    font-size: 2vw; /* Modifica la dimensione del testo per schermi più piccoli */
+    margin-top: 4%; /* Modifica il margine in alto per schermi più piccoli */
+  }
+}
+
+.stepNumber2 {
+  font-size: 1.2rem;
+  margin-top: 60%;
+  padding: 7%;
+}
+.stepNumber3 {
+  font-size: 1.2rem;
+  margin-top: 50%;
+  padding: 5%;
+}
+.stepNumber4 {
+  font-size: 1.2rem;
+  margin-top: 45%;
+  padding: 0%;
+}
+
+.divone {
+  border-radius: 8px;
+  margin: 2%; /* Utilizza percentuali per il margine */
+  padding: 2em; /* Utilizza em per il padding */
+  border: 1px solid #ddd;
+  margin-bottom: 2%; /* Utilizza percentuali per il margine in fondo */
+}
+
+/* Aggiungi una media query per adattare il design su schermi più piccoli */
+@media (max-width: 600px) {
+  .divone {
+    margin-bottom: 4%; /* Modifica il margine in fondo per schermi più piccoli */
+  }
+}
+
+.form-body {
+  height: auto;
+}
+
+.footerPE {
+  margin-top: auto; /* Imposta il margine superiore su auto per spingere il footer in basso */
+}

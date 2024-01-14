@@ -15,10 +15,10 @@ html {
   scroll-behavior: smooth;
 }
 
-body {
+.bodyhome {
   background-image: url('/Sfondo.png');
   background-size: 65%;
-  background-position: left 80%;
+  background-position: left 105%;
   background-repeat: no-repeat;
   margin: 0; /* Rimuovere il margin predefinito del body */
 }
@@ -41,7 +41,7 @@ body {
     margin-left: 5%;
     width: 90%;
   }
-  body {
+  .bodyhome {
     background-image: none; /* Rimuovi lo sfondo solo su schermi più piccoli */
   }
   .img-scritta {

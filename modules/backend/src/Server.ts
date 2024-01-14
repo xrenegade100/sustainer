@@ -6,6 +6,7 @@ import cors from 'cors';
 import PianoController from './Controller/PianoController';
 import UtenteController from './Controller/UtenteController';
 import AmministratoreController from './Controller/AmministratoreController';
+import ModelloController from './Controller/ModelloController';
 
 const server = express();
 
@@ -75,6 +76,14 @@ server.use('/verificaLoginAm', (req, res) => {
   AmministratoreController.verificaLoginAm(req, res);
 });
 // fineAmministratore
+
+server.use('/salvaJson', (req, res) => {
+  ModelloController.salvaJson(req, res);
+});
+
+server.use('/leggiCSV', (req, res) => {
+  ModelloController.leggiCSV(req, res);
+});
 
 export default server;
 export { key };

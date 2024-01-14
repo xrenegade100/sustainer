@@ -8,7 +8,7 @@ const homepage = () => (
     <div className="header">
       <Navbar />
     </div>
-    <div className="body">
+    <div className="bodyhome">
       <img className="img-logoblue" src="/logoblue.png" alt="" />
 
       <img className="img-scritta" src="/Scrittahome.png" alt="" />
