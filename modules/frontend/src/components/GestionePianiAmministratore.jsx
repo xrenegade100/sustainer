@@ -12,6 +12,8 @@ const GestioneAmministratorePiani = () => {
   const [prezzo, setPrezzo] = useState('');
   const [isShown, setIsShown] = useState(false);
   const [userInfo, setUserInfo] = useState(null);
+  const [currentUserId, setCurrentUserId] = useState(null);
+  const [piani, setPiani] = useState([]);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -115,117 +117,184 @@ const GestioneAmministratorePiani = () => {
     setIsShown(false);
   };
 
+  useEffect(() => {
+    const fetchPiani = async () => {
+      const response = await fetch('http://localhost:5000/Allpiani', {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+      const data = await response.json();
+      setPiani(data);
+      if (data) {
+        console.log(data);
+      }
+    };
+    fetchPiani();
+  }, []);
+
   if (!preventivi) {
     return <div>Nessun preventivo presente</div>;
   }
 
   return (
-    <div className="headergestione">
-      <div className="maingestione">
-        <h1>Gestione preventivi</h1>
-        <table className="gestionetable">
-          <thead className="gestionethead">
-            <tr className="gestionetr">
-              <th className="gestioneth">Preventivo ID</th>
-              <th className="gestioneth">Utente ID</th>
-              <th className="gestioneth">Limite Addestramento</th>
-              <th className="gestioneth">Limite Salvataggi</th>
-              <th className="gestioneth">Prezzo</th>
-              <th className="gestioneth">Stato</th>
-            </tr>
-          </thead>
-          <tbody className="gestionetbody">
-            {preventivi.map((preventivo) => (
-              <tr key={preventivo.idPreventivo} className="gestionetr">
-                <td className="gestionetd">{preventivo.idPreventivo}</td>
-                <td
-                  className="gestionetd"
-                  onMouseOver={() => showUserInfo(preventivo.idUtente)}
-                  onMouseOut={() => hideUserInfo()}
-                >
-                  {preventivo.idUtente}
-                  {isShown && (
-                    <div className="tooltip">
-                      {userInfo ? (
-                        <div>
-                          <p>Nome: {userInfo.nome}</p>
-                          <p>Cognome: {userInfo.cognome}</p>
-                          <p>Email: {userInfo.email}</p>
-                        </div>
-                      ) : (
-                        <div>Caricamento...</div>
-                      )}
-                    </div>
-                  )}
-                </td>
-                <td className="gestionetd">{preventivo.limitiAddestramenti}</td>
-                <td className="gestionetd">{preventivo.limitiSalvataggi}</td>
-                <td className="gestionetd">{preventivo.prezzo}</td>
-                <td className="gestionetd">{preventivo.stato}</td>
-                <td className="gestionetd">
-                  <button
-                    className="bottonePreventivi"
-                    onClick={() => openModal(preventivo)}
-                  >
-                    Modifica
-                  </button>
-                </td>
+    <div className="divGenerale">
+      <div className="headergestione">
+        <div className="maingestione">
+          <h1>Gestione Preventivi</h1>
+          <table className="gestionetable">
+            <thead className="gestionethead">
+              <tr className="gestionetr">
+                <th className="gestioneth">Preventivo ID</th>
+                <th className="gestioneth">Utente ID</th>
+                <th className="gestioneth">Limite Addestramento</th>
+                <th className="gestioneth">Limite Salvataggi</th>
+                <th className="gestioneth">Prezzo</th>
+                <th className="gestioneth">Stato</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
-        <Modal
-          isOpen={modalIsOpen}
-          onRequestClose={closeModal}
-          className="modal-content"
-        >
-          {currentPreventivo && (
-            <div>
-              <div className="modal-header">
-                <span className="close" onClick={closeModal}>
-                  &times;
-                </span>
-                <h2 className="titoloModal">Modifica Preventivo</h2>
-              </div>
-              <div className="modal-body">
-                <form onSubmit={handleSubmit}>
-                  <div>
-                    <h3 className="TextIdPreventivo">
-                      Id preventivo: {currentPreventivo.idPreventivo}
-                    </h3>
-                  </div>
-                  <div className="DivStato">
-                    <label className="statoLabel">Stato del preventivo</label>
-                    <select
-                      className="selectStato"
-                      id="stato"
-                      name="stato"
-                      value={currentPreventivo.stato}
-                      onChange={(e) => handleStateChange(e, currentPreventivo)}
+            </thead>
+            <tbody className="gestionetbody">
+              {preventivi.map((preventivo) => (
+                <tr key={preventivo.idPreventivo} className="gestionetr">
+                  <td className="gestionetd">{preventivo.idPreventivo}</td>
+                  <td className="gestionetd">
+                    <p
+                      onMouseOver={() => {
+                        showUserInfo(preventivo.idUtente);
+                        setCurrentUserId(preventivo.idUtente);
+                      }}
+                      onMouseOut={() => {
+                        hideUserInfo();
+                        setCurrentUserId(null);
+                      }}
                     >
-                      <option value="In Lavorazione">In Lavorazione</option>
-                      <option value="Accettato">Accettato</option>
-                      <option value="Rifiutato">Rifiutato</option>
-                    </select>
-                  </div>
-                  <div className="DivPrezzo">
-                    <label className="prezzoLabel">Prezzo del preventivo</label>
-                    <input
-                      className="inputPrezzo"
-                      value={prezzo}
-                      placeholder="Inserisci il prezzo"
-                      type="number"
-                      onChange={(e) => handlePriceChange(e, currentPreventivo)}
-                    />
-                  </div>
-                  <button type="submit" className="bottonePreventiviForm">
-                    Modifica
-                  </button>
-                </form>
+                      {preventivo.idUtente}
+                    </p>
+                    {isShown && currentUserId === preventivo.idUtente && (
+                      <div className="tooltip">
+                        {userInfo ? (
+                          <div>
+                            <p>Nome: {userInfo.nome}</p>
+                            <p>Cognome: {userInfo.cognome}</p>
+                            <p>Email: {userInfo.email}</p>
+                          </div>
+                        ) : (
+                          <div>Caricamento...</div>
+                        )}
+                      </div>
+                    )}
+                  </td>
+                  <td className="gestionetd">
+                    {preventivo.limitiAddestramenti}
+                  </td>
+                  <td className="gestionetd">{preventivo.limitiSalvataggi}</td>
+                  <td className="gestionetd">{preventivo.prezzo}</td>
+                  <td className="gestionetd">{preventivo.stato}</td>
+                  <td className="gestionetd">
+                    <button
+                      className="bottonePreventivi"
+                      onClick={() => openModal(preventivo)}
+                    >
+                      Modifica
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+          <Modal
+            isOpen={modalIsOpen}
+            onRequestClose={closeModal}
+            className="modal-content"
+          >
+            {currentPreventivo && (
+              <div>
+                <div className="modal-header">
+                  <span className="close" onClick={closeModal}>
+                    &times;
+                  </span>
+                  <h2 className="titoloModal">Modifica Preventivo</h2>
+                </div>
+                <div className="modal-body">
+                  <form onSubmit={handleSubmit}>
+                    <div>
+                      <h3 className="TextIdPreventivo">
+                        Id preventivo:
+                        {
+                          // eslint-disable-next-line
+                          currentPreventivo.idPreventivo
+                        }
+                      </h3>
+                    </div>
+                    <div className="DivStato">
+                      <label className="statoLabel">Stato del preventivo</label>
+                      <select
+                        className="selectStato"
+                        id="stato"
+                        name="stato"
+                        value={currentPreventivo.stato}
+                        onChange={(e) =>
+                          handleStateChange(e, currentPreventivo)
+                        }
+                      >
+                        <option value="In Lavorazione">In Lavorazione</option>
+                        <option value="Accettato">Accettato</option>
+                        <option value="Rifiutato">Rifiutato</option>
+                      </select>
+                    </div>
+                    <div className="DivPrezzo">
+                      <label className="prezzoLabel">
+                        Prezzo del preventivo
+                      </label>
+                      <input
+                        className="inputPrezzo"
+                        value={prezzo}
+                        placeholder="Inserisci il prezzo"
+                        type="number"
+                        onChange={(e) =>
+                          handlePriceChange(e, currentPreventivo)
+                        }
+                      />
+                    </div>
+                    <button type="submit" className="bottonePreventiviForm">
+                      Modifica
+                    </button>
+                  </form>
+                </div>
               </div>
-            </div>
-          )}
-        </Modal>
+            )}
+          </Modal>
+        </div>
+      </div>
+      <div className="headergestionePiani">
+        <div className="maingestionePiani">
+          <h1>Visualizzazione Piani</h1>
+          <table className="pianitable">
+            <thead className="pianithead">
+              <tr className="pianitr">
+                <th className="pianith">ID Piano</th>
+                <th className="pianith">Tipo</th>
+                <th className="pianith">Prezzo</th>
+                <th className="pianith">limite Salvataggi Modelli</th>
+                <th className="pianith">limite Addestramenti Modelli</th>
+              </tr>
+            </thead>
+            <tbody className="pianitbody">
+              {piani.map((piano) => (
+                <tr key={piano.idPiano} className="pianitr">
+                  <td className="pianitd">{piano.idPiano}</td>
+                  <td className="pianitd">{piano.tipo}</td>
+                  <td className="pianitd">{piano.prezzo}</td>
+                  <td className="pianitd">{piano.limiteSalvataggiModelli}</td>
+                  <td className="pianitd">
+                    {piano.limiteAddestramentiModelli}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
   );

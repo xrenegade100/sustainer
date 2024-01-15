@@ -166,7 +166,7 @@ const Navbar = () => {
             </li>
             <li className="elements">
               <Link to="/gestionePiani" className="text-white">
-                Gestione Piani
+                Gestione Preventivi
               </Link>
             </li>
             <li className="elements">
