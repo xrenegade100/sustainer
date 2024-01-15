@@ -6,6 +6,16 @@ const stripe = require('stripe')(
 );
 
 class PianoController {
+  // metodo che mi consente di visualizzare tutti i piani
+  static visualizzaPianiIMP = async (req: Request, res: Response) => {
+    // richiamo il metodo getPiani del serviziPianoImpl
+    const piani = await serviziPianoImpl.getAllPiani();
+    if (piani) {
+      return res.status(200).json(piani); // ritorno i piani
+    }
+    return res.status(403).json({ message: 'piani non trovati' }); // altrimenti ritorno un messaggio di errore
+  };
+
   // metodo che ritorna tutti i piani
   static getTipiPianoIMP = async (req: Request, res: Response) => {
     // richiamo il metodo getTipiPiani del serviziPianoImpl

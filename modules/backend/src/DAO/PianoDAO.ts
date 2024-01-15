@@ -4,6 +4,25 @@ import Piano from '../piano/domain/Piano';
 import Acquisto from '../piano/domain/Acquisto';
 
 class PianoDAO {
+  // funzione asincrona che ritorna tutti i piani
+  static async getAllPiani() {
+    const conn = await db(); // connessione al db
+    const [rows] = await conn.query('SELECT * FROM piano'); // query che ritorna tutti i piani
+    const piani = rows as RowDataPacket[]; // assegno a piani i risultati della query
+    return piani.map(
+      (piano) =>
+        // eslint-disable-next-line implicit-arrow-linebreak
+        new Piano(
+          piano.id_piano,
+          piano.tipo,
+          piano.prezzo,
+          piano.limite_salvataggi_modelli,
+          piano.limite_addestramenti_modelli,
+        ),
+      // ritorno un oggetto mappato con tutti i piani
+    );
+  }
+
   // funzione asincrona che ritorna un piano in base al suo id
   static async getTipiPiani() {
     const conn = await db(); // connessione al db

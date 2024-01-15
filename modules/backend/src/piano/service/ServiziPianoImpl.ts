@@ -3,6 +3,15 @@ import PianoDAO from '../../DAO/PianoDAO';
 
 class ServiziPianoImpl implements serviziPiano {
   // metodo che ritorna tutti i piani
+  static async getAllPiani() {
+    const piani = await PianoDAO.getAllPiani(); // richiamo il metodo getPiani del PianoDAO
+    if (piani) {
+      return piani;
+    }
+    return null;
+  }
+
+  // metodo che ritorna tutti i piani non enterprise
   static async getTipiPiani() {
     const tipiPiani = await PianoDAO.getTipiPiani(); // richiamo il metodo getTipiPiani del PianoDAO
     if (tipiPiani) {

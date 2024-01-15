@@ -61,6 +61,9 @@ server.use('/annullaPiano', (req, res) => {
 server.use('/differenzaGiorni', (req, res) => {
   PianoController.differenzaGiorniIMP(req, res);
 });
+server.use('/AllPiani', (req, res) => {
+  PianoController.visualizzaPianiIMP(req, res);
+});
 
 // finePiano
 
