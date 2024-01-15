@@ -9,6 +9,7 @@ import Homepage from './pages/Homepage';
 import Piani from './pages/Piani';
 import ModificaPiano from './pages/ModificaPiano';
 import LoginAmministratore from './pages/LoginAmministratore';
+import InserimentoParametri from './pages/InserimentoParametri';
 import CaricaDataset from './pages/CaricaDataset';
 
 // Qui fare il routing frontend, quindi aggiungere qui le pagine jsx qui
@@ -41,6 +42,10 @@ const router = createBrowserRouter([
   {
     path: '/addestra',
     element: <CaricaDataset />, // passare la pagina jsx con le <>
+  },
+  {
+    path: '/inserimentoparametri',
+    element: <InserimentoParametri />, // passare la pagina jsx con le <>
   },
 ]);
 
