@@ -14,6 +14,7 @@ const Fairness = () => {
   const [value, setValue] = React.useState([]);
   const [snackbarMessage, setSnackbarMessage] = useState('');
   const [option, setOption] = React.useState([]);
+  const [addestramento, setAddestramento] = useState(false);
 
   const navigate = useNavigate();
   useEffect(() => {
@@ -63,6 +64,8 @@ const Fairness = () => {
         if (res.ok) {
           // Trasforma l'array di stringhe in un array di oggetti con le chiavi label e value
           setOption(response.data.map((item) => ({ id: item, label: item })));
+        } else {
+          navigate('/homepage');
         }
       } catch (error) {
         // eslint-disable-next-line no-console
@@ -72,30 +75,9 @@ const Fairness = () => {
     recuperoAttributiDataset();
   }, []);
 
-  const avvioAddestramento = async () => {
-    try {
-      const res = await fetch('http://localhost:5000/avvioAddestramento', {
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        method: 'POST',
-        credentials: 'include',
-        body: JSON.stringify({
-          gruppoPrivilegiato: value,
-        }),
-      });
-      const response = await res.json();
-      alert(response.addestramento);
-
-      if (res.ok) {
-        navigate('/fine-addestramento');
-      }
-    } catch (error) {
-      // eslint-disable-next-line no-console
-      console.error('Errore durante avvio addestramento:', error);
-    }
+  const passaAddestramento = async () => {
+    navigate('/fine-addestramento', { state: value });
   };
-
   return (
     <>
       <div className="header">
@@ -185,7 +167,7 @@ const Fairness = () => {
           >
             Indietro
           </Button>
-          <Button className="buttonAvanti" onClick={avvioAddestramento}>
+          <Button className="buttonAvanti" onClick={passaAddestramento}>
             Avanti
           </Button>
         </div>

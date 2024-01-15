@@ -87,6 +87,9 @@
   width: 100%;
   align-items: center;
 }
+.linkDownload {
+  text-decoration: none;
+}
 
 @media (max-width: 3000px) {
 }

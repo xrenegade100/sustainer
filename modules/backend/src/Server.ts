@@ -110,6 +110,9 @@ server.use('/gruppoPrivilegiato', (req, res) => {
 server.use('/avvioAddestramento', (req, res) => {
   ModelloController.AddestramentoIMP(req, res);
 });
+server.use('/downloadModello', (req, res) => {
+  ModelloController.downloadIMP(req, res);
+});
 
 export default server;
 export { key };

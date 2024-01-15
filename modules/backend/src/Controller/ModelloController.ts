@@ -4,16 +4,25 @@ import path from 'path';
 import csv from 'csv-parser';
 
 class ModelloController {
+  private static pathModello: string;
+
   static AddestramentoIMP = async (req: Request, res: Response) => {
     const { gruppoPrivilegiato } = req.body;
-    console.log(gruppoPrivilegiato);
 
-    const urlWithParams = new URL('http://127.0.0.1:8000/prova');
-    /*
-    gruppoPrivilegiato.forEach((id) => {
-      urlWithParams.searchParams.append(`param${id}`, 'true');
+    const urlWithParams = new URL('http://127.0.0.1:8000/');
+
+    gruppoPrivilegiato.state.forEach((element: any) => {
+      console.log(element);
+      urlWithParams.searchParams.append(`${element.id}`, 'true');
     });
-    */
+    console.log('Il nuovo url è: ', urlWithParams.href);
+
+    const fileRelativePathJson = `src/Dataset/${'decisionTree.json'}`;
+    const fileRelativePathDataset = `src/Dataset/${'Titanic-Dataset.csv'}`;
+
+    // Ottieni il percorso assoluto del file utilizzando il modulo path
+    const absolutePathJson = path.resolve(fileRelativePathJson);
+    const absolutePathDataset = path.resolve(fileRelativePathDataset);
 
     const responseAddestramento = await fetch(urlWithParams, {
       headers: {
@@ -21,14 +30,14 @@ class ModelloController {
       },
       method: 'POST',
       body: JSON.stringify({
-        pathJson: 'qualcosa',
-        pathDataset: 'qualcosa',
+        pathJson: absolutePathJson,
+        pathDataset: absolutePathDataset,
       }),
     });
     if (responseAddestramento.ok) {
       // Estrai i dati dalla risposta
       const data = await responseAddestramento.json();
-      console.log('Dati ricevuti:', data);
+      this.pathModello = data.pathModello;
       return res.status(200).json({
         addestramento: true,
       });
@@ -36,6 +45,33 @@ class ModelloController {
     return res.status(400).json({
       addestramento: false,
     });
+  };
+
+  static downloadIMP = async (req: Request, res: Response) => {
+    res.download(this.pathModello, 'modelloAddestrato.pkl', (err) => {
+      if (err) {
+        console.error('Errore durante il download del file:', err);
+        res.status(500).send('Errore durante il download del file');
+      }
+    });
+  };
+
+  static avanzamentoAddestramento3IMP = async (req: Request, res: Response) => {
+    if (req.session!.faseAddestramento === 3) {
+      return res.status(200).json({
+        avanzamento: 3,
+      });
+    }
+    return res.status(400).json({ avanzamento: false });
+  };
+
+  static avanzamentoAddestramento4IMP = async (req: Request, res: Response) => {
+    if (req.session!.faseAddestramento === 4) {
+      return res.status(200).json({
+        avanzamento: 3,
+      });
+    }
+    return res.status(400).json({ avanzamento: false });
   };
 
   static leggiCSV = async (req: Request, res: Response) => {
@@ -61,11 +97,11 @@ class ModelloController {
         percorsoCompletoCSV,
       );
 
-      console.log(primaRigaCSV);
-
-      res
-        .status(200)
-        .json({ success: 'File CSV letto correttamente', data: primaRigaCSV });
+      res.status(200).json({
+        success: 'File CSV letto correttamente',
+        data: primaRigaCSV,
+        faseAddestramento: req.session!.faseAddestramento,
+      });
     } catch (err) {
       console.error('Errore:', err);
       res.status(500).json({ error: 'Errore nella lettura del file CSV' });

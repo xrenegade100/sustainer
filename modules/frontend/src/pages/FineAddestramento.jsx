@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { ProgressBar, Step } from 'react-step-progress-bar';
 import { Button } from 'baseui/button';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import '../styles/MultiStepProgressBar.css';
 import { SnackbarElement } from 'baseui/snackbar';
 import { ProgressBar as ProgressBarLoad } from 'baseui/progress-bar';
@@ -9,6 +9,7 @@ import Navbar from '../components/Navbar';
 import '../styles/FineAddestramento.css';
 
 const FineAddestramento = () => {
+  const location = useLocation();
   const [showSnackbar, setShowSnackbar] = useState(false);
   const [snackbarMessage, setSnackbarMessage] = useState('');
   const [isNotReady, setIsNotReady] = useState(true);
@@ -45,6 +46,32 @@ const FineAddestramento = () => {
       clearTimeout(timer);
     };
   }, [showSnackbar, navigate]);
+
+  useEffect(() => {
+    async function avvioAddestramento() {
+      try {
+        const res = await fetch('http://localhost:5000/avvioAddestramento', {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          method: 'POST',
+          credentials: 'include',
+          body: JSON.stringify({
+            gruppoPrivilegiato: location,
+          }),
+        });
+        const response = await res.json();
+
+        if (res.ok) {
+          setIsNotReady(false);
+        }
+      } catch (error) {
+        // eslint-disable-next-line no-console
+        console.error('Errore durante avvio addestramento:', error);
+      }
+    }
+    avvioAddestramento();
+  }, []);
 
   return (
     <>
@@ -135,15 +162,14 @@ const FineAddestramento = () => {
             </div>
             <div className="bottoniModello">
               <div className="bottoneColorato">
-                <Button
-                  className="modelButton"
-                  disabled={isNotReady}
-                  onClick={() => {
-                    navigate('');
-                  }}
+                <a
+                  className="linkDownload"
+                  href="http://localhost:5000/downloadModello"
                 >
-                  Scarica modello
-                </Button>
+                  <Button className="modelButton" disabled={isNotReady}>
+                    Scarica modello
+                  </Button>
+                </a>
               </div>
               <div className="bottoneColorato">
                 <Button
