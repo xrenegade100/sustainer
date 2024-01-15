@@ -10,6 +10,7 @@ import Piani from './pages/Piani';
 import ModificaPiano from './pages/ModificaPiano';
 import LoginAmministratore from './pages/LoginAmministratore';
 import CaricaDataset from './pages/CaricaDataset';
+import Fairness from './pages/Fairness';
 
 // Qui fare il routing frontend, quindi aggiungere qui le pagine jsx qui
 const router = createBrowserRouter([
@@ -41,6 +42,10 @@ const router = createBrowserRouter([
   {
     path: '/addestra',
     element: <CaricaDataset />, // passare la pagina jsx con le <>
+  },
+  {
+    path: '/fairness',
+    element: <Fairness />, // passare la pagina jsx con le <>
   },
 ]);
 
