@@ -7,6 +7,7 @@ import { upload, handleFileUpload } from './Dataset/DatasetMenage';
 import PianoController from './Controller/PianoController';
 import UtenteController from './Controller/UtenteController';
 import AmministratoreController from './Controller/AmministratoreController';
+import ModelloController from './Controller/ModelloController';
 
 const server = express();
 
@@ -79,6 +80,10 @@ server.use('/verificaLoginAm', (req, res) => {
 });
 // fineAmministratore
 
+server.use('/piani', (req, res) => {
+  PianoController.getTipiPianoIMP(req, res);
+});
+
 // eslint-disable-next-line consistent-return
 server.use(
   '/upload',
@@ -93,6 +98,18 @@ server.use(
     }
   },
 );
+
+server.use('/testPython', (req, res) => {
+  ModelloController.AddestramentoIMP(req, res);
+});
+
+server.use('/gruppoPrivilegiato', (req, res) => {
+  ModelloController.leggiCSV(req, res);
+});
+
+server.use('/avvioAddestramento', (req, res) => {
+  ModelloController.AddestramentoIMP(req, res);
+});
 
 export default server;
 export { key };

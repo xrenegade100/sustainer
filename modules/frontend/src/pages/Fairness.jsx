@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { FileUploader } from 'baseui/file-uploader';
 import { ProgressBar, Step } from 'react-step-progress-bar';
 import { Button } from 'baseui/button';
 import { useNavigate } from 'react-router-dom';
@@ -14,6 +13,7 @@ const Fairness = () => {
   const [showSnackbar, setShowSnackbar] = useState(false);
   const [value, setValue] = React.useState([]);
   const [snackbarMessage, setSnackbarMessage] = useState('');
+  const [option, setOption] = React.useState([]);
 
   const navigate = useNavigate();
   useEffect(() => {
@@ -32,6 +32,7 @@ const Fairness = () => {
           navigate('/login');
         }
       } catch (error) {
+        // eslint-disable-next-line no-console
         console.error('Errore durante la verifica del login:', error);
       }
     }
@@ -46,6 +47,54 @@ const Fairness = () => {
       clearTimeout(timer);
     };
   }, [showSnackbar, navigate]);
+
+  useEffect(() => {
+    async function recuperoAttributiDataset() {
+      try {
+        const res = await fetch('http://localhost:5000/gruppoPrivilegiato', {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          method: 'POST',
+          credentials: 'include',
+        });
+        const response = await res.json();
+
+        if (res.ok) {
+          // Trasforma l'array di stringhe in un array di oggetti con le chiavi label e value
+          setOption(response.data.map((item) => ({ id: item, label: item })));
+        }
+      } catch (error) {
+        // eslint-disable-next-line no-console
+        console.error('Errore durante la verifica del login:', error);
+      }
+    }
+    recuperoAttributiDataset();
+  }, []);
+
+  const avvioAddestramento = async () => {
+    try {
+      const res = await fetch('http://localhost:5000/avvioAddestramento', {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        method: 'POST',
+        credentials: 'include',
+        body: JSON.stringify({
+          gruppoPrivilegiato: value,
+        }),
+      });
+      const response = await res.json();
+      alert(response.addestramento);
+
+      if (res.ok) {
+        navigate('/fine-addestramento');
+      }
+    } catch (error) {
+      // eslint-disable-next-line no-console
+      console.error('Errore durante avvio addestramento:', error);
+    }
+  };
 
   return (
     <>
@@ -119,36 +168,10 @@ const Fairness = () => {
           <div className="fairnessForm">
             <h1>Gruppo Privilegiato</h1>
             <Select
-              options={[
-                {
-                  label: 'AliceBlue',
-                  id: '#F0F8FF',
-                },
-                {
-                  label: 'AntiqueWhite',
-                  id: '#FAEBD7',
-                },
-                {
-                  label: 'Aqua',
-                  id: '#00FFFF',
-                },
-                {
-                  label: 'Aquamarine',
-                  id: '#7FFFD4',
-                },
-                {
-                  label: 'Azure',
-                  id: '#F0FFFF',
-                },
-                {
-                  label: 'Beige',
-                  id: '#F5F5DC',
-                },
-              ]}
+              options={option}
               value={value}
               multi
-              required
-              placeholder="Gruppo privilegiato"
+              placeholder="Seleziona un attributo"
               onChange={(params) => setValue(params.value)}
             />
           </div>
@@ -162,12 +185,7 @@ const Fairness = () => {
           >
             Indietro
           </Button>
-          <Button
-            className="buttonAvanti"
-            onClick={() => {
-              navigate('');
-            }}
-          >
+          <Button className="buttonAvanti" onClick={avvioAddestramento}>
             Avanti
           </Button>
         </div>
