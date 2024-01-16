@@ -2,20 +2,22 @@ import { Request, Response } from 'express';
 import * as fs from 'fs';
 import path from 'path';
 import csv from 'csv-parser';
+import serviziModelloImpl from '../modello/service/ServiziModelloImpl';
 
 class ModelloController {
   private static pathModello: string;
 
   static AddestramentoIMP = async (req: Request, res: Response) => {
     const { gruppoPrivilegiato } = req.body;
-
+    let gruppoPrivilegiatoStringa: string = '';
     const urlWithParams = new URL('http://127.0.0.1:8000/');
 
     gruppoPrivilegiato.state.forEach((element: any) => {
-      console.log(element);
+      gruppoPrivilegiatoStringa += `${element.id}, `;
       urlWithParams.searchParams.append(`${element.id}`, 'true');
     });
     console.log('Il nuovo url è: ', urlWithParams.href);
+    console.log('Il gruppo privilegiato è: ', gruppoPrivilegiatoStringa);
 
     const fileRelativePathJson = `src/Dataset/${'decisionTree.json'}`;
     const fileRelativePathDataset = `src/Dataset/${'Titanic-Dataset.csv'}`;
@@ -37,6 +39,17 @@ class ModelloController {
     if (responseAddestramento.ok) {
       // Estrai i dati dalla risposta
       const data = await responseAddestramento.json();
+      console.log(data);
+      serviziModelloImpl.salvaModelloImpl(
+        req.session!.idUser,
+        gruppoPrivilegiatoStringa,
+        data.recall,
+        data.precision,
+        data.accuracy,
+        Number(data.emissions),
+        0,
+        'Decision Tree',
+      );
       this.pathModello = data.pathModello;
       return res.status(200).json({
         addestramento: true,

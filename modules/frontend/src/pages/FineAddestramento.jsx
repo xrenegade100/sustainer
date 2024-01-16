@@ -48,30 +48,32 @@ const FineAddestramento = () => {
   }, [showSnackbar, navigate]);
 
   useEffect(() => {
-    async function avvioAddestramento() {
+    async function avvioAddestramentoHandler() {
       try {
-        const res = await fetch('http://localhost:5000/avvioAddestramento', {
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          method: 'POST',
-          credentials: 'include',
-          body: JSON.stringify({
-            gruppoPrivilegiato: location,
-          }),
-        });
-        const response = await res.json();
+        if (isNotReady) {
+          const res = await fetch('http://localhost:5000/avvioAddestramento', {
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            method: 'POST',
+            credentials: 'include',
+            body: JSON.stringify({
+              gruppoPrivilegiato: location,
+            }),
+          });
+          const response = await res.json();
 
-        if (res.ok) {
-          setIsNotReady(false);
+          if (res.ok) {
+            setIsNotReady(false);
+          }
         }
       } catch (error) {
         // eslint-disable-next-line no-console
         console.error('Errore durante avvio addestramento:', error);
       }
     }
-    avvioAddestramento();
-  }, []);
+    avvioAddestramentoHandler();
+  }, [location]);
 
   return (
     <>
