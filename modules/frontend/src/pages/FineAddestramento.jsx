@@ -48,9 +48,12 @@ const FineAddestramento = () => {
   }, [showSnackbar, navigate]);
 
   useEffect(() => {
+    const controller = new AbortController();
+    const { signal } = controller;
+
     async function avvioAddestramentoHandler() {
       try {
-        if (isNotReady) {
+        if (isNotReady && location) {
           const res = await fetch('http://localhost:5000/avvioAddestramento', {
             headers: {
               'Content-Type': 'application/json',
@@ -60,20 +63,30 @@ const FineAddestramento = () => {
             body: JSON.stringify({
               gruppoPrivilegiato: location,
             }),
+            signal, // Passa il segnale di aborto alla richiesta fetch
           });
           const response = await res.json();
 
-          if (res.ok) {
+          if (!signal.aborted && res.ok) {
             setIsNotReady(false);
           }
         }
       } catch (error) {
-        // eslint-disable-next-line no-console
-        console.error('Errore durante avvio addestramento:', error);
+        if (!signal.aborted) {
+          // Solo se la richiesta non è stata annullata
+          // eslint-disable-next-line no-console
+          console.error('Errore durante avvio addestramento:', error);
+        }
       }
     }
+
     avvioAddestramentoHandler();
-  }, [location]);
+
+    // Funzione per annullare la richiesta quando il componente viene smontato
+    return () => {
+      controller.abort();
+    };
+  }, [location, isNotReady]);
 
   return (
     <>
