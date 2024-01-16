@@ -91,7 +91,6 @@ class UtenteController {
       const { idUtente } = req.params;
       // richiamo il metodo getUtente del serviziUtenteImpl
       const utente = await serviziUtenteImpl.getUtenteById(Number(idUtente));
-      console.log(utente);
       if (utente) {
         // se l'utente esiste
         return res // ritorno un json con success = true e l'utente

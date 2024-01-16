@@ -1,6 +1,12 @@
+/* eslint-disable jsx-a11y/label-has-associated-control */
+/* eslint-disable jsx-a11y/no-static-element-interactions */
+/* eslint-disable react/button-has-type */
+/* eslint-disable jsx-a11y/mouse-events-have-key-events */
+/* eslint-disable react/jsx-one-expression-per-line */
+// eslint-disable-next-line
+// eslint-disable-next-line implicit-arrow-linebreak
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-// eslint-disable-next-line import/no-extraneous-dependencies
 import Modal from 'react-modal';
 import '../styles/GestionePianiAmministratore.css'; // Import the CSS file
 
@@ -26,10 +32,7 @@ const GestioneAmministratorePiani = () => {
         credentials: 'include',
       });
       const response = await verifica.json();
-
-      if (response.user) {
-        console.log('sei loggato');
-      } else {
+      if (!response.user) {
         navigate('/loginAm');
       }
     }
@@ -88,8 +91,7 @@ const GestioneAmministratorePiani = () => {
         currentPreventivo,
       }),
     });
-    const data = await response.json();
-    console.log(data);
+    await response.json();
     setModalIsOpen(false);
     window.location.reload();
   };
@@ -127,9 +129,6 @@ const GestioneAmministratorePiani = () => {
       });
       const data = await response.json();
       setPiani(data);
-      if (data) {
-        console.log(data);
-      }
     };
     fetchPiani();
   }, []);
@@ -221,21 +220,21 @@ const GestioneAmministratorePiani = () => {
                     <div>
                       <h3 className="TextIdPreventivo">
                         Id preventivo:
-                        {
-                          // eslint-disable-next-line
-                          currentPreventivo.idPreventivo
-                        }
+                        {currentPreventivo.idPreventivo}
                       </h3>
                     </div>
                     <div className="DivStato">
-                      <label className="statoLabel">Stato del preventivo</label>
+                      <h1 className="statoLabel">Stato del preventivo</h1>
                       <select
                         className="selectStato"
                         id="stato"
                         name="stato"
                         value={currentPreventivo.stato}
-                        onChange={(e) =>
-                          handleStateChange(e, currentPreventivo)
+                        onChange={
+                          (e) =>
+                            // eslint-disable-next-line implicit-arrow-linebreak
+                            handleStateChange(e, currentPreventivo)
+                          // eslint-disable-next-line react/jsx-curly-newline
                         }
                       >
                         <option value="In Lavorazione">In Lavorazione</option>
@@ -244,16 +243,17 @@ const GestioneAmministratorePiani = () => {
                       </select>
                     </div>
                     <div className="DivPrezzo">
-                      <label className="prezzoLabel">
-                        Prezzo del preventivo
-                      </label>
+                      <h1 className="prezzoLabel">Prezzo del preventivo</h1>
                       <input
                         className="inputPrezzo"
                         value={prezzo}
                         placeholder="Inserisci il prezzo"
                         type="number"
-                        onChange={(e) =>
-                          handlePriceChange(e, currentPreventivo)
+                        onChange={
+                          (e) =>
+                            // eslint-disable-next-line implicit-arrow-linebreak
+                            handlePriceChange(e, currentPreventivo)
+                          // eslint-disable-next-line react/jsx-curly-newline
                         }
                       />
                     </div>

@@ -116,7 +116,7 @@
   padding: 20px;
   border: 1px solid #888; /* Adjust to match your site's colors */
   width: 40%;
-  height: 60%;
+  height: 65%;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
   transition: 0.3s;
   position: absolute;
@@ -223,6 +223,7 @@
   float: right;
   font-size: 28px;
   font-weight: bold;
+  background-color: transparent; /* Aggiunto per rendere lo sfondo trasparente */
 }
 
 .close:hover,

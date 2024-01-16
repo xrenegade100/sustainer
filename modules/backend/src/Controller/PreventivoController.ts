@@ -149,9 +149,7 @@ class PreventivoController {
       prezzo,
       currentPreventivo.idPreventivo,
     );
-    console.log(stato);
-    console.log(prezzo);
-    console.log(currentPreventivo.idPreventivo);
+
     if (preventivo) {
       return res.status(200).json(preventivo);
     }

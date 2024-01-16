@@ -136,7 +136,6 @@ class PreventivoDAO {
       return preventivo.stato; // ritorno lo stato
     }
     // Gestisci il caso in cui la query non restituisce risultati
-    console.error('Nessun risultato trovato per idUtente:', idUtente);
     return 'Stato non disponibile';
   }
 
@@ -184,16 +183,18 @@ class PreventivoDAO {
     prezzo: number,
     idPreventivo: number,
   ) {
-    if (!prezzo || prezzo < 0) {
-      prezzo = 0;
+    let defaultStato = stato;
+    let updatedPrezzo = prezzo;
+    if (!updatedPrezzo || updatedPrezzo < 0) {
+      updatedPrezzo = 0;
     }
-    if (!stato) {
-      stato = 'In lavorazione';
+    if (!defaultStato) {
+      defaultStato = 'In lavorazione';
     }
     const conn = await db(); // connessione al db
     await conn.query(
       'UPDATE preventivo SET stato = ?, prezzo = ? WHERE id_preventivo = ?',
-      [stato, prezzo, idPreventivo],
+      [defaultStato, updatedPrezzo, idPreventivo],
     ); // query che modifica un preventivo
     return null;
   }
