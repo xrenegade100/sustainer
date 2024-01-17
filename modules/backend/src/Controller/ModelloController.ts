@@ -9,7 +9,7 @@ class ModelloController {
       const { contenuto } = req.body;
 
       // Costruisci il nome del file in base ai parametri ricevuti
-      const nomeFile = 'parametri.json';
+      const nomeFile = `${String(req.session!.idUser)}.json`;
       // Specifica il percorso completo del file
       const percorsoCompleto = path.join(
         'src',
@@ -32,9 +32,9 @@ class ModelloController {
 
       // Leggi il contenuto della directory
       const files = fs.readdirSync(directory);
-
+      const nome = `${String(req.session!.idUser)}.csv`;
       // Trova il primo file CSV nella directory
-      const nomeFileCSV = files.find((file) => file.endsWith('.csv'));
+      const nomeFileCSV = files.find((file) => file.endsWith(nome));
 
       if (!nomeFileCSV) {
         throw new Error('Nessun file CSV trovato nella directory.');
@@ -52,6 +52,7 @@ class ModelloController {
         .status(200)
         .json({ success: 'File CSV letto correttamente', data: primaRigaCSV });
     } catch (err) {
+      // eslint-disable-next-line no-console
       console.error('Errore:', err);
       res.status(500).json({ error: 'Errore nella lettura del file CSV' });
     }

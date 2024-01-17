@@ -14,6 +14,16 @@
   margin-top: 10%;
 }
 
+.compilaCampi {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  padding-bottom: 2%;
+}
+
+.testoSnack {
+}
+
 /* Aggiungi una media query per adattare la larghezza su schermi più piccoli */
 @media (max-width: 600px) {
   .cardFormes {
