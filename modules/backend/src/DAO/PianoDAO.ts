@@ -100,17 +100,6 @@ class PianoDAO {
     return rows;
   }
 
-  // funzione che ritorna id del piano
-  static async getIdPiano(tipo: string) {
-    const conn = await db();
-    const [rows] = await conn.query(
-      'SELECT id_piano FROM piano WHERE tipo = ?',
-      tipo,
-    );
-    const piano = rows as RowDataPacket[];
-    return piano[0].id_piano;
-  }
-
   static async annullaPiano(idUtente: number, idPiano: number) {
     const conn = await db();
     console.log(idUtente, idPiano);
@@ -122,6 +111,27 @@ class PianoDAO {
       return true;
     }
     return false;
+  }
+
+  static async InserimentoPianoEnterprise(
+    limitiAddestramenti:number,
+    limitiSalvataggi:number,
+    prezzo:number,
+  ) {
+    const conn = await db();
+    await conn.query(
+      'INSERT INTO piano(tipo, prezzo, limite_salvataggi_modelli, limite_addestramenti_modelli) VALUES (?, ?, ?, ?)',
+      ['Enterprise', prezzo, limitiSalvataggi, limitiAddestramenti],
+    );
+    const [rows] = await conn.query('SELECT * FROM piano WHERE id_piano = LAST_INSERT_ID()');
+    const piano = (rows as RowDataPacket[])[0];
+    return new Piano(
+      piano.id_piano,
+      piano.tipo,
+      piano.prezzo,
+      piano.limite_salvataggi_modelli,
+      piano.limite_addestramenti_modelli,
+    );
   }
 }
 

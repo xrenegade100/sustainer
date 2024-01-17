@@ -60,6 +60,22 @@ class ServiziPianoImpl implements serviziPiano {
     }
     return null;
   }
+
+  static async InserimentoPianoEnterprise(
+    limitiAddestramenti: number,
+    limitiSalvataggi: number,
+    prezzo: number,
+  ) {
+    const piano = await PianoDAO.InserimentoPianoEnterprise(
+      prezzo,
+      limitiSalvataggi,
+      limitiAddestramenti,
+    );
+    if (piano) {
+      return piano;
+    }
+    return null;
+  }
 }
 
 export default ServiziPianoImpl;

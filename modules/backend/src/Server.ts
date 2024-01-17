@@ -89,7 +89,12 @@ server.use('/preventivi', (req, res) => {
 server.use('/preventivoModificato', (req, res) => {
   PreventivoController.ModificaPreventivoIMP(req, res);
 });
-
+server.use('/checkoutEnterprise', (req, res) => {
+  PianoController.AcquistoPianoEIMP(req, res);
+});
+server.use('/inserimentoEnterprise', (req, res) => {
+  PianoController.InserimentoPianoEnterpriseIMP(req, res);
+});
 // fine preventivo
 
 // amministratore
