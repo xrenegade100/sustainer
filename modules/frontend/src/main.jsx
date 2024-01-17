@@ -6,7 +6,6 @@ import { LightTheme, BaseProvider } from 'baseui';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import Login from './pages/Login';
 import Homepage from './pages/Homepage';
-import RegisterForm from './components/RegisterForm';
 import Piani from './pages/Piani';
 import ModificaPiano from './pages/ModificaPiano';
 import LoginAmministratore from './pages/LoginAmministratore';
@@ -31,27 +30,27 @@ const router = createBrowserRouter([
   },
   {
     path: '/piani',
-    element: <Piani />, //passare la pagina jsx con le <>
+    element: <Piani />, // passare la pagina jsx con le <>
   },
   {
     path: '/loginAm',
-    element: <LoginAmministratore />, //passare la pagina jsx con le <>
+    element: <LoginAmministratore />, // passare la pagina jsx con le <>
   },
   {
     path: '/modifica-piano',
-    element: <ModificaPiano />, //passare la pagina jsx con le <>
+    element: <ModificaPiano />, // passare la pagina jsx con le <>
   },
   {
     path: '/richiesta-Enterprise',
-    element: <PianoEnterprise />, //passare la pagina jsx con le <>
+    element: <PianoEnterprise />, // passare la pagina jsx con le <>
   },
   {
     path: '/gestionePiani',
-    element: <GestionePiani />, //passare la pagina jsx con le <>
+    element: <GestionePiani />, // passare la pagina jsx con le <>
   },
   {
     path: '/newPianoEnterprise',
-    element: <CardPianoEnterprise />, //passare la pagina jsx con le <>
+    element: <CardPianoEnterprise />, // passare la pagina jsx con le <>
   },
 ]);
 
