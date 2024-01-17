@@ -87,7 +87,6 @@ server.use('/leggiCSV', (req, res) => {
   ModelloController.leggiCSV(req, res);
 });
 
-
 // eslint-disable-next-line consistent-return
 server.use(
   '/upload',

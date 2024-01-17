@@ -73,7 +73,7 @@ const Fairness = () => {
       }
     }
     recuperoAttributiDataset();
-  }, []);
+  }, [navigate]);
 
   const passaAddestramento = async () => {
     navigate('/fine-addestramento', { state: value });

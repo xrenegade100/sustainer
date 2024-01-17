@@ -2,9 +2,9 @@ import { Request, Response } from 'express';
 import * as fs from 'fs';
 import * as path from 'path';
 import csv from 'csv-parser';
+import serviziModelloImpl from '../modello/service/ServiziModelloImpl';
 
 class ModelloController {
-  
   private static pathModello: string;
 
   static AddestramentoIMP = async (req: Request, res: Response) => {
@@ -19,8 +19,8 @@ class ModelloController {
     console.log('Il nuovo url è: ', urlWithParams.href);
     console.log('Il gruppo privilegiato è: ', gruppoPrivilegiatoStringa);
 
-    const fileRelativePathJson = `src/Dataset/${'decisionTree.json'}`;
-    const fileRelativePathDataset = `src/Dataset/${'Titanic-Dataset.csv'}`;
+    const fileRelativePathJson = `src/Dataset/${req.session!.idUser}.json`;
+    const fileRelativePathDataset = `src/Dataset/${req.session!.idUser}.csv`;
 
     // Ottieni il percorso assoluto del file utilizzando il modulo path
     const absolutePathJson = path.resolve(fileRelativePathJson);
@@ -68,7 +68,7 @@ class ModelloController {
       }
     });
   };
-  
+
   static salvaJson = async (req: Request, res: Response) => {
     try {
       const { contenuto } = req.body;
@@ -76,11 +76,8 @@ class ModelloController {
       // Costruisci il nome del file in base ai parametri ricevuti
       const nomeFile = `${String(req.session!.idUser)}.json`;
       // Specifica il percorso completo del file
-      const percorsoCompleto = path.join(
-        'src',
-        'InserimentoParametri',
-        nomeFile,
-      );
+      const percorsoCompleto = path.join('src/Dataset', nomeFile);
+      console.log(percorsoCompleto);
       const jsonSenzaEscape = JSON.parse(contenuto);
 
       fs.writeFileSync(percorsoCompleto, JSON.stringify(jsonSenzaEscape));
@@ -93,7 +90,7 @@ class ModelloController {
   static leggiCSV = async (req: Request, res: Response) => {
     try {
       // Specifica la directory in cui cercare i file CSV
-      const directory = path.join('src', 'Dataset/DatasetCaricati');
+      const directory = path.join('src', 'Dataset');
 
       // Leggi il contenuto della directory
       const files = fs.readdirSync(directory);

@@ -4,7 +4,7 @@ import csv from 'csv-parser';
 
 const storage = multer.diskStorage({
   destination(req, file, cb) {
-    const dir = 'src/Dataset/DatasetCaricati';
+    const dir = 'src/Dataset';
     fs.mkdirSync(dir, { recursive: true });
     cb(null, dir);
   },
