@@ -1,10 +1,10 @@
 import { Request, Response } from 'express';
 import * as fs from 'fs';
-import path from 'path';
+import * as path from 'path';
 import csv from 'csv-parser';
-import serviziModelloImpl from '../modello/service/ServiziModelloImpl';
 
 class ModelloController {
+  
   private static pathModello: string;
 
   static AddestramentoIMP = async (req: Request, res: Response) => {
@@ -68,35 +68,38 @@ class ModelloController {
       }
     });
   };
+  
+  static salvaJson = async (req: Request, res: Response) => {
+    try {
+      const { contenuto } = req.body;
 
-  static avanzamentoAddestramento3IMP = async (req: Request, res: Response) => {
-    if (req.session!.faseAddestramento === 3) {
-      return res.status(200).json({
-        avanzamento: 3,
-      });
-    }
-    return res.status(400).json({ avanzamento: false });
-  };
+      // Costruisci il nome del file in base ai parametri ricevuti
+      const nomeFile = `${String(req.session!.idUser)}.json`;
+      // Specifica il percorso completo del file
+      const percorsoCompleto = path.join(
+        'src',
+        'InserimentoParametri',
+        nomeFile,
+      );
+      const jsonSenzaEscape = JSON.parse(contenuto);
 
-  static avanzamentoAddestramento4IMP = async (req: Request, res: Response) => {
-    if (req.session!.faseAddestramento === 4) {
-      return res.status(200).json({
-        avanzamento: 3,
-      });
+      fs.writeFileSync(percorsoCompleto, JSON.stringify(jsonSenzaEscape));
+      res.status(200).json({ success: 'File salvato correttamente' });
+    } catch (err) {
+      res.status(500).json({ error: 'Errore nel salvataggio del file' });
     }
-    return res.status(400).json({ avanzamento: false });
-  };
+  }; // Add a semicolon here
 
   static leggiCSV = async (req: Request, res: Response) => {
     try {
       // Specifica la directory in cui cercare i file CSV
-      const directory = path.join('src', 'Dataset');
+      const directory = path.join('src', 'Dataset/DatasetCaricati');
 
       // Leggi il contenuto della directory
       const files = fs.readdirSync(directory);
-
+      const nome = `${String(req.session!.idUser)}.csv`;
       // Trova il primo file CSV nella directory
-      const nomeFileCSV = files.find((file) => file.endsWith('.csv'));
+      const nomeFileCSV = files.find((file) => file.endsWith(nome));
 
       if (!nomeFileCSV) {
         throw new Error('Nessun file CSV trovato nella directory.');
@@ -110,17 +113,17 @@ class ModelloController {
         percorsoCompletoCSV,
       );
 
-      res.status(200).json({
-        success: 'File CSV letto correttamente',
-        data: primaRigaCSV,
-        faseAddestramento: req.session!.faseAddestramento,
-      });
+      res
+        .status(200)
+        .json({ success: 'File CSV letto correttamente', data: primaRigaCSV });
     } catch (err) {
+      // eslint-disable-next-line no-console
       console.error('Errore:', err);
       res.status(500).json({ error: 'Errore nella lettura del file CSV' });
     }
   };
 
+  // Metodo per leggere la prima riga di un file CSV
   private static leggiNomiColonneCSV = async (
     percorsoFileCSV: string,
   ): Promise<string[] | null> =>

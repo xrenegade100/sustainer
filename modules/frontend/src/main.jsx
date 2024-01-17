@@ -9,6 +9,7 @@ import Homepage from './pages/Homepage';
 import Piani from './pages/Piani';
 import ModificaPiano from './pages/ModificaPiano';
 import LoginAmministratore from './pages/LoginAmministratore';
+import InserimentoParametri from './pages/InserimentoParametri';
 import CaricaDataset from './pages/CaricaDataset';
 import Fairness from './pages/Fairness';
 import FineAddestramento from './pages/FineAddestramento';
@@ -45,6 +46,10 @@ const router = createBrowserRouter([
     element: <CaricaDataset />, // passare la pagina jsx con le <>
   },
   {
+    path: '/inserimentoparametri',
+    element: <InserimentoParametri />, // passare la pagina jsx con le <>
+  },
+  {  
     path: '/fairness',
     element: <Fairness />, // passare la pagina jsx con le <>
   },

@@ -80,9 +80,13 @@ server.use('/verificaLoginAm', (req, res) => {
 });
 // fineAmministratore
 
-server.use('/piani', (req, res) => {
-  PianoController.getTipiPianoIMP(req, res);
+server.use('/salvaJson', (req, res) => {
+  ModelloController.salvaJson(req, res);
 });
+server.use('/leggiCSV', (req, res) => {
+  ModelloController.leggiCSV(req, res);
+});
+
 
 // eslint-disable-next-line consistent-return
 server.use(
