@@ -32,9 +32,9 @@ class ServiziPreventivoImpl implements serviziPreventivo {
   // metodo che mi consente di eliminare un preventivo
   static async eliminaPreventivo(idUtente: number) {
     // richiamo il metodo eliminaPreventivo del PreventivoDAO
-    const preventivo = await PreventivoDAO.eliminaPreventivo(idUtente);
-    if (preventivo) {
-      return preventivo;
+    const preventivoElim = await PreventivoDAO.eliminaPreventivo(idUtente);
+    if (preventivoElim !== null && preventivoElim !== undefined) {
+      return preventivoElim;
     }
     return null;
   }

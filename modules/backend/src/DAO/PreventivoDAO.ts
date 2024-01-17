@@ -9,15 +9,14 @@ class PreventivoDAO {
     const [rows] = await conn.query('SELECT * FROM preventivo'); // query che ritorna tutti i preventivi
     const preventivi = rows as RowDataPacket[]; // assegno a preventivi i risultati della query
     return preventivi.map(
-      (preventivo) =>
-        new Preventivo(
-          preventivo.id_preventivo,
-          preventivo.id_utente,
-          preventivo.limiti_addestramenti,
-          preventivo.limiti_salvataggi,
-          preventivo.prezzo,
-          preventivo.stato,
-        ),
+      (preventivo) => new Preventivo(
+        preventivo.id_preventivo,
+        preventivo.id_utente,
+        preventivo.limiti_addestramenti,
+        preventivo.limiti_salvataggi,
+        preventivo.prezzo,
+        preventivo.stato,
+      ),
     ); // ritorno un array di oggetti di tipo Preventivo
   }
 
@@ -61,19 +60,10 @@ class PreventivoDAO {
   // funzione asincrona che elimina un preventivo
   static async eliminaPreventivo(idUtente: number) {
     const conn = await db(); // connessione al db
-    const [rows] = await conn.query(
+    await conn.query(
       'DELETE FROM preventivo WHERE id_utente = ?',
       idUtente,
     ); // query che elimina un preventivo
-    const preventivo = rows as RowDataPacket[]; // assegno a preventivo i risultati della query
-    return new Preventivo(
-      preventivo[0].id_preventivo,
-      preventivo[0].id_utente,
-      preventivo[0].limiti_addestramenti,
-      preventivo[0].limiti_salvataggi,
-      preventivo[0].prezzo,
-      preventivo[0].stato,
-    ); // ritorno un oggetto di tipo Preventivo
   }
 
   // funzione asincrona che ritorna l'id del preventivo
