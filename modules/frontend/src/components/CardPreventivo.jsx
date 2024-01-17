@@ -1,13 +1,16 @@
+/* eslint-disable react/prop-types */
 import * as React from 'react';
 import { useEffect, useState } from 'react';
+import { Button, SIZE } from 'baseui/button';
+import { loadStripe } from '@stripe/stripe-js';
 
 const CardPreventivo = ({
-  // eslint-disable-next-line react/prop-types
+  titolo,
   bgColor,
   circleIcon,
   textColor,
 }) => {
-  const [prezzo, setPrezzo] = useState(null);
+  const [prezzoP, setPrezzoP] = useState(null);
   const [limitiSalvataggi, setLimitiSalvataggi] = useState(null);
   const [limitiAddestramenti, setLimitiAddestramenti] = useState(null);
 
@@ -26,7 +29,7 @@ const CardPreventivo = ({
         }
 
         const jsonData = await response.json();
-        setPrezzo(jsonData.prezzo);
+        setPrezzoP(jsonData.prezzo);
         setLimitiSalvataggi(jsonData.limitiSalvataggi);
         setLimitiAddestramenti(jsonData.limitiAddestramenti);
       } catch (error) {
@@ -36,48 +39,118 @@ const CardPreventivo = ({
     fetchDataPreventivo();
   }, []);
 
+  const handleBuyClick = async (title) => {
+    try {
+      await loadStripe(
+        'pk_test_51OURU6DecXgXrLSFmXl0Zo7y1yCQzOVyQUZ5ew1trbRBrh9oHv93n73XitLXt6zt47wZL4yKWSjJ7m8wnKdEPg9B00Q0FdvOLx',
+      );
+      const response = await fetch('http://localhost:5000/checkoutEnterprise', {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        method: 'POST',
+        credentials: 'include',
+        body: JSON.stringify({
+          titoloPiano: title,
+          prezzoPiano: prezzoP,
+          limSPiano: limitiSalvataggi,
+          limAPiano: limitiAddestramenti,
+        }),
+      });
+      const session = await response.json();
+      if (session) {
+        window.location.replace(session.checkoutUrl);
+      }
+    } catch (error) {
+      console.error('Errore durante la fetch:', error);
+    }
+  };
+
+  const handleNotBuyClick = async () => {
+    try {
+      const response = await fetch('http://localhost:5000/eliminaPreventivo', {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        method: 'POST',
+        credentials: 'include',
+      });
+      const result = await response.json();
+      if (result.status === 'success') {
+        window.location.replace('/modifica-piani');
+      }
+    } catch (error) {
+      console.error('Errore durante la fetch:', error);
+    }
+  };
+
   return (
-    <div
-      className="card"
-      style={{ backgroundColor: bgColor, color: textColor }}
-    >
-      <div className="card-header">
-        <h2>Il tuo Preventivo</h2>
-      </div>
-      <div className="price">
-        {prezzo !== null && (
+    <>
+      <div
+        className="card"
+        style={{ backgroundColor: bgColor, color: textColor }}
+      >
+        <div className="card-header">
+          <h2>Il tuo Preventivo</h2>
+        </div>
+        <div className="price">
+          {prezzoP !== null && (
           <p className="text-price">
             €
-            {prezzo}
+            {prezzoP}
           </p>
-        )}
-        <p className="text-period">/Mese</p>
+          )}
+          <p className="text-period">/Mese</p>
+        </div>
+        <ul className="phrase-list">
+          <li className="phrase-item">
+            <img src={circleIcon} alt="circleCheck" />
+            <span className="phrase-text">NO Pubblicità</span>
+          </li>
+          <li className="phrase-item">
+            <img src={circleIcon} alt="circleCheck" />
+            <span className="phrase-text">
+              {limitiAddestramenti}
+              {' '}
+              addestramenti giornalieri
+            </span>
+          </li>
+          <li className="phrase-item">
+            <img src={circleIcon} alt="circleCheck" />
+            <span className="phrase-text">
+              {limitiSalvataggi}
+              {' '}
+              salvataggi in memoria
+            </span>
+          </li>
+          <li className="phrase-item">
+            <img src={circleIcon} alt="circleCheck" />
+            <span className="phrase-text">
+              Salvataggio parametri e metriche degli addestramenti
+            </span>
+          </li>
+        </ul>
       </div>
-      <ul className="phrase-list">
-        <li className="phrase-item">
-          <img src={circleIcon} alt="circleCheck" />
-          <span className="phrase-text">NO Pubblicità</span>
-        </li>
-        <li className="phrase-item">
-          <img src={circleIcon} alt="circleCheck" />
-          <span className="phrase-text">
-            {limitiAddestramenti} addestramenti giornalieri
-          </span>
-        </li>
-        <li className="phrase-item">
-          <img src={circleIcon} alt="circleCheck" />
-          <span className="phrase-text">
-            {limitiSalvataggi} salvataggi in memoria
-          </span>
-        </li>
-        <li className="phrase-item">
-          <img src={circleIcon} alt="circleCheck" />
-          <span className="phrase-text">
-            Salvataggio parametri e metriche degli addestramenti
-          </span>
-        </li>
-      </ul>
-    </div>
+      <div className="buttonPE">
+        <Button
+          className="btnback"
+          // eslint-disable-next-line max-len
+          onClick={() => handleNotBuyClick()} // creare metodo che rendirizza a stripe e aumentare currentstep che va a 4
+          size={SIZE.large}
+        >
+          Rifiuta
+        </Button>
+        <Button
+          className="btnnext"
+          // eslint-disable-next-line max-len
+          onClick={() => handleBuyClick(titolo)}
+          size={SIZE.large}
+        >
+          Acquista
+        </Button>
+      </div>
+
+    </>
   );
 };
 

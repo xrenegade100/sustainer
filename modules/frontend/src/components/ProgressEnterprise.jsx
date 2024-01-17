@@ -1,6 +1,5 @@
 /* eslint-disable no-nested-ternary */
 import React, { useState, useEffect } from 'react';
-import { loadStripe } from '@stripe/stripe-js';
 import { useNavigate } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { Button, SIZE } from 'baseui/button';
@@ -10,6 +9,8 @@ import '../styles/ProgressEnterprise.css';
 import CardLoadingPrev from './CardLoadingPrev';
 import CardPreventivo from './CardPreventivo';
 import circleCheck from '../assets/circle_check.svg';
+import circleCheckBlu from '../assets/circle_checkBlu.svg';
+import CardPianoEnterprise from './CardPianoEnterprise';
 
 const PageNumber = ({
   accomplished,
@@ -40,8 +41,10 @@ PageNumber.propTypes = {
 
 const ProgressEnterprise = ({ onPageNumberClick }) => {
   const [currentStep, setCurrentStep] = useState(1);
-  const [limitiAddestramenti, setLimiteAddestramenti] = useState('');
-  const [limitiSalvataggi, setLimiteSalvataggi] = useState('');
+  const [paymentStep, setPaymentStep] = useState(1);
+  const [prezzo, setPrezzo] = useState(null);
+  const [limitiAddestramenti, setLimitiAddestramenti] = useState('');
+  const [limitiSalvataggi, setLimitiSalvataggi] = useState('');
   const navigate = useNavigate();
 
   const fetchData = async function funzioneVerifica() {
@@ -88,6 +91,30 @@ const ProgressEnterprise = ({ onPageNumberClick }) => {
 
   funzioneVerificaPrev();
 
+  // funzione per verificare se l'utente ha già un piano e se è diverso da enterprise
+  const funzioneVerificaPiano = async () => {
+    if (currentStep === 1) {
+      try {
+        const response = await fetch('http://localhost:5000/ultimoPianoUtente', {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          method: 'POST',
+          credentials: 'include',
+        });
+        const result = await response.json();
+        if (result !== 'Enterprise') {
+          setCurrentStep(1);
+        }
+        navigate('/modifica-piano');
+      } catch (error) {
+        console.error('Errore durante la fetch:', error);
+      }
+    }
+  };
+
+  funzioneVerificaPiano();
+
   const handleNextClick = async () => {
     if (currentStep === 1) {
       if (limitiAddestramenti && limitiSalvataggi) {
@@ -123,6 +150,26 @@ const ProgressEnterprise = ({ onPageNumberClick }) => {
     }
   };
 
+  const handleTerminaClick = async () => {
+    if (paymentStep === 4) {
+      try {
+        const response = await fetch('http://localhost:5000/eliminaPreventivo', {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          method: 'POST',
+          credentials: 'include',
+        });
+        const result = await response.json();
+        if (result) {
+          navigate('/modifica-piano');
+        }
+      } catch (error) {
+        console.error('Errore durante la fetch:', error);
+      }
+    }
+  };
+
   const funzioneVerificaStato = async () => {
     if (currentStep === 2) {
       try {
@@ -149,47 +196,6 @@ const ProgressEnterprise = ({ onPageNumberClick }) => {
   };
 
   funzioneVerificaStato();
-
-  const handleBuyClick = async (prezzo) => {
-    try {
-      await loadStripe(
-        'pk_test_51OURU6DecXgXrLSFmXl0Zo7y1yCQzOVyQUZ5ew1trbRBrh9oHv93n73XitLXt6zt47wZL4yKWSjJ7m8wnKdEPg9B00Q0FdvOLx',
-      );
-      const response = await fetch('http://localhost:5000/checkoutEnterprise', {
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        method: 'POST',
-        credentials: 'include',
-        body: JSON.stringify({
-          titoloPiano: 'Enterprise',
-          prezzoPiano: prezzo,
-        }),
-      });
-      const session = await response.json();
-      window.location.replace(session.checkoutUrl);
-    } catch (error) {
-      console.error('Errore durante la fetch:', error);
-    }
-  };
-
-  const handleNotBuyClick = async () => {
-    try {
-      const response = await fetch('http://localhost:5000/eliminaPreventivo', {
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        method: 'POST',
-        credentials: 'include',
-      });
-      const result = await response.json();
-      if (result.status === 'success') {
-        window.location.replace('/modifica-piani');
-      }
-    } catch (error) {
-      console.error('Errore durante la fetch:', error);
-    }
-  };
 
   const getStepPercentage = () => {
     switch (currentStep) {
@@ -236,7 +242,7 @@ const ProgressEnterprise = ({ onPageNumberClick }) => {
                 <Input
                   className="nadgginput"
                   value={limitiAddestramenti}
-                  onChange={(e) => setLimiteAddestramenti(e.target.value)}
+                  onChange={(e) => setLimitiAddestramenti(e.target.value)}
                   placeholder="10"
                   clearable
                   type="number"
@@ -250,7 +256,7 @@ const ProgressEnterprise = ({ onPageNumberClick }) => {
                   <Input
                     className="nsvgginput"
                     value={limitiSalvataggi}
-                    onChange={(e) => setLimiteSalvataggi(e.target.value)}
+                    onChange={(e) => setLimitiSalvataggi(e.target.value)}
                     placeholder="10"
                     clearable
                     type="number"
@@ -282,48 +288,35 @@ const ProgressEnterprise = ({ onPageNumberClick }) => {
           <CardLoadingPrev />
         </div>
       ) : currentStep === 3 ? (
-        <>
-          <div className="cardPreventivo">
-            <CardPreventivo
-              bgColor="#2467d1"
-              textColor="#FFFFFF"
-              circleIcon={circleCheck}
-            />
-          </div>
-          <div className="buttonPE">
-            <Button
-              className="btnback"
-                  // eslint-disable-next-line max-len
-              onClick={handleNotBuyClick} // creare metodo che rendirizza a stripe e aumentare currentstep che va a 4
-              size={SIZE.large}
-            >
-              Rifiuta
-            </Button>
-            <Button
-              className="btnnext"
-                  // eslint-disable-next-line max-len
-              onClick={handleBuyClick} // creare metodo che rendirizza a stripe e aumentare currentstep che va a 4
-              size={SIZE.large}
-            >
-              Acquista
-            </Button>
-          </div>
-
-        </>
-      ) : (
+        <div className="cardPreventivo">
+          <CardPreventivo
+            titolo="Enterprise"
+            prezzo={prezzo}
+            limitiS={limitiSalvataggi}
+            limitiA={limitiAddestramenti}
+            bgColor="#2467d1"
+            textColor="#FFFFFF"
+            circleIcon={circleCheck}
+          />
+        </div>
+      ) : paymentStep === 4 ? (
         <div className="cardPianoE">
-          <CardPianoEnterprise />
+          <CardPianoEnterprise
+            bgColor="#FFFFFF"
+            textColor="#222222"
+            circleIcon={circleCheckBlu}
+          />
           <div className="buttonPE">
             <Button
               className="btnnext"
-              onClick={handleAddClick} // creare metodo che rendirizza a pagina addestramento
+              onClick={handleTerminaClick} // creare metodo che rendirizza a pagina addestramento
               size={SIZE.large}
             >
-              Addestra
+              Termina
             </Button>
           </div>
         </div>
-      )}
+      ) : (null)}
 
       {/* <div className="buttonPE">
         <Button
