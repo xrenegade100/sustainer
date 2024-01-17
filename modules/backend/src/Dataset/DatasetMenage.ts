@@ -9,7 +9,8 @@ const storage = multer.diskStorage({
     cb(null, dir);
   },
   filename(req, file, cb) {
-    cb(null, `${Date.now()}-${file.originalname}`);
+    const id = req.session!.idUser;
+    cb(null, `${id}.csv`);
   },
 });
 
@@ -48,7 +49,7 @@ export async function handleFileUpload(req: any, res: any): Promise<void> {
     });
   }
 }
-export function checkCsvColumns(filePath: string): Promise<boolean> {
+export async function checkCsvColumns(filePath: string): Promise<boolean> {
   return new Promise((resolve, reject) => {
     const requiredColumns = 2; // Numero minimo di colonne richieste
 
@@ -69,9 +70,9 @@ export function checkCsvColumns(filePath: string): Promise<boolean> {
     };
 
     // Controlla con il separatore con i vari separatori
+    checkSeparator(',');
     checkSeparator(';');
     checkSeparator('.');
-    checkSeparator(',');
   });
 }
 
