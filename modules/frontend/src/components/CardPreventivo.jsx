@@ -86,50 +86,52 @@ const CardPreventivo = ({
 
   return (
     <>
-      <div
-        className="card"
-        style={{ backgroundColor: bgColor, color: textColor }}
-      >
-        <div className="card-header">
-          <h2>Il tuo Preventivo</h2>
+      <div className="cardPreventivo">
+        <div
+          className="card"
+          style={{ backgroundColor: bgColor, color: textColor }}
+        >
+          <div className="card-header">
+            <h2>Il tuo Preventivo</h2>
+          </div>
+          <div className="price">
+            {prezzoP !== null && (
+            <p className="text-price">
+              €
+              {prezzoP}
+            </p>
+            )}
+            <p className="text-period">/Mese</p>
+          </div>
+          <ul className="phrase-list">
+            <li className="phrase-item">
+              <img src={circleIcon} alt="circleCheck" />
+              <span className="phrase-text">NO Pubblicità</span>
+            </li>
+            <li className="phrase-item">
+              <img src={circleIcon} alt="circleCheck" />
+              <span className="phrase-text">
+                {limitiAddestramenti}
+                {' '}
+                addestramenti giornalieri
+              </span>
+            </li>
+            <li className="phrase-item">
+              <img src={circleIcon} alt="circleCheck" />
+              <span className="phrase-text">
+                {limitiSalvataggi}
+                {' '}
+                salvataggi in memoria
+              </span>
+            </li>
+            <li className="phrase-item">
+              <img src={circleIcon} alt="circleCheck" />
+              <span className="phrase-text">
+                Salvataggio parametri e metriche degli addestramenti
+              </span>
+            </li>
+          </ul>
         </div>
-        <div className="price">
-          {prezzoP !== null && (
-          <p className="text-price">
-            €
-            {prezzoP}
-          </p>
-          )}
-          <p className="text-period">/Mese</p>
-        </div>
-        <ul className="phrase-list">
-          <li className="phrase-item">
-            <img src={circleIcon} alt="circleCheck" />
-            <span className="phrase-text">NO Pubblicità</span>
-          </li>
-          <li className="phrase-item">
-            <img src={circleIcon} alt="circleCheck" />
-            <span className="phrase-text">
-              {limitiAddestramenti}
-              {' '}
-              addestramenti giornalieri
-            </span>
-          </li>
-          <li className="phrase-item">
-            <img src={circleIcon} alt="circleCheck" />
-            <span className="phrase-text">
-              {limitiSalvataggi}
-              {' '}
-              salvataggi in memoria
-            </span>
-          </li>
-          <li className="phrase-item">
-            <img src={circleIcon} alt="circleCheck" />
-            <span className="phrase-text">
-              Salvataggio parametri e metriche degli addestramenti
-            </span>
-          </li>
-        </ul>
       </div>
       <div className="buttonPE">
         <Button

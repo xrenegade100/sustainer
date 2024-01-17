@@ -1,6 +1,8 @@
 /* eslint-disable no-nested-ternary */
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { SnackbarElement } from 'baseui/snackbar';
+import { useStyletron } from 'baseui';
 import PropTypes from 'prop-types';
 import { Button, SIZE } from 'baseui/button';
 import { ProgressBar, Step } from 'react-step-progress-bar';
@@ -39,16 +41,29 @@ PageNumber.propTypes = {
 
 const ProgressEnterprise = ({ onPageNumberClick }) => {
   const [currentStep, setCurrentStep] = useState(1);
+  const [isOpen, setIsOpen] = useState(false);
+  const [showSnackbar, setShowSnackbar] = useState(false);
+  const [snackbarMessage, setSnackbarMessage] = useState('');
   const [prezzo, setPrezzo] = useState(null);
   const [limitiAddestramenti, setLimitiAddestramenti] = useState('');
   const [limitiSalvataggi, setLimitiSalvataggi] = useState('');
+  const [css] = useStyletron();
   const navigate = useNavigate();
 
   useEffect(() => {
     fetchData();
     funzioneVerificaPrev();
     funzioneVerificaStato();
-  }, [currentStep]);
+    let timer;
+    if (showSnackbar) {
+      timer = setTimeout(() => {
+        setShowSnackbar(false);
+      }, 3500);
+    }
+    return () => {
+      clearTimeout(timer);
+    };
+  }, [currentStep], [showSnackbar]);
 
   const fetchData = async function funzioneVerifica() {
     const verifica = await fetch('http://localhost:5000/verificaLogin', {
@@ -97,27 +112,34 @@ const ProgressEnterprise = ({ onPageNumberClick }) => {
   const handleNextClick = async () => {
     if (currentStep === 1) {
       if (limitiAddestramenti && limitiSalvataggi) {
-        try {
-          const response = await fetch('http://localhost:5000/creaPreventivo', {
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            method: 'POST',
-            credentials: 'include',
-            body: JSON.stringify({
-              limitiAddestramenti,
-              limitiSalvataggi,
-            }),
-          });
-
-          if (response.ok) {
-            const data = await response.json();
-            console.log('Risposta dal backend:', data);
-          } else {
-            console.error('Errore nella richiesta al backend:', response.statusText);
+        if ((limitiAddestramenti > 2 && limitiAddestramenti <= 10)
+        || (limitiSalvataggi > 1 && limitiSalvataggi <= 50)) {
+          try {
+            const response = await fetch('http://localhost:5000/creaPreventivo', {
+              headers: {
+                'Content-Type': 'application/json',
+              },
+              method: 'POST',
+              credentials: 'include',
+              body: JSON.stringify({
+                limitiAddestramenti,
+                limitiSalvataggi,
+              }),
+            });
+            if (response.ok) {
+              const data = await response.json();
+              console.log('Risposta dal backend:', data);
+              window.location.reload('/richiesta-Enterprise');
+            } else {
+              console.error('Errore nella richiesta al backend:', response.statusText);
+            }
+          } catch (error) {
+            console.error('Errore nella fetch:', error);
           }
-        } catch (error) {
-          console.error('Errore nella fetch:', error);
+        } else {
+          setIsOpen(true);
+          setShowSnackbar(true);
+          setSnackbarMessage('Inserire valori validi');
         }
       }
     }
@@ -126,6 +148,8 @@ const ProgressEnterprise = ({ onPageNumberClick }) => {
   const handlePrevClick = () => {
     if (currentStep > 1) {
       setCurrentStep(currentStep - 1);
+    } else if (currentStep === 1) {
+      navigate('/modifica-piano');
     }
   };
 
@@ -223,18 +247,45 @@ const ProgressEnterprise = ({ onPageNumberClick }) => {
                 </div>
               </div>
             </div>
+            {showSnackbar && (
+            <div className={css({ position: 'relative' })}>
+              <SnackbarElement
+                message={
+                      // eslint-disable-next-line react/jsx-wrap-multilines
+                  <div
+                    className={css({
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                    })}
+                  >
+                    {snackbarMessage}
+                  </div>
+                    }
+                focus={false}
+                overrides={{
+                  Root: {
+                    style: {
+                      position: 'relative',
+                      top: '20px',
+                    },
+                  },
+                }}
+              />
+            </div>
+            )}
           </div>
           <div className="buttonPE">
             <Button
               className="btnback"
-              onClick={handlePrevClick}
+              onClick={() => handlePrevClick()}
               size={SIZE.large}
             >
               Indietro
             </Button>
             <Button
               className="btnnext"
-              onClick={handleNextClick}
+              onClick={() => handleNextClick()}
               size={SIZE.large}
             >
               Avanti
@@ -247,17 +298,15 @@ const ProgressEnterprise = ({ onPageNumberClick }) => {
           <CardLoadingPrev />
         </div>
       ) : currentStep === 3 ? (
-        <div className="cardPreventivo">
-          <CardPreventivo
-            titolo="Enterprise"
-            prezzo={prezzo}
-            limitiS={limitiSalvataggi}
-            limitiA={limitiAddestramenti}
-            bgColor="#2467d1"
-            textColor="#FFFFFF"
-            circleIcon={circleCheck}
-          />
-        </div>
+        <CardPreventivo
+          titolo="Enterprise"
+          prezzo={prezzo}
+          limitiS={limitiSalvataggi}
+          limitiA={limitiAddestramenti}
+          bgColor="#2467d1"
+          textColor="#FFFFFF"
+          circleIcon={circleCheck}
+        />
       ) : (null)}
     </>
   );
