@@ -185,10 +185,8 @@ const ProgressEnterprise = ({ onPageNumberClick }) => {
       case 1:
         return 0;
       case 2:
-        return 35;
+        return 50;
       case 3:
-        return 70;
-      case 4:
         return 100;
       default:
         return 0;
@@ -198,7 +196,7 @@ const ProgressEnterprise = ({ onPageNumberClick }) => {
   return (
     <>
       <ProgressBar percent={getStepPercentage()}>
-        {[1, 2, 3, 4].map((pageNumber, index) => (
+        {[1, 2, 3].map((pageNumber, index) => (
           <Step key={pageNumber}>
             {({ accomplished }) => (
               <PageNumber
