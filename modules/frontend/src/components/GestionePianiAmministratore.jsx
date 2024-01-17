@@ -226,10 +226,11 @@ const GestioneAmministratorePiani = () => {
                     <div className="DivStato">
                       <h1 className="statoLabel">Stato del preventivo</h1>
                       <select
+                        defaultValue="In Lavorazione"
+                        value={stato}
                         className="selectStato"
                         id="stato"
                         name="stato"
-                        value={currentPreventivo.stato}
                         onChange={
                           (e) =>
                             // eslint-disable-next-line implicit-arrow-linebreak
@@ -242,21 +243,25 @@ const GestioneAmministratorePiani = () => {
                         <option value="Rifiutato">Rifiutato</option>
                       </select>
                     </div>
-                    <div className="DivPrezzo">
-                      <h1 className="prezzoLabel">Prezzo del preventivo</h1>
-                      <input
-                        className="inputPrezzo"
-                        value={prezzo}
-                        placeholder="Inserisci il prezzo"
-                        type="number"
-                        onChange={
-                          (e) =>
-                            // eslint-disable-next-line implicit-arrow-linebreak
-                            handlePriceChange(e, currentPreventivo)
-                          // eslint-disable-next-line react/jsx-curly-newline
-                        }
-                      />
-                    </div>
+                    {stato === 'Accettato' && (
+                      <div className="DivPrezzo">
+                        <h1 className="prezzoLabel">Prezzo preventivo</h1>
+                        <input
+                          className="inputPrezzo"
+                          value={prezzo}
+                          placeholder="Inserisci il prezzo"
+                          type="number"
+                          min="1"
+                          required
+                          onChange={
+                            (e) =>
+                              // eslint-disable-next-line implicit-arrow-linebreak
+                              handlePriceChange(e, currentPreventivo)
+                            // eslint-disable-next-line react/jsx-curly-newline
+                          }
+                        />
+                      </div>
+                    )}
                     <button type="submit" className="bottonePreventiviForm">
                       Modifica
                     </button>
