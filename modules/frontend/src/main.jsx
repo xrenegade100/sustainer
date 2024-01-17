@@ -12,6 +12,7 @@ import ModificaPiano from './pages/ModificaPiano';
 import LoginAmministratore from './pages/LoginAmministratore';
 import PianoEnterprise from './pages/PianoEnterprise';
 import GestionePiani from './pages/GestionePiani';
+import CardPianoEnterprise from './pages/CardPianoEnterprise';
 
 // Qui fare il routing frontend, quindi aggiungere qui le pagine jsx qui
 const router = createBrowserRouter([
@@ -47,6 +48,10 @@ const router = createBrowserRouter([
   {
     path: '/gestionePiani',
     element: <GestionePiani />, //passare la pagina jsx con le <>
+  },
+  {
+    path: '/newPianoEnterprise',
+    element: <CardPianoEnterprise />, //passare la pagina jsx con le <>
   },
 ]);
 

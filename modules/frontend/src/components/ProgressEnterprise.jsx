@@ -9,8 +9,6 @@ import '../styles/ProgressEnterprise.css';
 import CardLoadingPrev from './CardLoadingPrev';
 import CardPreventivo from './CardPreventivo';
 import circleCheck from '../assets/circle_check.svg';
-import circleCheckBlu from '../assets/circle_checkBlu.svg';
-import CardPianoEnterprise from './CardPianoEnterprise';
 
 const PageNumber = ({
   accomplished,
@@ -41,11 +39,16 @@ PageNumber.propTypes = {
 
 const ProgressEnterprise = ({ onPageNumberClick }) => {
   const [currentStep, setCurrentStep] = useState(1);
-  const [paymentStep, setPaymentStep] = useState(1);
   const [prezzo, setPrezzo] = useState(null);
   const [limitiAddestramenti, setLimitiAddestramenti] = useState('');
   const [limitiSalvataggi, setLimitiSalvataggi] = useState('');
   const navigate = useNavigate();
+
+  useEffect(() => {
+    fetchData();
+    funzioneVerificaPrev();
+    funzioneVerificaStato();
+  }, [currentStep]);
 
   const fetchData = async function funzioneVerifica() {
     const verifica = await fetch('http://localhost:5000/verificaLogin', {
@@ -78,10 +81,8 @@ const ProgressEnterprise = ({ onPageNumberClick }) => {
 
         if (response.ok) {
           setCurrentStep(2);
-          const data = await response.json();
-          console.log('Risposta dal backend:', data);
         } else {
-          console.error('Errore nella richiesta al backend:', response.statusText);
+          setCurrentStep(1);
         }
       } catch (error) {
         console.error('Errore nella fetch:', error);
@@ -91,29 +92,7 @@ const ProgressEnterprise = ({ onPageNumberClick }) => {
 
   funzioneVerificaPrev();
 
-  // funzione per verificare se l'utente ha già un piano e se è diverso da enterprise
-  const funzioneVerificaPiano = async () => {
-    if (currentStep === 1) {
-      try {
-        const response = await fetch('http://localhost:5000/ultimoPianoUtente', {
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          method: 'POST',
-          credentials: 'include',
-        });
-        const result = await response.json();
-        if (result !== 'Enterprise') {
-          setCurrentStep(1);
-        }
-        navigate('/modifica-piano');
-      } catch (error) {
-        console.error('Errore durante la fetch:', error);
-      }
-    }
-  };
-
-  funzioneVerificaPiano();
+  // funzione per verificare se l'utente ha già un piano e se è diverso da enterprise tolta
 
   const handleNextClick = async () => {
     if (currentStep === 1) {
@@ -147,26 +126,6 @@ const ProgressEnterprise = ({ onPageNumberClick }) => {
   const handlePrevClick = () => {
     if (currentStep > 1) {
       setCurrentStep(currentStep - 1);
-    }
-  };
-
-  const handleTerminaClick = async () => {
-    if (paymentStep === 4) {
-      try {
-        const response = await fetch('http://localhost:5000/eliminaPreventivo', {
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          method: 'POST',
-          credentials: 'include',
-        });
-        const result = await response.json();
-        if (result) {
-          navigate('/modifica-piano');
-        }
-      } catch (error) {
-        console.error('Errore durante la fetch:', error);
-      }
     }
   };
 
@@ -299,41 +258,7 @@ const ProgressEnterprise = ({ onPageNumberClick }) => {
             circleIcon={circleCheck}
           />
         </div>
-      ) : paymentStep === 4 ? (
-        <div className="cardPianoE">
-          <CardPianoEnterprise
-            bgColor="#FFFFFF"
-            textColor="#222222"
-            circleIcon={circleCheckBlu}
-          />
-          <div className="buttonPE">
-            <Button
-              className="btnnext"
-              onClick={handleTerminaClick} // creare metodo che rendirizza a pagina addestramento
-              size={SIZE.large}
-            >
-              Termina
-            </Button>
-          </div>
-        </div>
       ) : (null)}
-
-      {/* <div className="buttonPE">
-        <Button
-          className="btnback"
-          onClick={handlePrevClick}
-          size={SIZE.large}
-        >
-          Indietro
-        </Button>
-        <Button
-          className="btnnext"
-          onClick={handleNextClick}
-          size={SIZE.large}
-        >
-          Avanti
-        </Button>
-      </div> */}
     </>
   );
 };
