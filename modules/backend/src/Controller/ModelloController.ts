@@ -4,6 +4,71 @@ import * as path from 'path';
 import csv from 'csv-parser';
 
 class ModelloController {
+  
+  private static pathModello: string;
+
+  static AddestramentoIMP = async (req: Request, res: Response) => {
+    const { gruppoPrivilegiato } = req.body;
+    let gruppoPrivilegiatoStringa: string = '';
+    const urlWithParams = new URL('http://127.0.0.1:8000/');
+
+    gruppoPrivilegiato.state.forEach((element: any) => {
+      gruppoPrivilegiatoStringa += `${element.id}, `;
+      urlWithParams.searchParams.append(`${element.id}`, 'true');
+    });
+    console.log('Il nuovo url è: ', urlWithParams.href);
+    console.log('Il gruppo privilegiato è: ', gruppoPrivilegiatoStringa);
+
+    const fileRelativePathJson = `src/Dataset/${'decisionTree.json'}`;
+    const fileRelativePathDataset = `src/Dataset/${'Titanic-Dataset.csv'}`;
+
+    // Ottieni il percorso assoluto del file utilizzando il modulo path
+    const absolutePathJson = path.resolve(fileRelativePathJson);
+    const absolutePathDataset = path.resolve(fileRelativePathDataset);
+
+    const responseAddestramento = await fetch(urlWithParams, {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      method: 'POST',
+      body: JSON.stringify({
+        pathJson: absolutePathJson,
+        pathDataset: absolutePathDataset,
+      }),
+    });
+    if (responseAddestramento.ok) {
+      // Estrai i dati dalla risposta
+      const data = await responseAddestramento.json();
+      console.log(data);
+      serviziModelloImpl.salvaModelloImpl(
+        req.session!.idUser,
+        gruppoPrivilegiatoStringa,
+        data.recall,
+        data.precision,
+        data.accuracy,
+        Number(data.emissions),
+        0,
+        'Decision Tree',
+      );
+      this.pathModello = data.pathModello;
+      return res.status(200).json({
+        addestramento: true,
+      });
+    }
+    return res.status(400).json({
+      addestramento: false,
+    });
+  };
+
+  static downloadIMP = async (req: Request, res: Response) => {
+    res.download(this.pathModello, 'modelloAddestrato.pkl', (err) => {
+      if (err) {
+        console.error('Errore durante il download del file:', err);
+        res.status(500).send('Errore durante il download del file');
+      }
+    });
+  };
+  
   static salvaJson = async (req: Request, res: Response) => {
     try {
       const { contenuto } = req.body;
