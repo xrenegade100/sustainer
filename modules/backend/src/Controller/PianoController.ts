@@ -144,13 +144,12 @@ class PianoController {
     );
     // prendo l'id del piano appena inserito
     if (piano && piano.getIdPiano) {
-      // richiamo il metodo AcquistoPiano del serviziPianoImpl
       const acquisto = await serviziPianoImpl.AcquistoPiano(
         Number(req.session!.idUser),
         piano.getIdPiano(),
       );
       if (acquisto) {
-        return res.status(200).redirect('http://localhost:5173/richiesta-Enterprise?paymentStep=4');
+        return res.status(200).redirect('http://localhost:5173/newPianoEnterprise');
       }
     }
     return res.status(403).json({ message: 'errore' });

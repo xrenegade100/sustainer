@@ -44,13 +44,18 @@ class PreventivoController {
   };
 
   static eliminaPreventivoIMP = async (req: Request, res: Response) => {
-    const preventivo = await ServiziPreventivoImpl.eliminaPreventivo(
+    const prev = await ServiziPreventivoImpl.getPreventivo(
       req.session!.idUser,
     );
-    if (preventivo) {
-      return res.status(200).json(preventivo);
+    if (prev) {
+      const elimina = await ServiziPreventivoImpl.eliminaPreventivo(
+        req.session!.idUser,
+      );
+      if (elimina) {
+        return res.status(200).json({ message: 'preventivo eliminato' });
+      }
     }
-    return res.status(403).json({ message: 'preventivo non eliminato' });
+    return res.status(403).json({ message: 'nessun preventivo da eliminare' });
   };
 
   static getPreventivoIMP = async (req: Request, res: Response) => {
