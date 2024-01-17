@@ -11,6 +11,7 @@ const PianoEnterprise = () => {
   const params = new URLSearchParams(location.search);
   const paymentStep = params.get('paymentStep');
 
+  return (
     <div className="container">
       <div className="header">
         <Navbar />
@@ -24,7 +25,8 @@ const PianoEnterprise = () => {
       <div className="footerPE">
         <Footer />
       </div>
-    </div>;
+    </div>
+  );
 };
 
 export default PianoEnterprise;
