@@ -1,7 +1,6 @@
 import React from 'react';
 import '../styles/InserimentoParametri.css';
 import { ProgressBar, Step } from 'react-step-progress-bar';
-import Footer from '../components/Footer';
 import Navbar from '../components/Navbar';
 import InserimentoParametriForm from '../components/InserimentoParametriForm';
 
@@ -69,9 +68,6 @@ const InserimentoParametri = () => (
     </div>
     <div>
       <InserimentoParametriForm className="formoo" />
-    </div>
-    <div className="footerPE">
-      <Footer />
     </div>
   </div>
 );
