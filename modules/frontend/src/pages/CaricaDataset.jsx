@@ -82,12 +82,46 @@ const CaricaDataset = () => {
     const startFakeProgress = () => {
       setIsActive(true);
     };
+    const handleUploadFile = async () => {
+      try {
+        const formData = new FormData();
+        formData.append('file', uploadedFile);
+
+        const response = await fetch('http://localhost:5000/upload', {
+          method: 'POST',
+          credentials: 'include',
+          body: formData,
+        });
+
+        // Gestisci la risposta dal server come necessario
+        console.log(response.status);
+        if (response.ok && fakeProgress === 100) {
+          setSnackbarMessage('File caricato con successo');
+          setFileUploaded(true);
+          setShowSnackbar(true);
+        } else if (response.status === 400 && fakeProgress === 100) {
+          setSnackbarMessage('Errore: il contenuto del file non è valido');
+          setFileUploaded(false);
+          setShowSnackbar(true);
+        } else if (response.status === 500) {
+          setSnackbarMessage('Errore: puoi caricare solo file .csv');
+          setShowSnackbar(true);
+          setFileUploaded(false);
+        }
+      } catch (error) {
+        setSnackbarMessage(
+          'Errore durante la richiesta di caricamento del file',
+          error,
+        );
+        setShowSnackbar(true);
+      }
+    };
 
     useInterval(
       () => {
         if (fakeProgress >= 100) {
+          handleUploadFile();
           stopFakeProgress();
-          setFileUploaded(true);
         } else {
           setFakeProgress(fakeProgress + 10);
         }
@@ -100,37 +134,6 @@ const CaricaDataset = () => {
   // eslint-disable-next-line operator-linebreak
   const [progressAmount, startFakeProgress, stopFakeProgress] =
     useFakeProgress();
-  const handleUploadFile = async () => {
-    try {
-      const formData = new FormData();
-      formData.append('file', uploadedFile);
-
-      const response = await fetch('http://localhost:5000/upload', {
-        method: 'POST',
-        credentials: 'include',
-        body: formData,
-      });
-
-      // Gestisci la risposta dal server come necessario
-      if (response.ok) {
-        setSnackbarMessage('File caricato con successo');
-        setShowSnackbar(true);
-        navigate('/inserimentoparametri');
-      } else if (response.status === 400) {
-        setSnackbarMessage('Errore: il contenuto del file non è valido');
-        setShowSnackbar(true);
-      } else {
-        setSnackbarMessage('Errore: puoi caricare solo file .csv');
-        setShowSnackbar(true);
-      }
-    } catch (error) {
-      setSnackbarMessage(
-        'Errore durante la richiesta di caricamento del file',
-        error,
-      );
-      setShowSnackbar(true);
-    }
-  };
   return (
     <>
       <div className="header">
@@ -265,8 +268,7 @@ const CaricaDataset = () => {
           className="avantiButton"
           disabled={!fileUploaded}
           onClick={() => {
-            handleUploadFile();
-            navigate('');
+            navigate('/inserimentoparametri');
           }}
         >
           Avanti
