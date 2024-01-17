@@ -1,25 +1,22 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { SnackbarElement } from 'baseui/snackbar';
 import { Tabs, Tab, FILL } from 'baseui/tabs-motion';
 
 const InserimentoParametriForm = () => {
   const [csv, setCsv] = useState([]);
-  const [tipoModello, setTipoModello] = React.useState('decisiontree');
+  const [tipoModello, setTipoModello] = useState('decisiontree');
   const [
     decisionTreeCriterioDiSuddivisione,
     setDecisionTreeCriterioDiSuddivisione,
-  ] = React.useState('');
-  // eslint-disable-next-line operator-linebreak
-  const [decisionTreeProfondita, setDecisionTreeProfondita] =
-    React.useState('');
+  ] = useState('');
+  const [decisionTreeProfondita, setDecisionTreeProfondita] = useState('');
   // eslint-disable-next-line operator-linebreak
   const [decisionTreeCampioniFoglia, setDecisionTreeCampioniFoglia] =
-    React.useState('');
-  // eslint-disable-next-line operator-linebreak
-  const [naiveBayesDistribuzione, setNaiveBayesDistribuzione] =
-    React.useState('');
-  const [naiveBayesSmoothing, setNaiveBayesSmoothing] = React.useState('');
-  const [target, setTarget] = React.useState('');
+    useState('');
+  const [naiveBayesDistribuzione, setNaiveBayesDistribuzione] = useState('');
+  const [naiveBayesSmoothing, setNaiveBayesSmoothing] = useState('');
+  const [target, setTarget] = useState('');
   const [activeKey, setActiveKey] = useState('0');
   const [showSnackbar, setShowSnackbar] = useState(false);
   const navigate = useNavigate();
@@ -85,16 +82,7 @@ const InserimentoParametriForm = () => {
     }
 
     funzioneVerifica();
-    let timer;
-    if (showSnackbar) {
-      timer = setTimeout(() => {
-        setShowSnackbar(false);
-      }, 3500);
-    }
-    return () => {
-      clearTimeout(timer);
-    };
-  }, [showSnackbar, navigate]);
+  }, [navigate]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -107,14 +95,16 @@ const InserimentoParametriForm = () => {
           credentials: 'include',
         });
         const result = await response.json();
+        if (!result.data) navigate('/homepage');
         setCsv(result.data);
       } catch (error) {
+        // eslint-disable-next-line no-console
         console.error('Errore durante la fetch:', error);
       }
     };
 
     fetchData();
-  }, []);
+  }, [navigate]);
 
   const generaFileJSON = async () => {
     let datiDaSalvare;
@@ -136,7 +126,6 @@ const InserimentoParametriForm = () => {
       };
     }
     const jsonString = JSON.stringify(datiDaSalvare);
-    console.log(jsonString);
     const response = await fetch('http://localhost:5000/salvaJson', {
       method: 'POST',
       credentials: 'include',
@@ -147,8 +136,10 @@ const InserimentoParametriForm = () => {
     });
 
     if (response.ok) {
+      // eslint-disable-next-line no-console
       console.log('Dati salvati con successo');
     } else {
+      // eslint-disable-next-line no-console
       console.error('Errore nel salvataggio dei dati');
     }
   };
@@ -247,7 +238,7 @@ const InserimentoParametriForm = () => {
                 </div>
               </Tab>
               <Tab
-                title="Navie Bayes"
+                title="Naive Bayes"
                 className="fomtClass"
                 valie={tipoModello}
                 onClick={() => setTipoModello('naviebayes')}
@@ -305,6 +296,19 @@ const InserimentoParametriForm = () => {
               </Tab>
             </Tabs>
           </div>
+          {showSnackbar && (
+            <div className="compilaCampi">
+              <SnackbarElement
+                message={
+                  // eslint-disable-next-line react/jsx-wrap-multilines
+                  <div className="testoSnack">
+                    Compila tutti i campi obbligatori
+                  </div>
+                }
+                focus={false}
+              />
+            </div>
+          )}
         </div>
         <div className="bottoni">
           <button
@@ -318,8 +322,28 @@ const InserimentoParametriForm = () => {
             type="button"
             className="buttonA"
             onClick={() => {
-              generaFileJSON();
-              navigate('/fairness');
+              if (
+                // eslint-disable-next-line operator-linebreak
+                (decisionTreeCriterioDiSuddivisione === '' ||
+                  // eslint-disable-next-line operator-linebreak
+                  decisionTreeProfondita === 0 ||
+                  // eslint-disable-next-line operator-linebreak
+                  decisionTreeCampioniFoglia === 0 ||
+                  // eslint-disable-next-line operator-linebreak
+                  target === '') &&
+                // eslint-disable-next-line operator-linebreak
+                (naiveBayesDistribuzione === '' ||
+                  // eslint-disable-next-line operator-linebreak
+                  naiveBayesSmoothing === 0 ||
+                  target === '')
+              ) {
+                // Se una delle variabili è null, mostra un alert
+                setShowSnackbar(true);
+              } else {
+                // Altrimenti, esegui la tua logica
+                generaFileJSON();
+                navigate('/fairness');
+              }
             }}
           >
             Vai Avanti
