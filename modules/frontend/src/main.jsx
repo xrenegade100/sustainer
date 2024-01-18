@@ -53,6 +53,7 @@ const router = createBrowserRouter([
   {
     path: '/newPianoEnterprise',
     element: <CardPianoEnterprise />, // passare la pagina jsx con le <>
+  },
   {
     path: '/addestra',
     element: <CaricaDataset />, // passare la pagina jsx con le <>
