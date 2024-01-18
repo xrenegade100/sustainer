@@ -70,29 +70,9 @@ const CardPianoEnterprise = () => {
       }
     };
 
-    const funzioneVerificaPrev = async () => {
-      try {
-        const response = await fetch('http://localhost:5000/verificaPreventivo', {
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          method: 'POST',
-          credentials: 'include',
-        });
-
-        if (response.ok) {
-          navigate('/richiesta-Enterprise');
-        } else {
-          fetchEliminaPreventivo();
-        }
-      } catch (error) {
-        console.error('Errore nella fetch:', error);
-      }
-    };
-
-    funzioneVerificaPrev();
     fetchData();
     fetchDataPiano();
+    fetchEliminaPreventivo();
   }, []);
 
   const handleTerminaClick = async () => {
