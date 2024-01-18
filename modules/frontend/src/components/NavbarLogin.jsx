@@ -7,7 +7,7 @@ const NavbarLogin = () => {
   return (
     <nav className="navbar">
       <ul className="ul-nav">
-        <img className="logo" src="/Logo.png" alt="" />
+        <img className="logoLg" src="/Logo.png" alt="" />
         {location.pathname === '/login' || location.pathname === '/loginAm' ? (
           <li className="pulsante-home">
             <Link to="/" className="text-white">

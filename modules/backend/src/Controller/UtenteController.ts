@@ -8,11 +8,12 @@ class UtenteController {
     // se l'utente è loggato
     if (req.session!.authenticated) {
       // ritorno un json con success = true e l'utente loggato
+      console.log('utente loggato id: ', req.session!.idUser);
       return res
         .status(200)
         .json({ success: true, user: req.session!.authenticated });
     }
-    return res.status(200).json({ success: false }); // altrimenti ritorno un json con success=false
+    return res.status(403).json({ success: false }); // altrimenti ritorno un json con success=false
   };
 
   // metodo che mi servirà per il login
@@ -81,6 +82,29 @@ class UtenteController {
       return res
         .status(500)
         .json({ success: false, message: 'Errore durante il logout' });
+    }
+  };
+
+  // metodo che mi servirà per il ritorno di un utente in base all'id_utente
+  static getUtenteById = async (req: Request, res: Response) => {
+    try {
+      // prendo l'id_utente dalla richiesta
+      const { idUtente } = req.params;
+      // richiamo il metodo getUtente del serviziUtenteImpl
+      const utente = await serviziUtenteImpl.getUtenteById(Number(idUtente));
+      if (utente) {
+        // se l'utente esiste
+        return res // ritorno un json con success = true e l'utente
+          .status(200)
+          .json(utente);
+      }
+      return res // altrimenti ritorno un json con success = false e un messaggio di errore
+        .status(403)
+        .json({ success: false, message: 'Utente non trovato' });
+    } catch (error) {
+      return res
+        .status(500)
+        .json({ success: false, message: 'Errore durante il login' });
     }
   };
 }

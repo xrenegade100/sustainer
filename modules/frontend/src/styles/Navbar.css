@@ -41,6 +41,7 @@
 }
 
 .logo {
+  padding: 0;
   margin: 0;
   width: 14%;
   height: 14%;
@@ -173,9 +174,12 @@
 }
 /* Aggiunta di media query per rendere la navbar responsiva */
 @media (max-width: 850px) {
-  .dropdown-li {
-    float: right;
+  
+  .text-white {
+    font-size: 1em;
+    float: none;
   }
+
   .elements {
     display: none; /* Nascondi la navbar di default */
     background-color: #2467d1;
@@ -204,15 +208,78 @@
     margin-left: 5%;
   }
   .dropdown-content {
-    top: 90%;
-    width: 30%;
-    right: 5%;
+    position: absolute;
+    display: block;
+    width: 100px;
+    right: 35%;
+    margin-top: 50px;
+    margin-right: 5px;
   }
-  .logo {
+  .logoLg {
     width: 24%;
     height: 24%;
   }
+
+  .logout-button-admin {
+    font-size: 16px;
+    text-align: center;
+    border-radius: 0%;
+    width: 100%;
+    border-color: transparent;
+    background-color: transparent;
+    transition: background-color 0.3s;
+    padding: 14px 16px;
+  }
 }
+
+@media (max-width: 768px) {
+  .text-white {
+    font-size: 1em;
+    float: none;
+  }
+
+  .elements {
+    display: none; /* Nascondi la navbar di default */
+    background-color: #2467d1;
+    padding-bottom: 1%;
+  }
+  .navbar.visible .elements {
+    display: block; /* Mostra gli elementi solo quando la navbar è visibile */
+  }
+  .navbar li {
+    float: none;
+    text-align: center;
+  }
+  .toggle_Menu {
+    float: right;
+    position: absolute;
+    display: block;
+    top: 1%;
+  }
+  .img-avatar {
+    position: relative;
+    display: block;
+    top: -6.6%;
+    
+  }
+  .dropdown-content {
+    position: absolute;
+    display: block;
+    width: 100px;
+    right: 5%;
+    margin-top: 10px;
+    margin-right: 5px;
+  }
+  .logoLg {
+    width: 24%;
+    height: 24%;
+  }
+
+
+
+}
+
+
 @media (max-width: 570px) {
   .img-avatar {
     width: 45px;
@@ -235,31 +302,74 @@
 }
 @media (max-width: 425px) {
   .img-avatar {
-    width: 35px;
-    height: 35px;
+    width: 30px;
+    height: 30px;
     right: 5%;
-    top: 0.5%;
+    top: 2%;
   }
   .toggle_Menu {
     top: 0%;
   }
+
+  .toggle_Menu svg{
+    width: 30px;
+    height: 30px;
+  }
+
+  .dropdown-content {
+    position: absolute;
+    display: block;
+    width: 60px;
+    right: 2%;
+    margin-top: 5px;
+    margin-right: 2px;
+  }
+
+  .logoLg {
+    margin-top: 2%;
+    width: 20%;
+    height: 20%;
+  }
+
 }
 @media (max-width: 390px) {
   .img-avatar {
-    width: 30px;
-    height: 30px;
+    width: 25px;
+    height: 25px;
     margin-right: 3%;
     top: 2px;
   }
+
+  .logoLg {
+    margin-top: 3%;
+    width: 25%;
+    height: 25%;
+  }
+
 }
 @media (max-width: 320px) {
   .toggle_Menu {
-    margin-top: -1%;
+    margin-top: 1%;
   }
+
+  .toggle_Menu svg{
+    width: 20px;
+    height: 20px;
+  }
+
   .img-avatar {
     width: 25px;
     height: 25px;
     margin-right: 5%;
     top: 2px;
   }
+
+
+  .logoLg {
+    margin-top: 3%;
+    width: 30%;
+    height: 30%;
+  }
 }
+
+

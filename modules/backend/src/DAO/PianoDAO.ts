@@ -1,9 +1,28 @@
 import { RowDataPacket } from 'mysql2';
-import db from '../db/poolDB';
+import db from '../db/PoolDB';
 import Piano from '../piano/domain/Piano';
 import Acquisto from '../piano/domain/Acquisto';
 
 class PianoDAO {
+  // funzione asincrona che ritorna tutti i piani
+  static async getAllPiani() {
+    const conn = await db(); // connessione al db
+    const [rows] = await conn.query('SELECT * FROM piano'); // query che ritorna tutti i piani
+    const piani = rows as RowDataPacket[]; // assegno a piani i risultati della query
+    return piani.map(
+      (piano) =>
+        // eslint-disable-next-line implicit-arrow-linebreak
+        new Piano(
+          piano.id_piano,
+          piano.tipo,
+          piano.prezzo,
+          piano.limite_salvataggi_modelli,
+          piano.limite_addestramenti_modelli,
+        ),
+      // ritorno un oggetto mappato con tutti i piani
+    );
+  }
+
   // funzione asincrona che ritorna un piano in base al suo id
   static async getTipiPiani() {
     const conn = await db(); // connessione al db
@@ -31,8 +50,8 @@ class PianoDAO {
       'SELECT id_piano FROM susdb.piano WHERE tipo = "Free"', // query che ritorna l'id del piano free
     )) as RowDataPacket[]; // assegno a id_piano i risultati della query
     await conn.query(
-      'INSERT INTO acquisto(id_utente, id_piano, data_acquisto) VALUES (?, ?, ?)', // query che inserisce un acquisto nel db
-      [idUtente, idPiano[0][0].id_piano, new Date()], // parametri della query
+      'INSERT INTO acquisto(id_utente, id_piano, data_acquisto, attivo) VALUES (?, ?, ?, ?)', // query che inserisce un acquisto nel db
+      [idUtente, idPiano[0][0].id_piano, new Date(), true], // parametri della query
     );
   }
 
@@ -48,6 +67,7 @@ class PianoDAO {
       acquisto[0].id_utente,
       acquisto[0].id_piano,
       acquisto[0].data_acquisto,
+      acquisto[0].attivo,
     );
   }
 
@@ -74,21 +94,44 @@ class PianoDAO {
   static async AcquistoPiano(idUtente: number, idPiano: number) {
     const conn = await db(); // connessione al db
     const [rows] = await conn.query(
-      'INSERT INTO acquisto(id_utente, id_piano, data_acquisto) VALUES (?, ?, ?)', // query che inserisce un acquisto nel db
-      [idUtente, idPiano, new Date()], // parametri della query
+      'INSERT INTO acquisto(id_utente, id_piano, data_acquisto, attivo) VALUES (?, ?, ?, ?)', // query che inserisce un acquisto nel db
+      [idUtente, idPiano, new Date(), true], // parametri della query
     );
     return rows;
   }
 
-  // funzione che ritorna id del piano
-  static async getIdPiano(tipo: string) {
+  static async annullaPiano(idUtente: number, idPiano: number) {
     const conn = await db();
+    console.log(idUtente, idPiano);
     const [rows] = await conn.query(
-      'SELECT id_piano FROM piano WHERE tipo = ?',
-      tipo,
+      'UPDATE susdb.acquisto SET attivo = 0 WHERE id_utente = ? AND id_piano = ?',
+      [idUtente, idPiano],
     );
-    const piano = rows as RowDataPacket[];
-    return piano[0].id_piano;
+    if (rows) {
+      return true;
+    }
+    return false;
+  }
+
+  static async InserimentoPianoEnterprise(
+    limitiAddestramenti:number,
+    limitiSalvataggi:number,
+    prezzo:number,
+  ) {
+    const conn = await db();
+    await conn.query(
+      'INSERT INTO piano(tipo, prezzo, limite_salvataggi_modelli, limite_addestramenti_modelli) VALUES (?, ?, ?, ?)',
+      ['Enterprise', prezzo, limitiSalvataggi, limitiAddestramenti],
+    );
+    const [rows] = await conn.query('SELECT * FROM piano WHERE id_piano = LAST_INSERT_ID()');
+    const piano = (rows as RowDataPacket[])[0];
+    return new Piano(
+      piano.id_piano,
+      piano.tipo,
+      piano.prezzo,
+      piano.limite_salvataggi_modelli,
+      piano.limite_addestramenti_modelli,
+    );
   }
 }
 
