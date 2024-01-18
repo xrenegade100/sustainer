@@ -12,9 +12,8 @@ import '../styles/Fairness.css';
 const Fairness = () => {
   const [showSnackbar, setShowSnackbar] = useState(false);
   const [value, setValue] = React.useState([]);
-  const [snackbarMessage, setSnackbarMessage] = useState('');
+  const [snackbarMessage] = useState('');
   const [option, setOption] = React.useState([]);
-  const [addestramento, setAddestramento] = useState(false);
 
   const navigate = useNavigate();
   useEffect(() => {

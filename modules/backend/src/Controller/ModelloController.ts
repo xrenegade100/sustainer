@@ -16,8 +16,6 @@ class ModelloController {
       gruppoPrivilegiatoStringa += `${element.id}, `;
       urlWithParams.searchParams.append(`${element.id}`, 'true');
     });
-    console.log('Il nuovo url è: ', urlWithParams.href);
-    console.log('Il gruppo privilegiato è: ', gruppoPrivilegiatoStringa);
 
     const fileRelativePathJson = `src/Dataset/${req.session!.idUser}.json`;
     const fileRelativePathDataset = `src/Dataset/${req.session!.idUser}.csv`;
@@ -39,7 +37,6 @@ class ModelloController {
     if (responseAddestramento.ok) {
       // Estrai i dati dalla risposta
       const data = await responseAddestramento.json();
-      console.log(data);
       serviziModelloImpl.salvaModelloImpl(
         req.session!.idUser,
         gruppoPrivilegiatoStringa,
@@ -63,6 +60,7 @@ class ModelloController {
   static downloadIMP = async (req: Request, res: Response) => {
     res.download(this.pathModello, 'modelloAddestrato.pkl', (err) => {
       if (err) {
+        // eslint-disable-next-line no-console
         console.error('Errore durante il download del file:', err);
         res.status(500).send('Errore durante il download del file');
       }
@@ -77,7 +75,6 @@ class ModelloController {
       const nomeFile = `${String(req.session!.idUser)}.json`;
       // Specifica il percorso completo del file
       const percorsoCompleto = path.join('src/Dataset', nomeFile);
-      console.log(percorsoCompleto);
       const jsonSenzaEscape = JSON.parse(contenuto);
 
       fs.writeFileSync(percorsoCompleto, JSON.stringify(jsonSenzaEscape));
@@ -109,14 +106,15 @@ class ModelloController {
       const primaRigaCSV = await ModelloController.leggiNomiColonneCSV(
         percorsoCompletoCSV,
       );
-
-      res
+      return res
         .status(200)
         .json({ success: 'File CSV letto correttamente', data: primaRigaCSV });
     } catch (err) {
       // eslint-disable-next-line no-console
       console.error('Errore:', err);
-      res.status(500).json({ error: 'Errore nella lettura del file CSV' });
+      return res
+        .status(500)
+        .json({ error: 'Errore nella lettura del file CSV' });
     }
   };
 

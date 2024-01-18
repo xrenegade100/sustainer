@@ -4,7 +4,7 @@
   "description": "",
   "main": "src/Index.ts",
   "scripts": {
-    "dev": "nodemon src/Index.ts"
+    "dev": "nodemon --ignore src/Dataset src/Index.ts"
   },
   "keywords": [],
   "author": "",

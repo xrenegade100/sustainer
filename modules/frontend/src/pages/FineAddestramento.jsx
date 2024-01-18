@@ -11,7 +11,7 @@ import '../styles/FineAddestramento.css';
 const FineAddestramento = () => {
   const location = useLocation();
   const [showSnackbar, setShowSnackbar] = useState(false);
-  const [snackbarMessage, setSnackbarMessage] = useState('');
+  const [snackbarMessage] = useState('');
   const [isNotReady, setIsNotReady] = useState(true);
 
   const navigate = useNavigate();
@@ -65,7 +65,6 @@ const FineAddestramento = () => {
             }),
             signal, // Passa il segnale di aborto alla richiesta fetch
           });
-          const response = await res.json();
 
           if (!signal.aborted && res.ok) {
             setIsNotReady(false);

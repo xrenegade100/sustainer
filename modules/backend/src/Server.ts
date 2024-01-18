@@ -4,10 +4,10 @@ import morgan from 'morgan';
 import helmet from 'helmet';
 import cors from 'cors';
 import { upload, handleFileUpload } from './Dataset/DatasetMenage';
-import PianoController from './Controller/PianoController';
-import UtenteController from './Controller/UtenteController';
-import AmministratoreController from './Controller/AmministratoreController';
-import ModelloController from './Controller/ModelloController';
+import PianoController from './controller/PianoController';
+import UtenteController from './controller/UtenteController';
+import AmministratoreController from './controller/AmministratoreController';
+import ModelloController from './controller/ModelloController';
 
 const server = express();
 
