@@ -35,6 +35,17 @@ class ServiziUtenteImpl implements serviziUtente {
     }
     return 0;
   }
+
+  // metodo che uso per ritornami un utente in base all'id_utente
+  static async getUtenteById(idUtente: number) {
+    // richiamo il metodo getUtente del UtenteDAO
+    const utente = await UtenteDAO.getUtenteById(idUtente);
+    // se l'utente esiste
+    if (utente) {
+      return utente; // ritorno l'utente
+    }
+    return null;
+  }
 }
 
 export default ServiziUtenteImpl;

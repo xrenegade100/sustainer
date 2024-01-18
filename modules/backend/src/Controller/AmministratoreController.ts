@@ -5,7 +5,6 @@ class AmministratoreController {
   static verificaLoginAm = async (req: Request, res: Response) => {
     if (req.session!.authenticated) {
       return res.status(200).json({
-        success: true,
         user: req.session!.authenticated,
         adminId: req.session!.idAdmin,
       });

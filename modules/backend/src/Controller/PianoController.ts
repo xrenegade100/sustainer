@@ -6,6 +6,16 @@ const stripe = require('stripe')(
 );
 
 class PianoController {
+  // metodo che mi consente di visualizzare tutti i piani
+  static visualizzaPianiIMP = async (req: Request, res: Response) => {
+    // richiamo il metodo getPiani del serviziPianoImpl
+    const piani = await serviziPianoImpl.getAllPiani();
+    if (piani) {
+      return res.status(200).json(piani); // ritorno i piani
+    }
+    return res.status(403).json({ message: 'piani non trovati' }); // altrimenti ritorno un messaggio di errore
+  };
+
   // metodo che ritorna tutti i piani
   static getTipiPianoIMP = async (req: Request, res: Response) => {
     // richiamo il metodo getTipiPiani del serviziPianoImpl
@@ -122,6 +132,54 @@ class PianoController {
       }
 
       return res.status(200).json(differenzaInGiorni);
+    }
+    return res.status(403).json({ message: 'errore' });
+  };
+
+  static InserimentoPianoEnterpriseIMP = async (req: Request, res: Response) => {
+    const piano = await serviziPianoImpl.InserimentoPianoEnterprise(
+      Number(req.query.prezzo),
+      Number(req.query.limiteSalvataggiModelli),
+      Number(req.query.limiteAddestramentiModelli),
+    );
+    // prendo l'id del piano appena inserito
+    if (piano && piano.getIdPiano) {
+      const acquisto = await serviziPianoImpl.AcquistoPiano(
+        Number(req.session!.idUser),
+        piano.getIdPiano(),
+      );
+      if (acquisto) {
+        return res.status(200).redirect('http://localhost:5173/newPianoEnterprise');
+      }
+    }
+    return res.status(403).json({ message: 'errore' });
+  };
+
+  static AcquistoPianoEIMP = async (req: Request, res: Response) => {
+    const { titoloPiano, prezzoPiano } = req.body;
+    const session = await stripe.checkout.sessions.create({
+      customer_email: req.session!.authenticated,
+      line_items: [
+        {
+          price_data: {
+            currency: 'eur',
+            product_data: {
+              name: titoloPiano,
+            },
+            unit_amount: Number(prezzoPiano) * 100,
+          },
+          quantity: 1,
+        },
+      ],
+      mode: 'payment',
+      success_url: `http://localhost:5000/inserimentoEnterprise?prezzo=${
+        req.body.prezzoPiano
+      }&limiteSalvataggiModelli=${req.body.limSPiano}&limiteAddestramentiModelli=${req.body.limAPiano}&idUtente=${req.session!.idUser}`,
+      cancel_url: 'http://localhost:5173/modifica-piano',
+    });
+
+    if (session) {
+      return res.status(200).json({ checkoutUrl: session.url, success: true });
     }
     return res.status(403).json({ message: 'errore' });
   };

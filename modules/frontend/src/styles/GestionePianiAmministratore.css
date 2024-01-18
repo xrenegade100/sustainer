@@ -1,0 +1,242 @@
+.divGenerale {
+  width: 100%;
+  position: absolute;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.headergestione {
+  width: 70%;
+  position: relative;
+  padding: 20px;
+  text-align: center;
+  background-color: #f1f1f1;
+  border-radius: 10px; /* Add rounded borders */
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5); /* Add shadow */
+  margin: 0 auto;
+  margin-top: 2%;
+}
+
+.maingestione {
+  margin: 0 auto;
+  width: 80%;
+}
+
+.gestionetable {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+.gestionetable,
+.gestioneth,
+.gestionetd {
+  border: 1px solid #222222;
+}
+
+.gestioneth,
+.gestionetd {
+  padding: 15px;
+  text-align: center;
+}
+
+.gestioneth {
+  background-color: #2467d1;
+  color: white;
+}
+/* Fine Gestione preventivi */
+
+.headergestionePiani {
+  width: 70%;
+  margin-bottom: 0%;
+  position: relative;
+  padding: 20px;
+  text-align: center;
+  background-color: #f1f1f1;
+  border-radius: 10px; /* Add rounded borders */
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5); /* Add shadow */
+  margin: 0 auto;
+  margin-top: 2%;
+}
+
+.maingestionePiani {
+  margin: 0 auto;
+  width: 80%;
+}
+
+.pianitable {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+.pianitable,
+.pianith,
+.pianitd {
+  border: 1px solid #222222;
+}
+
+.pianith,
+.pianitd {
+  padding: 15px;
+  text-align: center;
+}
+
+.pianith {
+  background-color: #2467d1;
+  color: white;
+}
+
+/* Gestione Piani */
+
+.bottonePreventivi {
+  background-color: #2467d1;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  padding: 10px 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  transition-duration: 0.4s;
+  cursor: pointer;
+}
+
+.bottonePreventivi:hover {
+  background-color: white;
+  color: #2467d1;
+}
+
+.modal-content {
+  background-color: #f4f4f4; /* Adjust to match your site's colors */
+  margin: auto;
+  padding: 20px;
+  border: 1px solid #888; /* Adjust to match your site's colors */
+  width: 40%;
+  height: 65%;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  transition: 0.3s;
+  position: absolute;
+  top: 20%;
+  left: 10%;
+  right: 10%;
+}
+
+.modal-header,
+.modal-footer {
+  padding: 10px 16px;
+  background-color: #2467d1; /* Adjust to match your site's colors */
+  color: white;
+}
+
+.modal-body {
+  padding: 2px 16px;
+}
+
+.titoloModal {
+  text-align: center;
+  font-size: 30px;
+}
+
+.TextIdPreventivo {
+  width: 100%;
+  padding: 3% 3%;
+  margin: 3% 0;
+  box-sizing: border-box;
+  text-align: center;
+  font-size: 30px;
+}
+/* The Modal (background) div dello stato */
+.DivStato {
+  width: 60%;
+  text-align: center;
+  position: relative;
+  left: 20%;
+  display: flex;
+  flex-direction: column;
+}
+.statoLabel {
+  font-size: 30px;
+  font-weight: bold;
+}
+.selectStato {
+  width: 100%;
+  padding: 3% 3%;
+  margin: 3% 0;
+  box-sizing: border-box;
+  text-align: center;
+}
+/* fine div dello stato */
+
+/* The Modal (background) div del prezzo */
+.DivPrezzo {
+  margin-top: 3%;
+  width: 60%;
+  text-align: center;
+  position: relative;
+  left: 20%;
+  display: flex;
+  flex-direction: column;
+}
+.prezzoLabel {
+  padding: 3% 3%;
+  font-size: 30px;
+  font-weight: bold;
+}
+
+.inputPrezzo {
+  width: 100%;
+  padding: 3% 3%;
+  margin: 3% 0;
+  box-sizing: border-box;
+  text-align: center;
+}
+/* fine div del prezzo */
+
+.bottonePreventiviForm {
+  background-color: #2467d1;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  padding: 10px 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 20px;
+  margin: 3% 0;
+  transition-duration: 0.4s;
+  cursor: pointer;
+  position: relative;
+  left: 40%;
+}
+
+.bottonePreventiviForm:hover {
+  background-color: white;
+  color: #2467d1;
+}
+
+.close {
+  color: white;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+  background-color: transparent; /* Aggiunto per rendere lo sfondo trasparente */
+}
+
+.close:hover,
+.close:focus {
+  color: #000;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.tooltip {
+  position: absolute;
+  background-color: #f9f9f9;
+  border: 1px solid #ccc;
+  padding: 10px;
+  z-index: 1;
+}

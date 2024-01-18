@@ -64,6 +64,23 @@ class UtenteDAO {
     const utente = rows as RowDataPacket[]; // assegno a utente i risultati della query
     return utente[0].id_utente; // ritorno l'id_utente
   }
+
+  // creo il metodo per il ritorno di un utente in base all'id_utente
+  static async getUtenteById(idUtente: number): Promise<Utente> {
+    const conn = await db(); // connessione al db
+    const [rows] = await conn.query(
+      'SELECT * FROM utente WHERE id_utente = ?', // query che ritorna un utente in base all'id_utente
+      [idUtente], // parametri della query
+    );
+    const utente = rows as RowDataPacket[]; // assegno a utente i risultati della query
+    // ritorno un oggetto mappato con l'utente
+    return new Utente(
+      utente[0].nome,
+      utente[0].cognome,
+      utente[0].email,
+      utente[0].password,
+    );
+  }
 }
 
 export default UtenteDAO;

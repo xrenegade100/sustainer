@@ -8,6 +8,12 @@ import PianoController from './controller/PianoController';
 import UtenteController from './controller/UtenteController';
 import AmministratoreController from './controller/AmministratoreController';
 import ModelloController from './controller/ModelloController';
+import PianoController from './Controller/PianoController';
+import UtenteController from './Controller/UtenteController';
+import AmministratoreController from './Controller/AmministratoreController';
+import PreventivoController from './Controller/PreventivoController';
+import ModelloController from './Controller/ModelloController';
+
 
 const server = express();
 
@@ -38,6 +44,9 @@ server.use('/verificaLogin', (req, res) => {
 server.use('/register', (req, res) => {
   UtenteController.registrazioneIMP(req, res);
 });
+server.use('/InfoUtente/:idUtente', (req, res) => {
+  UtenteController.getUtenteById(req, res);
+});
 // fineUtente
 
 // piano
@@ -59,8 +68,41 @@ server.use('/annullaPiano', (req, res) => {
 server.use('/differenzaGiorni', (req, res) => {
   PianoController.differenzaGiorniIMP(req, res);
 });
+server.use('/AllPiani', (req, res) => {
+  PianoController.visualizzaPianiIMP(req, res);
+});
 
 // finePiano
+
+// preventivo
+server.use('/creaPreventivo', (req, res) => {
+  PreventivoController.creaPreventivoIMP(req, res);
+});
+server.use('/preventivoUtente', (req, res) => {
+  PreventivoController.getPreventivoIMP(req, res);
+});
+server.use('/statoPreventivo', (req, res) => {
+  PreventivoController.getStatoIMP(req, res);
+});
+server.use('/eliminaPreventivo', (req, res) => {
+  PreventivoController.eliminaPreventivoIMP(req, res);
+});
+server.use('/verificaPreventivo', (req, res) => {
+  PreventivoController.controllaPreventivoIMP(req, res);
+});
+server.use('/preventivi', (req, res) => {
+  PreventivoController.TuttiPreventiviIMP(req, res);
+});
+server.use('/preventivoModificato', (req, res) => {
+  PreventivoController.ModificaPreventivoIMP(req, res);
+});
+server.use('/checkoutEnterprise', (req, res) => {
+  PianoController.AcquistoPianoEIMP(req, res);
+});
+server.use('/inserimentoEnterprise', (req, res) => {
+  PianoController.InserimentoPianoEnterpriseIMP(req, res);
+});
+// fine preventivo
 
 // amministratore
 server.use('/loginAm', (req, res) => {
