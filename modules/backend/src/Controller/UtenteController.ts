@@ -8,11 +8,12 @@ class UtenteController {
     // se l'utente è loggato
     if (req.session!.authenticated) {
       // ritorno un json con success = true e l'utente loggato
+      console.log('utente loggato id: ', req.session!.idUser);
       return res
         .status(200)
         .json({ success: true, user: req.session!.authenticated });
     }
-    return res.status(200).json({ success: false }); // altrimenti ritorno un json con success=false
+    return res.status(403).json({ success: false }); // altrimenti ritorno un json con success=false
   };
 
   // metodo che mi servirà per il login

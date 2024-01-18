@@ -14,6 +14,8 @@ import GestionePiani from './pages/GestionePiani';
 import CardPianoEnterprise from './pages/CardPianoEnterprise';
 import InserimentoParametri from './pages/InserimentoParametri';
 import CaricaDataset from './pages/CaricaDataset';
+import Fairness from './pages/Fairness';
+import FineAddestramento from './pages/FineAddestramento';
 
 // Qui fare il routing frontend, quindi aggiungere qui le pagine jsx qui
 const router = createBrowserRouter([
@@ -61,6 +63,14 @@ const router = createBrowserRouter([
   {
     path: '/inserimentoparametri',
     element: <InserimentoParametri />, // passare la pagina jsx con le <>
+  },
+  {  
+    path: '/fairness',
+    element: <Fairness />, // passare la pagina jsx con le <>
+  },
+  {
+    path: '/fine-addestramento',
+    element: <FineAddestramento />, // passare la pagina jsx con le <>
   },
 ]);
 

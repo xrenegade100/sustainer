@@ -7,9 +7,8 @@ import { upload, handleFileUpload } from './Dataset/DatasetMenage';
 import PianoController from './Controller/PianoController';
 import UtenteController from './Controller/UtenteController';
 import AmministratoreController from './Controller/AmministratoreController';
-import PreventivoController from './Controller/PreventivoController';
 import ModelloController from './Controller/ModelloController';
-
+import PreventivoController from './Controller/PreventivoController';
 
 const server = express();
 
@@ -121,7 +120,9 @@ server.use('/verificaLoginAm', (req, res) => {
 server.use('/salvaJson', (req, res) => {
   ModelloController.salvaJson(req, res);
 });
-
+server.use('/leggiCSV', (req, res) => {
+  ModelloController.leggiCSV(req, res);
+});
 server.use('/leggiCSV', (req, res) => {
   ModelloController.leggiCSV(req, res);
 });
@@ -140,6 +141,21 @@ server.use(
     }
   },
 );
+
+server.use('/testPython', (req, res) => {
+  ModelloController.AddestramentoIMP(req, res);
+});
+
+server.use('/gruppoPrivilegiato', (req, res) => {
+  ModelloController.leggiCSV(req, res);
+});
+
+server.use('/avvioAddestramento', (req, res) => {
+  ModelloController.AddestramentoIMP(req, res);
+});
+server.use('/downloadModello', (req, res) => {
+  ModelloController.downloadIMP(req, res);
+});
 
 export default server;
 export { key };
