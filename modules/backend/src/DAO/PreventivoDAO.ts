@@ -9,14 +9,15 @@ class PreventivoDAO {
     const [rows] = await conn.query('SELECT * FROM preventivo'); // query che ritorna tutti i preventivi
     const preventivi = rows as RowDataPacket[]; // assegno a preventivi i risultati della query
     return preventivi.map(
-      (preventivo) => new Preventivo(
-        preventivo.id_preventivo,
-        preventivo.id_utente,
-        preventivo.limiti_addestramenti,
-        preventivo.limiti_salvataggi,
-        preventivo.prezzo,
-        preventivo.stato,
-      ),
+      (preventivo) =>
+        new Preventivo(
+          preventivo.id_preventivo,
+          preventivo.id_utente,
+          preventivo.limiti_addestramenti,
+          preventivo.limiti_salvataggi,
+          preventivo.prezzo,
+          preventivo.stato,
+        ),
     ); // ritorno un array di oggetti di tipo Preventivo
   }
 
@@ -60,10 +61,7 @@ class PreventivoDAO {
   // funzione asincrona che elimina un preventivo
   static async eliminaPreventivo(idUtente: number) {
     const conn = await db(); // connessione al db
-    await conn.query(
-      'DELETE FROM preventivo WHERE id_utente = ?',
-      idUtente,
-    ); // query che elimina un preventivo
+    await conn.query('DELETE FROM preventivo WHERE id_utente = ?', idUtente); // query che elimina un preventivo
   }
 
   // funzione asincrona che ritorna l'id del preventivo
@@ -167,6 +165,15 @@ class PreventivoDAO {
     ); // ritorno un oggetto di tipo Preventivo
   }
 
+  // funzione asincrona che elimina un preventivo
+  static async eliminaPreventivoByid(idPreventivo: number) {
+    const conn = await db(); // connessione al db
+    await conn.query(
+      'DELETE FROM preventivo WHERE id_preventivo = ?',
+      idPreventivo,
+    ); // query che elimina un preventivo
+  }
+
   // funzione asincrona che modifica un preventivo
   static async ModificaPreventivo(
     stato: string,
@@ -180,6 +187,12 @@ class PreventivoDAO {
     }
     if (!defaultStato) {
       defaultStato = 'In lavorazione';
+    }
+    if (defaultStato === 'In lavorazione') {
+      updatedPrezzo = 0;
+    }
+    if (defaultStato === 'Rifiutato') {
+      this.eliminaPreventivoByid(idPreventivo);
     }
     const conn = await db(); // connessione al db
     await conn.query(
