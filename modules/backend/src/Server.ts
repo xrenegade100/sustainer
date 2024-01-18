@@ -3,10 +3,13 @@ import session from 'express-session';
 import morgan from 'morgan';
 import helmet from 'helmet';
 import cors from 'cors';
+import { upload, handleFileUpload } from './Dataset/DatasetMenage';
 import PianoController from './Controller/PianoController';
 import UtenteController from './Controller/UtenteController';
 import AmministratoreController from './Controller/AmministratoreController';
 import PreventivoController from './Controller/PreventivoController';
+import ModelloController from './Controller/ModelloController';
+
 
 const server = express();
 
@@ -114,6 +117,29 @@ server.use('/verificaLoginAm', (req, res) => {
   AmministratoreController.verificaLoginAm(req, res);
 });
 // fineAmministratore
+
+server.use('/salvaJson', (req, res) => {
+  ModelloController.salvaJson(req, res);
+});
+
+server.use('/leggiCSV', (req, res) => {
+  ModelloController.leggiCSV(req, res);
+});
+
+// eslint-disable-next-line consistent-return
+server.use(
+  '/upload',
+  upload.single('file'),
+  handleFileUpload,
+  async (req, res) => {
+    try {
+      return res.status(200).json();
+    } catch (error) {
+      console.error(error);
+      return res.status(500).json();
+    }
+  },
+);
 
 export default server;
 export { key };
