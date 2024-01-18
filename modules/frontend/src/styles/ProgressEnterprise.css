@@ -1,0 +1,320 @@
+.indexedStep {
+    color: rgb(190, 190, 190);
+  width: 40px;
+  height: 40px;
+  font-size: 12px;
+  background-color: rgb(255, 255, 255);
+  border-radius: 50%;
+  border-style: solid;
+  border-width: 1px;
+  border-color: rgb(206, 206, 206);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+
+.indexedStep.accomplished {
+    background-color: #2467d1;
+  color: white;
+  border-style: none;
+}
+
+.RSPBprogressBar {
+    height: 2px;
+  width: 40%;
+  line-height: 1;
+  border-radius: 10px;
+  position: relative;
+  background-color: rgb(207, 207, 207);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 0;
+  margin: 20px auto;
+}
+
+.RSPBprogressBar .RSPBstep {
+    display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 0;
+  position: absolute;
+  transform: translateX(-50%);
+  transition-property: all;
+  transition-timing-function: ease;
+}
+
+.RSPBprogressBar .RSPBprogressBarText {
+    color: white;
+  font-size: 10px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.RSPBprogressBar .RSPBprogression {
+    position: absolute;
+    transition: width 0.3s ease;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    border-radius: 10px;
+    background: #2467d1;
+    z-index: -1;
+}
+
+/*sezione card form limiti*/
+.formlimiti{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    margin-top: 5%;
+}
+
+.cardForm{
+    width: 30%;
+    height: 400px;
+    background-color: rgb(250, 248, 248);
+    border-radius: 8px;
+    border-style: none;
+    padding: 10px;
+    text-align: center;
+}
+
+.cardForm .cfetitle{
+    margin-bottom: 15%;
+}
+
+.cardForm .cferow1 h3{
+    margin-bottom: 3%;
+}
+
+.cardForm .cferow1 .nadgg{
+    margin-left: 20%;
+    margin-bottom: 3%;
+    width: 60%;
+}
+
+.cardForm .cferow1 .nadgg .nadgginput{
+    width: 100%;
+    height: 30px;
+    border-radius: 5px;
+}
+
+.cardForm .cferow2 .nsvgg{
+    margin-left: 20%;
+    margin-bottom: 3%;
+    width: 60%;
+}
+
+.cardForm .cferow2 .nsvgg .nsvgginput{
+    width: 100%;
+    height: 30px;
+    border-radius: 5px;
+}
+
+.buttonPE {
+    display: flex;
+    justify-content: center;
+    margin-top: 5%; /* Aggiungi uno spazio dal top se necessario */
+  }
+  
+  /* Stile opzionale per i bottoni */
+  .buttonPE Button {
+    margin: 0 20px; /* Aggiungi spazi tra i bottoni se necessario */
+    width: 50%;
+    height: auto;
+    color: white;
+    border-radius: 5px;
+    border-style: none;
+    font-size: 22px;
+    cursor: pointer;
+  }
+
+  .buttonPE Button:hover{
+    background-color: #222222;
+    color: white;
+  }
+
+  .buttonPE .btnback{
+    width: 120px;
+    background-color: #DCDCDC;
+    color: #222222;
+  }
+
+  .buttonPE .btnnext{
+    width: 120px;
+    background-color: #2467d1
+}
+
+
+.cardLoading{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    margin-top: 5%;
+}
+
+.cardLoad{
+    width: 400px;
+    height: 200px;
+    background-color: rgb(250, 248, 248);
+    border-radius: 8px;
+    border-style: none;
+    padding: 10px;
+    text-align: center;
+}
+
+.cardLoad h3{
+    margin-top: 15%;
+    margin-bottom: 5%;
+
+}
+
+.cardPreventivo{
+    width: auto;
+    height: auto;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    margin-top: 5%;
+}
+
+@media screen and (max-width: 768px) {
+    .cfetitle h2{
+        font-size: 28px;
+    }
+    .cardForm{
+        width: 80%;
+        border-color: #2466d12e;
+        border-style: solid;
+    }
+    
+    .buttonPE Button {
+        width: 18%;
+        height: auto;
+        color: white;
+        border-radius: 5px;
+        border-style: none;
+        font-size: 18px;
+        cursor: pointer;
+      }
+    
+      .cardLoading{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        margin-top: 5%;
+    }
+}
+
+
+
+@media screen and (max-width: 480px) {
+    .indexedStep{
+        width: 15px;
+        height: 15px;
+        font-size: 6px;
+    }
+}
+
+@media screen and (max-width:425px){
+    .indexedStep{
+        width: 20px;
+        height: 20px;
+        font-size: 10px;
+    }
+
+    .titolo h1{
+        font-size: 22px;
+    }
+
+    .cfetitle h2{
+        font-size: 18px;
+    }
+
+    .cardForm{
+        width: 50%;
+    }
+
+    .buttonPE Button {
+        width: 20%;
+        height: auto;
+        color: white;
+        border-radius: 5px;
+        border-style: none;
+        font-size: 14px;
+        cursor: pointer;
+      }
+      
+    .cardLoading{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        margin-top: 5%;
+    }
+
+    .cardLoad{
+        width: 80%;
+    }
+}
+
+@media screen and (max-width:375px){
+    .titolo h1{
+        font-size: 20px;
+    }
+
+    .cfetitle h2{
+        font-size: 18px;
+    }
+
+    .cardForm{
+        width: 60%;
+    }
+
+    .buttonPE Button {
+        width: 20%;
+        height: auto;
+        color: white;
+        border-radius: 5px;
+        border-style: none;
+        font-size: 14px;
+        cursor: pointer;
+      }
+    
+}
+
+@media screen and (max-width:320px){
+    .titolo h1{
+        font-size: 18px;
+    }
+
+    .cfetitle h2{
+        font-size: 18px;
+    }
+
+    .cardForm{
+        width: 90%;
+    }
+
+    .buttonPE Button {
+        width: 20%;
+        height: auto;
+        color: white;
+        border-radius: 5px;
+        border-style: none;
+        font-size: 14px;
+        cursor: pointer;
+      }
+    
+}

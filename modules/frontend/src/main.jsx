@@ -9,6 +9,9 @@ import Homepage from './pages/Homepage';
 import Piani from './pages/Piani';
 import ModificaPiano from './pages/ModificaPiano';
 import LoginAmministratore from './pages/LoginAmministratore';
+import PianoEnterprise from './pages/PianoEnterprise';
+import GestionePiani from './pages/GestionePiani';
+import CardPianoEnterprise from './pages/CardPianoEnterprise';
 import InserimentoParametri from './pages/InserimentoParametri';
 import CaricaDataset from './pages/CaricaDataset';
 
@@ -38,6 +41,18 @@ const router = createBrowserRouter([
   {
     path: '/modifica-piano',
     element: <ModificaPiano />, // passare la pagina jsx con le <>
+  },
+  {
+    path: '/richiesta-Enterprise',
+    element: <PianoEnterprise />, // passare la pagina jsx con le <>
+  },
+  {
+    path: '/gestionePiani',
+    element: <GestionePiani />, // passare la pagina jsx con le <>
+  },
+  {
+    path: '/newPianoEnterprise',
+    element: <CardPianoEnterprise />, // passare la pagina jsx con le <>
   },
   {
     path: '/addestra',

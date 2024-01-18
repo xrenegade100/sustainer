@@ -15,13 +15,7 @@ html {
   scroll-behavior: smooth;
 }
 
-body {
-  background-image: url('/Sfondo.png');
-  background-size: 65%;
-  background-position: left 80%;
-  background-repeat: no-repeat;
-  margin: 0; /* Rimuovere il margin predefinito del body */
-}
+
 
 .img-scritta {
   width: 50%;
@@ -29,6 +23,46 @@ body {
   margin-top: 3%;
   margin-left: 25%;
 }
+@media only screen and (max-width:2056px){
+  body {
+    background-image: url(/Sfondo.png);
+    background-size: 50%;
+    background-position: left 1500%;
+    background-repeat: no-repeat;
+    margin: 0;
+}
+}
+
+@media only screen and (max-width:1920px){
+  body {
+    background-image: url(/Sfondo.png);
+    background-size: 50%;
+    background-position: left 600%;
+    background-repeat: no-repeat;
+    margin: 0;
+}
+}
+
+@media only screen and (max-width:1440px){
+  body {
+    background-image: url(/Sfondo.png);
+    background-size: 50%;
+    background-position: left 235%;
+    background-repeat: no-repeat;
+    margin: 0;
+}
+}
+
+@media only screen and (max-width:1024px){
+  body {
+    background-image: url(/Sfondo.png);
+    background-size: 50%;
+    background-position: left 170%;
+    background-repeat: no-repeat;
+    margin: 0;
+}
+}
+
 
 /* Media query per schermi più piccoli */
 @media only screen and (max-width: 768px) {

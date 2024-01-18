@@ -1,0 +1,20 @@
+html{
+    height: 100%;
+
+}
+
+.titolo{
+    width: 100%;
+    text-align: center;
+    margin-top: 2%;
+    margin-bottom: 2.5%;
+}
+
+@media screen and (max-width: 480px) {
+    .footerPE {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+      }
+}
