@@ -86,6 +86,10 @@ server.use('/salvaJson', (req, res) => {
 server.use('/leggiCSV', (req, res) => {
   ModelloController.leggiCSV(req, res);
 });
+server.use('/leggiCSV', (req, res) => {
+  ModelloController.leggiCSV(req, res);
+});
+
 
 // eslint-disable-next-line consistent-return
 server.use(
