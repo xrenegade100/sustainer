@@ -34,6 +34,15 @@ class ModelloController {
         pathDataset: absolutePathDataset,
       }),
     });
+
+    let contenuto: any;
+    try {
+      const fileContent = fs.readFileSync(fileRelativePathJson, 'utf-8');
+      contenuto = JSON.parse(fileContent);
+    } catch (error) {
+      console.error(`Error reading JSON file: ${error}`);
+    }
+
     if (responseAddestramento.ok) {
       // Estrai i dati dalla risposta
       const data = await responseAddestramento.json();
@@ -45,9 +54,27 @@ class ModelloController {
         data.accuracy,
         Number(data.emissions),
         0,
-        'Decision Tree',
+        // eslint-disable-next-line dot-notation
+        contenuto['tipoModello'] === 'decisiontree'
+          ? 'Decision Tree'
+          : 'Naive Bayes',
       );
       this.pathModello = data.pathModello;
+
+      fs.unlink(fileRelativePathJson, (err) => {
+        if (err) {
+          // eslint-disable-next-line no-console
+          console.error('Errore durante la cancellazione del file:', err);
+        }
+      });
+
+      fs.unlink(fileRelativePathDataset, (err) => {
+        if (err) {
+          // eslint-disable-next-line no-console
+          console.error('Errore durante la cancellazione del file:', err);
+        }
+      });
+
       return res.status(200).json({
         addestramento: true,
       });

@@ -203,7 +203,7 @@ const CaricaDataset = () => {
       <div className="allForm">
         <div className="uploadForm">
           <div className="title">Carica il tuo Dataset</div>
-          <div className="uploader">
+          <div className="sezioneUpload">
             {fileUploaded && (
               <div className="file-info">
                 <div className="file-icon">
@@ -264,15 +264,17 @@ const CaricaDataset = () => {
             />
           </div>
         )}
-        <Button
-          className="avantiButton"
-          disabled={!fileUploaded}
-          onClick={() => {
-            navigate('/inserimentoparametri');
-          }}
-        >
-          Avanti
-        </Button>
+        <div className="sezione-avanti">
+          <Button
+            className="avantiButton"
+            disabled={!fileUploaded}
+            onClick={() => {
+              navigate('/inserimentoparametri');
+            }}
+          >
+            Avanti
+          </Button>
+        </div>
       </div>
     </>
   );
