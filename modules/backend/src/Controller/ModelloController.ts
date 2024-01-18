@@ -40,6 +40,7 @@ class ModelloController {
       const fileContent = fs.readFileSync(fileRelativePathJson, 'utf-8');
       contenuto = JSON.parse(fileContent);
     } catch (error) {
+      // eslint-disable-next-line no-console
       console.error(`Error reading JSON file: ${error}`);
     }
 
