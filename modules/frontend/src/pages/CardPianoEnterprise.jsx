@@ -14,6 +14,20 @@ const CardPianoEnterprise = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
+    const fetchData = async function funzioneVerifica() {
+      const verifica = await fetch('http://localhost:5000/verificaLogin', {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        method: 'POST',
+        credentials: 'include',
+      });
+      const response = await verifica.json();
+      if (!response.user) {
+        navigate('/login');
+      }
+    };
+
     const fetchDataPiano = async () => {
       try {
         const response = await fetch('http://localhost:5000/modificaPiano', {
@@ -28,6 +42,9 @@ const CardPianoEnterprise = () => {
         }
 
         const jsonData = await response.json();
+        if (jsonData.piano.tipo !== 'Enterprise') {
+          navigate('/modifica-piano');
+        }
         setPrezzoP(jsonData.piano.prezzo);
         setLimitiSalvataggi(jsonData.piano.limiteSalvataggiModelli);
         setLimitiAddestramenti(jsonData.piano.limiteAddestramentiModelli);
@@ -53,7 +70,28 @@ const CardPianoEnterprise = () => {
       }
     };
 
-    fetchEliminaPreventivo();
+    const funzioneVerificaPrev = async () => {
+      try {
+        const response = await fetch('http://localhost:5000/verificaPreventivo', {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          method: 'POST',
+          credentials: 'include',
+        });
+
+        if (response.ok) {
+          navigate('/richiesta-Enterprise');
+        } else {
+          fetchEliminaPreventivo();
+        }
+      } catch (error) {
+        console.error('Errore nella fetch:', error);
+      }
+    };
+
+    funzioneVerificaPrev();
+    fetchData();
     fetchDataPiano();
   }, []);
 

@@ -1,3 +1,4 @@
+/* eslint-disable no-nested-ternary */
 import React, { useEffect, useState, useRef } from 'react';
 import { Menu } from 'baseui/icon';
 import { Link, useNavigate } from 'react-router-dom';
@@ -24,12 +25,14 @@ const Navbar = () => {
     'cloud',
     'storico',
     'addestra',
+    'enterprise',
     'piani',
     'home',
   ]);
   const menuSmall = useRef([
     'home',
     'piani',
+    'enterprise',
     'addestra',
     'storico',
     'cloud',
@@ -220,7 +223,13 @@ const Navbar = () => {
             {navigationItems.map((element) => (
               <li className="elements" key={element}>
                 <Link
-                  to={element === 'home' ? '/homepage' : `/${element}`}
+                  to={
+                      element === 'home'
+                        ? '/homepage'
+                        : element === 'enterprise'
+                          ? '/richiesta-Enterprise'
+                          : `/${element}`
+      }
                   className="text-white"
                 >
                   {element.charAt(0).toUpperCase() + element.slice(1)}

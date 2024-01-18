@@ -1,3 +1,5 @@
+/* eslint-disable no-unused-vars */
+/* eslint-disable no-use-before-define */
 /* eslint-disable no-nested-ternary */
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -52,17 +54,7 @@ const ProgressEnterprise = ({ onPageNumberClick }) => {
 
   useEffect(() => {
     fetchData();
-    funzioneVerificaPrev();
     funzioneVerificaStato();
-    let timer;
-    if (showSnackbar) {
-      timer = setTimeout(() => {
-        setShowSnackbar(false);
-      }, 3500);
-    }
-    return () => {
-      clearTimeout(timer);
-    };
   }, [currentStep], [showSnackbar]);
 
   const fetchData = async function funzioneVerifica() {
@@ -106,14 +98,13 @@ const ProgressEnterprise = ({ onPageNumberClick }) => {
   };
 
   funzioneVerificaPrev();
-
   // funzione per verificare se l'utente ha già un piano e se è diverso da enterprise tolta
 
   const handleNextClick = async () => {
     if (currentStep === 1) {
       if (limitiAddestramenti && limitiSalvataggi) {
-        if ((limitiAddestramenti > 2 && limitiAddestramenti <= 10)
-        || (limitiSalvataggi > 1 && limitiSalvataggi <= 50)) {
+        if ((limitiAddestramenti > 4 && limitiAddestramenti <= 20)
+        && (limitiSalvataggi > 10 && limitiSalvataggi <= 50)) {
           try {
             const response = await fetch('http://localhost:5000/creaPreventivo', {
               headers: {
@@ -129,7 +120,6 @@ const ProgressEnterprise = ({ onPageNumberClick }) => {
             if (response.ok) {
               const data = await response.json();
               console.log('Risposta dal backend:', data);
-              window.location.reload('/richiesta-Enterprise');
             } else {
               console.error('Errore nella richiesta al backend:', response.statusText);
             }
@@ -140,6 +130,9 @@ const ProgressEnterprise = ({ onPageNumberClick }) => {
           setIsOpen(true);
           setShowSnackbar(true);
           setSnackbarMessage('Inserire valori validi');
+          const timer = setTimeout(() => {
+            setShowSnackbar(false);
+          }, 1500);
         }
       }
     }
@@ -165,9 +158,10 @@ const ProgressEnterprise = ({ onPageNumberClick }) => {
         });
         if (response.ok) {
           const data = await response.json();
-          console.log('Risposta ricevuta:', data);
           if (data === 'Accettato') {
             setCurrentStep(3);
+          } else if (data === 'In lavorazione') {
+            setCurrentStep(2);
           }
         } else {
           console.error('Errore nella richiesta al backend:', response.statusText);
@@ -177,8 +171,6 @@ const ProgressEnterprise = ({ onPageNumberClick }) => {
       }
     }
   };
-
-  funzioneVerificaStato();
 
   const getStepPercentage = () => {
     switch (currentStep) {
@@ -224,7 +216,7 @@ const ProgressEnterprise = ({ onPageNumberClick }) => {
                   className="nadgginput"
                   value={limitiAddestramenti}
                   onChange={(e) => setLimitiAddestramenti(e.target.value)}
-                  placeholder="10"
+                  placeholder="min.5 max.20"
                   clearable
                   type="number"
                 />
@@ -238,7 +230,7 @@ const ProgressEnterprise = ({ onPageNumberClick }) => {
                     className="nsvgginput"
                     value={limitiSalvataggi}
                     onChange={(e) => setLimitiSalvataggi(e.target.value)}
-                    placeholder="10"
+                    placeholder="min.11 max.50"
                     clearable
                     type="number"
                   />
@@ -283,7 +275,7 @@ const ProgressEnterprise = ({ onPageNumberClick }) => {
             </Button>
             <Button
               className="btnnext"
-              onClick={() => handleNextClick()}
+              onClick={() => [handleNextClick(), funzioneVerificaStato(), window.location.replace('/richiesta-Enterprise')]}
               size={SIZE.large}
             >
               Avanti

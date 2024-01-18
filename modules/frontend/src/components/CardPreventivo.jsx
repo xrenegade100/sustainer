@@ -68,17 +68,13 @@ const CardPreventivo = ({
 
   const handleNotBuyClick = async () => {
     try {
-      const response = await fetch('http://localhost:5000/eliminaPreventivo', {
+      await fetch('http://localhost:5000/eliminaPreventivo', {
         headers: {
           'Content-Type': 'application/json',
         },
         method: 'POST',
         credentials: 'include',
       });
-      const result = await response.json();
-      if (result.status === 'success') {
-        window.location.replace('/modifica-piani');
-      }
     } catch (error) {
       console.error('Errore durante la fetch:', error);
     }
@@ -137,8 +133,7 @@ const CardPreventivo = ({
         <Button
           className="btnback"
           // eslint-disable-next-line max-len
-          onClick={() => handleNotBuyClick()} // creare metodo che rendirizza a stripe e aumentare currentstep che va a 4
-          size={SIZE.large}
+          onClick={() => [handleNotBuyClick(), window.location.replace('/modifica-piano')]}
         >
           Rifiuta
         </Button>
