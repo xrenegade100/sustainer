@@ -224,12 +224,18 @@ const Navbar = () => {
               <li className="elements" key={element}>
                 <Link
                   to={
-                      element === 'home'
-                        ? '/homepage'
-                        : element === 'enterprise'
-                          ? '/richiesta-Enterprise'
-                          : `/${element}`
-      }
+                    element === 'home'
+                      ? '/homepage'
+                      : element === 'enterprise'
+                      ? '/richiesta-Enterprise'
+                      : element === 'community'
+                      ? '/homepage'
+                      : element === 'cloud'
+                      ? '/homepage'
+                      : element === 'storico'
+                      ? '/homepage'
+                      : `/${element}`
+                  }
                   className="text-white"
                 >
                   {element.charAt(0).toUpperCase() + element.slice(1)}
