@@ -277,6 +277,7 @@ const ProgressEnterprise = ({ onPageNumberClick }) => {
               className="btnnext"
               onClick={async () => {
                 handleNextClick();
+                funzioneVerificaStato();
                 await new Promise((resolve) => {
                   setTimeout(resolve, 100);
                 });
