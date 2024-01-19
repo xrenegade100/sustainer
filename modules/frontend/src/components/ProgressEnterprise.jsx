@@ -275,7 +275,14 @@ const ProgressEnterprise = ({ onPageNumberClick }) => {
             </Button>
             <Button
               className="btnnext"
-              onClick={() => [handleNextClick(), funzioneVerificaStato(), window.location.replace('/richiesta-Enterprise')]}
+              onClick={async () => {
+                handleNextClick();
+                funzioneVerificaStato();
+                await new Promise((resolve) => {
+                  setTimeout(resolve, 100);
+                });
+                window.location.replace('/richiesta-Enterprise');
+              }}
               size={SIZE.large}
             >
               Avanti
