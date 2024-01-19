@@ -136,7 +136,10 @@ class PianoController {
     return res.status(403).json({ message: 'errore' });
   };
 
-  static InserimentoPianoEnterpriseIMP = async (req: Request, res: Response) => {
+  static InserimentoPianoEnterpriseIMP = async (
+    req: Request,
+    res: Response,
+  ) => {
     const piano = await serviziPianoImpl.InserimentoPianoEnterprise(
       Number(req.query.prezzo),
       Number(req.query.limiteSalvataggiModelli),
@@ -149,7 +152,9 @@ class PianoController {
         piano.getIdPiano(),
       );
       if (acquisto) {
-        return res.status(200).redirect('http://localhost:5173/newPianoEnterprise');
+        return res
+          .status(200)
+          .redirect('http://localhost:5173/newPianoEnterprise');
       }
     }
     return res.status(403).json({ message: 'errore' });
@@ -174,7 +179,11 @@ class PianoController {
       mode: 'payment',
       success_url: `http://localhost:5000/inserimentoEnterprise?prezzo=${
         req.body.prezzoPiano
-      }&limiteSalvataggiModelli=${req.body.limSPiano}&limiteAddestramentiModelli=${req.body.limAPiano}&idUtente=${req.session!.idUser}`,
+      }&limiteSalvataggiModelli=${
+        req.body.limSPiano
+      }&limiteAddestramentiModelli=${req.body.limAPiano}&idUtente=${
+        req.session!.idUser
+      }`,
       cancel_url: 'http://localhost:5173/modifica-piano',
     });
 

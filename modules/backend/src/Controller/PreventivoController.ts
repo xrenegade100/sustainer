@@ -21,16 +21,8 @@ class PreventivoController {
       if (preventivo) {
         return res.status(200).json(preventivo);
       }
-      return res.status(403).json({ message: 'preventivo non creato' });
     }
-
-    const preventivo = await ServiziPreventivoImpl.getPreventivo(
-      req.session!.idUser,
-    );
-    if (preventivo) {
-      return res.status(200).json(preventivo);
-    }
-    return res.status(403).json({ message: 'preventivo non trovato' });
+    return res.status(403).json({ message: 'preventivo non creato' });
   };
 
   static controllaPreventivoIMP = async (req: Request, res: Response) => {
@@ -44,9 +36,7 @@ class PreventivoController {
   };
 
   static eliminaPreventivoIMP = async (req: Request, res: Response) => {
-    const prev = await ServiziPreventivoImpl.getPreventivo(
-      req.session!.idUser,
-    );
+    const prev = await ServiziPreventivoImpl.getPreventivo(req.session!.idUser);
     if (prev) {
       const elimina = await ServiziPreventivoImpl.eliminaPreventivo(
         req.session!.idUser,
