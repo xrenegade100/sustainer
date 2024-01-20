@@ -7,7 +7,7 @@ import { upload, handleFileUpload } from './Dataset/DatasetMenage';
 import PianoController from './Controller/PianoController';
 import UtenteController from './Controller/UtenteController';
 import AmministratoreController from './Controller/AmministratoreController';
-import ModelloController from './Controller/ModelloController';
+import AddestramentoController from './Controller/AddestramentoController';
 import PreventivoController from './Controller/PreventivoController';
 
 const server = express();
@@ -118,13 +118,13 @@ server.use('/verificaLoginAm', (req, res) => {
 // fineAmministratore
 
 server.use('/salvaJson', (req, res) => {
-  ModelloController.salvaJson(req, res);
+  AddestramentoController.salvaJson(req, res);
 });
 server.use('/leggiCSV', (req, res) => {
-  ModelloController.leggiCSV(req, res);
+  AddestramentoController.leggiCSV(req, res);
 });
 server.use('/leggiCSV', (req, res) => {
-  ModelloController.leggiCSV(req, res);
+  AddestramentoController.leggiCSV(req, res);
 });
 
 // eslint-disable-next-line consistent-return
@@ -143,18 +143,18 @@ server.use(
 );
 
 server.use('/testPython', (req, res) => {
-  ModelloController.AddestramentoIMP(req, res);
+  AddestramentoController.AddestramentoIMP(req, res);
 });
 
 server.use('/gruppoPrivilegiato', (req, res) => {
-  ModelloController.leggiCSV(req, res);
+  AddestramentoController.leggiCSV(req, res);
 });
 
 server.use('/avvioAddestramento', (req, res) => {
-  ModelloController.AddestramentoIMP(req, res);
+  AddestramentoController.AddestramentoIMP(req, res);
 });
 server.use('/downloadModello', (req, res) => {
-  ModelloController.downloadIMP(req, res);
+  AddestramentoController.downloadIMP(req, res);
 });
 
 export default server;

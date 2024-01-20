@@ -1,7 +1,6 @@
-import serviziPiano from './ServiziPiano';
 import PianoDAO from '../../DAO/PianoDAO';
 
-class ServiziPianoImpl implements serviziPiano {
+class ServiziPianoImpl {
   // metodo che ritorna tutti i piani
   static async getAllPiani() {
     const piani = await PianoDAO.getAllPiani(); // richiamo il metodo getPiani del PianoDAO

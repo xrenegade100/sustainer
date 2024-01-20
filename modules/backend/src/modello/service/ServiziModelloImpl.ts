@@ -1,7 +1,6 @@
-import serviziModello from './ServiziModello';
 import ModelloDAO from '../../DAO/ModelloDAO';
 
-class ServiziModelloImpl implements serviziModello {
+class ServiziModelloImpl {
   // metodo che uso per la login
   static async salvaModelloImpl(
     idUtente: number,
