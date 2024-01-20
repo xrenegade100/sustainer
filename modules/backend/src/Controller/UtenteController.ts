@@ -1,4 +1,5 @@
 import { Request, Response } from 'express';
+import SHA256 from 'crypto-js/sha256';
 import serviziUtenteImpl from '../account/service/ServiziUtenteImpl';
 import PianoController from './PianoController';
 
@@ -48,9 +49,54 @@ class UtenteController {
       // eslint-disable-next-line object-curly-newline
       const { nome, cognome, emailr, passwordr } = req.body;
 
+      // Validazione del nome
+      const nomeRegex = /^[a-zA-ZÀ-ÖØ-öø-ÿ\s']{1,100}$/;
+      if (!nomeRegex.test(nome)) {
+        return res.status(400).json({
+          success: false,
+          message:
+            'Il nome deve contenere solo lettere, non deve essere vuoto e non deve superare i 100 caratteri',
+        });
+      }
+
+      // Validazione del cognome
+      const cognomeRegex = /^[a-zA-ZÀ-ÖØ-öø-ÿ\s']{1,100}$/;
+      if (!cognomeRegex.test(cognome)) {
+        return res.status(400).json({
+          success: false,
+          message:
+            'Il cognome deve contenere solo lettere, non deve essere vuoto e non deve superare i 100 caratteri',
+        });
+      }
+
+      // Validazione dell'email
+      const emailRegex = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,319}$/;
+      if (!emailRegex.test(emailr)) {
+        return res.status(400).json({
+          success: false,
+          message:
+            'Email non rispetta il formato corretto (es. mario@rossi.it)',
+        });
+      }
+
+      // Validazione della password
+      // eslint-disable-next-line operator-linebreak
+      const passwordRegex =
+        /^(?=.*[A-Z])(?=.*[!@#$%^&*()_+{}[\]:;<>,.?~\\/-])[A-Za-z0-9!@#$%^&*()_+{}[\]:;<>,.?~\\/-]{8,64}$/;
+      if (!passwordRegex.test(passwordr)) {
+        return res.status(400).json({
+          success: false,
+          message:
+            'La password deve contenere almeno 8 caratteri tra cui: 1 lettera maiuscola e 1 carattere speciale',
+        });
+      }
+
+      // Hash della password
+      const hashValue = SHA256(passwordr).toString();
+
       // richiamo il metodo register del serviziUtenteImpl
 
-      await serviziUtenteImpl.register(nome, cognome, emailr, passwordr);
+      await serviziUtenteImpl.register(nome, cognome, emailr, hashValue);
 
       // richiamo il metodo getIdUtente per prendermi id dell'utente appena registrato
       const idUtente = await serviziUtenteImpl.getIdUtente(emailr);
