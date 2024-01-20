@@ -1,7 +1,6 @@
 import AmministratoreDAO from '../../DAO/AmministratoreDAO';
-import serviziAmministratore from './ServiziAmministratore';
 
-class ServiziAmministratoreImpl implements serviziAmministratore {
+class ServiziAmministratoreImpl {
   // login
   static async loginIMP(email: string, password: string) {
     const amministratoreLogin = await AmministratoreDAO.login(email, password);

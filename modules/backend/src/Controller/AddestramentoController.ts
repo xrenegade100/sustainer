@@ -4,7 +4,7 @@ import * as path from 'path';
 import csv from 'csv-parser';
 import serviziModelloImpl from '../modello/service/ServiziModelloImpl';
 
-class ModelloController {
+class AddestramentoController {
   private static pathModello: string;
 
   static AddestramentoIMP = async (req: Request, res: Response) => {
@@ -131,7 +131,7 @@ class ModelloController {
       const percorsoCompletoCSV = path.join(directory, nomeFileCSV);
 
       // Chiama il metodo per leggere la prima riga del file CSV
-      const primaRigaCSV = await ModelloController.leggiNomiColonneCSV(
+      const primaRigaCSV = await AddestramentoController.leggiNomiColonneCSV(
         percorsoCompletoCSV,
       );
       return res
@@ -174,4 +174,4 @@ class ModelloController {
     });
 }
 
-export default ModelloController;
+export default AddestramentoController;

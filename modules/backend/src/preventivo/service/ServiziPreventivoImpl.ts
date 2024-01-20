@@ -1,7 +1,6 @@
-import serviziPreventivo from './ServiziPreventivo';
 import PreventivoDAO from '../../DAO/PreventivoDAO';
 
-class ServiziPreventivoImpl implements serviziPreventivo {
+class ServiziPreventivoImpl {
   static async TuttiPreventivi() {
     // richiamo il metodo TuttiPreventivi del PreventivoDAO
     const preventivi = await PreventivoDAO.getPreventivi();
