@@ -27,7 +27,8 @@
     "mysql2": "^3.6.5",
     "path": "^0.12.7",
     "react": "^18.2.0",
-    "stripe": "^14.10.0"
+    "stripe": "^14.10.0",
+    "ts-node": "^10.9.2"
   },
   "devDependencies": {
     "@types/cors": "^2.8.17",
