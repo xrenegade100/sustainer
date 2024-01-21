@@ -12,14 +12,19 @@ class PreventivoController {
 
   static creaPreventivoIMP = async (req: Request, res: Response) => {
     if (req.body.limitiAddestramenti && req.body.limitiSalvataggi) {
-      const { limitiAddestramenti, limitiSalvataggi } = req.body;
-      const preventivo = await ServiziPreventivoImpl.creaPreventivo(
-        req.session!.idUser,
-        limitiAddestramenti,
-        limitiSalvataggi,
-      );
-      if (preventivo) {
-        return res.status(200).json(preventivo);
+      if (req.body.limitiAddestramenti && req.body.limitiSalvataggi) {
+        const { limitiAddestramenti, limitiSalvataggi } = req.body;
+        if ((limitiAddestramenti > 4 && limitiAddestramenti <= 20)
+        && (limitiSalvataggi > 10 && limitiSalvataggi <= 50)) {
+          const preventivo = await ServiziPreventivoImpl.creaPreventivo(
+            req.session!.idUser,
+            limitiAddestramenti,
+            limitiSalvataggi,
+          );
+          if (preventivo) {
+            return res.status(200).json(preventivo);
+          }
+        }
       }
     }
     return res.status(403).json({ message: 'preventivo non creato' });
