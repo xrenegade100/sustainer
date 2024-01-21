@@ -19,6 +19,87 @@ describe('ModificaPreventivoIMP', () => {
     sandbox.restore();
   });
 
+  it('should handle ModificaPreventivo error, stato:error - prezzo:ok - currentpreventivo:ok', async () => {
+    req = {
+      body: {
+        stato: 'Preso in Lavorazione',
+        prezzo: 0,
+        currentPreventivo: { idPreventivo: 1 },
+      },
+    };
+    res = {
+      status: (s: number) => {
+        status = s;
+        return res;
+      },
+      json: (data: any) => {
+        jsonResponse = data;
+        return jsonResponse;
+      },
+    };
+    const addStub = sinon
+      .stub(ServiziPreventivoImpl, 'ModificaPreventivo')
+      .returns(undefined);
+    await PreventivoController.ModificaPreventivoIMP(req, res);
+    addStub.restore();
+    // Asserting expectations
+    expect(status).to.equal(403);
+  });
+
+  it('should handle ModificaPreventivo error, stato:ok - prezzo:error - currentpreventivo:ok', async () => {
+    req = {
+      body: {
+        stato: 'Accettato',
+        prezzo: -10,
+        currentPreventivo: { idPreventivo: 1 },
+      },
+    };
+    res = {
+      status: (s: number) => {
+        status = s;
+        return res;
+      },
+      json: (data: any) => {
+        jsonResponse = data;
+        return jsonResponse;
+      },
+    };
+    const addStub = sinon
+      .stub(ServiziPreventivoImpl, 'ModificaPreventivo')
+      .returns(undefined);
+    await PreventivoController.ModificaPreventivoIMP(req, res);
+    addStub.restore();
+    // Asserting expectations
+    expect(status).to.equal(403);
+  });
+
+  it('should handle ModificaPreventivo error, stato:ok - prezzo:ok - currentpreventivo:error', async () => {
+    req = {
+      body: {
+        stato: 'Accettato',
+        prezzo: 100,
+        currentPreventivo: { idPreventivo: 150 },
+      },
+    };
+    res = {
+      status: (s: number) => {
+        status = s;
+        return res;
+      },
+      json: (data: any) => {
+        jsonResponse = data;
+        return jsonResponse;
+      },
+    };
+    const addStub = sinon
+      .stub(ServiziPreventivoImpl, 'ModificaPreventivo')
+      .returns(undefined);
+    await PreventivoController.ModificaPreventivoIMP(req, res);
+    addStub.restore();
+    // Asserting expectations
+    expect(status).to.equal(403);
+  });
+
   it('should handle ModificaPreventivo successfully, stato:ok - prezzo:ok - currentpreventivo:ok', async () => {
     req = {
       body: {
@@ -45,32 +126,5 @@ describe('ModificaPreventivoIMP', () => {
     // Asserting expectations
     expect(status).to.equal(200);
     expect(jsonResponse).to.deep.equal('preventivo corretto');
-  });
-
-  it('should handle ModificaPreventivo error, stato:error - prezzo:ok - currentpreventivo:ok', async () => {
-    req = {
-      body: {
-        stato: 'Preso in Lavorazione',
-        prezzo: 0,
-        currentPreventivo: { idPreventivo: 1 },
-      },
-    };
-    res = {
-      status: (s: number) => {
-        status = s;
-        return res;
-      },
-      json: (data: any) => {
-        jsonResponse = data;
-        return jsonResponse;
-      },
-    };
-    const addStub = sinon
-      .stub(ServiziPreventivoImpl, 'ModificaPreventivo')
-      .returns(undefined);
-    await PreventivoController.ModificaPreventivoIMP(req, res);
-    addStub.restore();
-    // Asserting expectations
-    expect(status).to.equal(403);
   });
 });
