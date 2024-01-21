@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import '../styles/LoginSignupForm.css';
 import { useStyletron } from 'baseui';
 import { Input } from 'baseui/input';
+import { SHA256 } from 'crypto-js';
 import { Button, SIZE } from 'baseui/button';
 import { SnackbarElement } from 'baseui/snackbar';
 
@@ -30,6 +31,19 @@ const RegisterForm = () => {
 
   const handleSubmitR = async () => {
     setIsLoading(true);
+
+    // eslint-disable-next-line operator-linebreak
+    const passwordRegex =
+      /^(?=.*[A-Z])(?=.*[!@#$%^&*()_+{}\[\]:;<>,.?~\\/-])[A-Za-z0-9!@#$%^&*()_+{}\[\]:;<>,.?~\\/-]{8,64}$/;
+    if (!passwordRegex.test(passwordr)) {
+      alert(
+        'La password deve contenere almeno 8 caratteri tra cui: \n1 lettera maisucola \n1 carattere speciale',
+      );
+      setIsLoading(false);
+      return;
+    }
+    // Hash della password
+    const hashValue = SHA256(passwordr).toString();
     const response = await fetch('http://localhost:5000/register', {
       headers: {
         'Content-Type': 'application/json',
@@ -39,7 +53,7 @@ const RegisterForm = () => {
         nome,
         cognome,
         emailr,
-        passwordr,
+        passwordr: hashValue,
       }),
     });
 
