@@ -3,7 +3,6 @@ import '../styles/LoginSignupForm.css';
 import { useStyletron } from 'baseui';
 import { Input } from 'baseui/input';
 import { Button, SIZE } from 'baseui/button';
-import SHA256 from 'crypto-js/sha256';
 import { SnackbarElement } from 'baseui/snackbar';
 
 const RegisterForm = () => {
@@ -31,50 +30,6 @@ const RegisterForm = () => {
 
   const handleSubmitR = async () => {
     setIsLoading(true);
-    const nomeRegex = /^[a-zA-ZÀ-ÖØ-öø-ÿ\s']{1,100}$/;
-    if (!nomeRegex.test(nome)) {
-      setSnackbarMessage(
-        'Il nome deve contenere solo lettere, non deve essere vuoto e non deve superare i 100 caratteri',
-      );
-      setShowSnackbar(true);
-      setIsLoading(false);
-      return;
-    }
-    const cognomeRegex = /^[a-zA-ZÀ-ÖØ-öø-ÿ\s']{1,100}$/;
-    if (!cognomeRegex.test(cognome)) {
-      setSnackbarMessage(
-        'Il cognome deve contenere solo lettere, non deve essere vuoto e non deve superare i 100 caratteri',
-      );
-      setShowSnackbar(true);
-      setIsLoading(false);
-      return;
-    }
-
-    const emailRegex = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,319}$/;
-    if (!emailRegex.test(emailr)) {
-      setSnackbarMessage(
-        'Email non rispetta il formato corretto (es. mario@rossi.it)',
-      );
-      setShowSnackbar(true);
-      setIsLoading(false);
-      return;
-    }
-
-    // validazione Password
-    // eslint-disable-next-line operator-linebreak
-    const passwordRegex =
-      /^(?=.*[A-Z])(?=.*[!@#$%^&*()_+{}[\]:;<>,.?~\\/-])[A-Za-z0-9!@#$%^&*()_+{}[\]:;<>,.?~\\/-]{8,64}$/;
-    if (!passwordRegex.test(passwordr)) {
-      setSnackbarMessage(
-        'La password deve contenere almeno 8 caratteri tra cui: 1 lettera maisucola 1 carattere speciale',
-      );
-      setShowSnackbar(true);
-      setIsLoading(false);
-      return;
-    }
-
-    const hashValue = SHA256(passwordr).toString();
-
     const response = await fetch('http://localhost:5000/register', {
       headers: {
         'Content-Type': 'application/json',
@@ -84,13 +39,14 @@ const RegisterForm = () => {
         nome,
         cognome,
         emailr,
-        passwordr: hashValue,
+        passwordr,
       }),
     });
 
     setIsLoading(false);
     if (!response.ok) {
-      setSnackbarMessage('Utente già esistente, procedere con login!');
+      const result = await response.json();
+      setSnackbarMessage(result.message);
       setShowSnackbar(true);
       setIsLoading(false);
       return;
