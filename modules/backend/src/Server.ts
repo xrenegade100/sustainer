@@ -121,10 +121,7 @@ server.use('/salvaJson', (req, res) => {
   AddestramentoController.salvaJson(req, res);
 });
 server.use('/leggiCSV', (req, res) => {
-  AddestramentoController.leggiCSV(req, res);
-});
-server.use('/leggiCSV', (req, res) => {
-  AddestramentoController.leggiCSV(req, res);
+  AddestramentoController.attributiDataset(req, res);
 });
 
 // eslint-disable-next-line consistent-return
@@ -147,7 +144,7 @@ server.use('/testPython', (req, res) => {
 });
 
 server.use('/gruppoPrivilegiato', (req, res) => {
-  AddestramentoController.leggiCSV(req, res);
+  AddestramentoController.attributiDataset(req, res);
 });
 
 server.use('/avvioAddestramento', (req, res) => {

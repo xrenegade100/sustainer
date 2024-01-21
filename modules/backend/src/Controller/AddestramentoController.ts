@@ -1,3 +1,4 @@
+/* eslint-disable dot-notation */
 import { Request, Response } from 'express';
 import * as fs from 'fs';
 import * as path from 'path';
@@ -98,21 +99,73 @@ class AddestramentoController {
   static salvaJson = async (req: Request, res: Response) => {
     try {
       const { contenuto } = req.body;
-
-      // Costruisci il nome del file in base ai parametri ricevuti
-      const nomeFile = `${String(req.session!.idUser)}.json`;
-      // Specifica il percorso completo del file
-      const percorsoCompleto = path.join('src/Dataset', nomeFile);
+      let parametriCorretti = false;
       const jsonSenzaEscape = JSON.parse(contenuto);
 
-      fs.writeFileSync(percorsoCompleto, JSON.stringify(jsonSenzaEscape));
-      res.status(200).json({ success: 'File salvato correttamente' });
+      // Specifica la directory in cui cercare i file CSV
+      const directory = path.join('src', 'Dataset');
+
+      // Leggi il contenuto della directory
+      const files = fs.readdirSync(directory);
+      const nome = `${String(req.session!.idUser)}.csv`;
+      // Trova il primo file CSV nella directory
+      const nomeFileCSV = files.find((file) => file.endsWith(nome));
+
+      if (!nomeFileCSV) {
+        throw new Error('Nessun file CSV trovato nella directory.');
+      }
+
+      // Specifica il percorso completo del file CSV
+      const percorsoCompletoCSV = path.join(directory, nomeFileCSV);
+
+      // Leggo attributi del file CSV
+      const primaRigaCSV = await AddestramentoController.leggiNomiColonneCSV(
+        percorsoCompletoCSV,
+      );
+
+      if (jsonSenzaEscape['tipoModello'] === 'decisiontree') {
+        // eslint-disable-next-line operator-linebreak
+        const tipoAddestramento =
+          jsonSenzaEscape['decisionTreeCriterioDiSuddivisione'];
+        if (tipoAddestramento === 'entropia' || tipoAddestramento === 'gini') {
+          const profondita = jsonSenzaEscape['decisionTreeProfondita'];
+          if (profondita > 1 && profondita <= 99) {
+            const campFoglia = jsonSenzaEscape['decisionTreeCampioniFoglia'];
+            if (campFoglia > 0 && campFoglia <= 999) {
+              if (primaRigaCSV?.includes(jsonSenzaEscape['target'])) {
+                parametriCorretti = true;
+              }
+            }
+          }
+        }
+      } else if (jsonSenzaEscape['tipoModello'] === 'naivebayes') {
+        const distribuzione = jsonSenzaEscape['naiveBayesDistribuzione'];
+        if (distribuzione === 'gaussian' || distribuzione === 'multinomial') {
+          const smoothing = jsonSenzaEscape['naiveBayesSmoothing'];
+          if (smoothing >= 0 && smoothing <= 1) {
+            if (primaRigaCSV?.includes(jsonSenzaEscape['target'])) {
+              parametriCorretti = true;
+            }
+          }
+        }
+      }
+
+      if (parametriCorretti) {
+        // Costruisci il nome del file in base ai parametri ricevuti
+        const nomeFile = `${String(req.session!.idUser)}.json`;
+        // Specifica il percorso completo del file
+        const percorsoCompleto = path.join('src/Dataset', nomeFile);
+
+        fs.writeFileSync(percorsoCompleto, JSON.stringify(jsonSenzaEscape));
+        return res.status(200).json({ success: 'File salvato correttamente' });
+      }
     } catch (err) {
       res.status(500).json({ error: 'Errore nel salvataggio del file' });
     }
-  }; // Add a semicolon here
+    return res.status(422).json({ error: 'Parametri errati' });
+  };
 
-  static leggiCSV = async (req: Request, res: Response) => {
+  static attributiDataset = async (req: Request, res: Response) => {
     try {
       // Specifica la directory in cui cercare i file CSV
       const directory = path.join('src', 'Dataset');

@@ -241,7 +241,7 @@ const InserimentoParametriForm = () => {
                 title="Naive Bayes"
                 className="fomtClass"
                 valie={tipoModello}
-                onClick={() => setTipoModello('naviebayes')}
+                onClick={() => setTipoModello('naivebayes')}
               >
                 <div className="divone">
                   <h3 className="h3">Distribuzione</h3>
