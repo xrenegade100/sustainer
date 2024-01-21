@@ -1,5 +1,4 @@
 import { Request, Response } from 'express';
-import SHA256 from 'crypto-js/sha256';
 import serviziUtenteImpl from '../account/service/ServiziUtenteImpl';
 import PianoController from './PianoController';
 
@@ -22,12 +21,11 @@ class UtenteController {
     try {
       const { email, password } = req.body; // prendo email e password dalla richiesta
       const user = await serviziUtenteImpl.login(email, password);
-
       if (user) {
         // se l'utente esiste
         req.session!.authenticated = user.getEmail(); // setto la sessione con l'email dell'utente
         req.session!.idUser = user.getIdUtente();
-        req.session!.save(() => {}); // salvo la sessione
+        // req.session!.save(() => {}); // salvo la sessione
         return res // ritorno un json con success = true e l'utente loggato
           .status(200)
           .json({ success: true, user: req.session!.authenticated });
@@ -79,24 +77,9 @@ class UtenteController {
         });
       }
 
-      // Validazione della password
-      // eslint-disable-next-line operator-linebreak
-      const passwordRegex =
-        /^(?=.*[A-Z])(?=.*[!@#$%^&*()_+{}[\]:;<>,.?~\\/-])[A-Za-z0-9!@#$%^&*()_+{}[\]:;<>,.?~\\/-]{8,64}$/;
-      if (!passwordRegex.test(passwordr)) {
-        return res.status(400).json({
-          success: false,
-          message:
-            'La password deve contenere almeno 8 caratteri tra cui: 1 lettera maiuscola e 1 carattere speciale',
-        });
-      }
-
-      // Hash della password
-      const hashValue = SHA256(passwordr).toString();
-
       // richiamo il metodo register del serviziUtenteImpl
 
-      await serviziUtenteImpl.register(nome, cognome, emailr, hashValue);
+      await serviziUtenteImpl.register(nome, cognome, emailr, passwordr);
 
       // richiamo il metodo getIdUtente per prendermi id dell'utente appena registrato
       const idUtente = await serviziUtenteImpl.getIdUtente(emailr);
