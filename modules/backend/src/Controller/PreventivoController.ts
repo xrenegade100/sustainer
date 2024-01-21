@@ -137,18 +137,44 @@ class PreventivoController {
     return res.status(403).json({ message: 'preventivo non aggiornato' });
   };
 
+  static eliminaPreventivoByIdIMP = async (req: Request) => {
+    const { currentPreventivo } = req.body;
+    await ServiziPreventivoImpl.eliminaPreventivoById(
+      currentPreventivo.idPreventivo,
+    );
+  };
+
   static ModificaPreventivoIMP = async (req: Request, res: Response) => {
     const { stato, prezzo, currentPreventivo } = req.body;
+    let defaultStato = stato;
+    let updatedPrezzo = prezzo;
+    if (!updatedPrezzo || updatedPrezzo < 0) {
+      updatedPrezzo = 0;
+    }
+    if (!defaultStato) {
+      defaultStato = 'In lavorazione';
+    }
+    if (defaultStato === 'In lavorazione') {
+      updatedPrezzo = 0;
+    }
+    if (defaultStato === 'Rifiutato') {
+      this.eliminaPreventivoByIdIMP(req);
+      // mock?? no Anto non lo faccio senza che fai perche non lo testo il rifiutato
+    }
+
     const preventivo = await ServiziPreventivoImpl.ModificaPreventivo(
-      stato,
-      prezzo,
+      defaultStato,
+      updatedPrezzo,
       currentPreventivo.idPreventivo,
     );
 
     if (preventivo) {
       return res.status(200).json(preventivo);
     }
-    return res.status(403).json({ message: 'preventivo non modificato' });
+
+    return res
+      .status(403)
+      .json({ message: 'preventivo non trovato per la modifica' });
   };
 }
 

@@ -118,6 +118,11 @@ class ServiziPreventivoImpl {
     return null;
   }
 
+  static async eliminaPreventivoById(idPreventivo: number) {
+    // richiamo il metodo elminiaPreventivo del PreventivoDAO
+    await PreventivoDAO.eliminaPreventivoById(idPreventivo);
+  }
+
   // metodo che mi consente di modificare un preventivo
   static async ModificaPreventivo(
     stato: string,

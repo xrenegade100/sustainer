@@ -1,6 +1,7 @@
 import { RowDataPacket } from 'mysql2';
 import db from '../db/PoolDB';
 import Preventivo from '../preventivo/domain/Preventivo';
+import { stat } from 'fs';
 
 class PreventivoDAO {
   // funzione asincrona che ritorna tutti i preventivi
@@ -166,7 +167,7 @@ class PreventivoDAO {
   }
 
   // funzione asincrona che elimina un preventivo
-  static async eliminaPreventivoByid(idPreventivo: number) {
+  static async eliminaPreventivoById(idPreventivo: number) {
     const conn = await db(); // connessione al db
     await conn.query(
       'DELETE FROM preventivo WHERE id_preventivo = ?',
@@ -180,25 +181,30 @@ class PreventivoDAO {
     prezzo: number,
     idPreventivo: number,
   ) {
-    let defaultStato = stato;
-    let updatedPrezzo = prezzo;
-    if (!updatedPrezzo || updatedPrezzo < 0) {
-      updatedPrezzo = 0;
-    }
-    if (!defaultStato) {
-      defaultStato = 'In lavorazione';
-    }
-    if (defaultStato === 'In lavorazione') {
-      updatedPrezzo = 0;
-    }
-    if (defaultStato === 'Rifiutato') {
-      this.eliminaPreventivoByid(idPreventivo);
-    }
     const conn = await db(); // connessione al db
     await conn.query(
       'UPDATE preventivo SET stato = ?, prezzo = ? WHERE id_preventivo = ?',
-      [defaultStato, updatedPrezzo, idPreventivo],
+      [stato, prezzo, idPreventivo],
     ); // query che modifica un preventivo
+
+    // Verifica se la query ha restituito risultati
+    const [rows] = await conn.query(
+      'SELECT * FROM preventivo WHERE id_preventivo = ?',
+      idPreventivo,
+    );
+
+    const preventivo = rows as RowDataPacket[];
+
+    if (preventivo.length > 0) {
+      return new Preventivo(
+        preventivo[0].id_preventivo,
+        preventivo[0].id_utente,
+        preventivo[0].limiti_addestramenti,
+        preventivo[0].limiti_salvataggi,
+        preventivo[0].prezzo,
+        preventivo[0].stato,
+      );
+    }
     return null;
   }
 }
