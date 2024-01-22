@@ -5,7 +5,7 @@ import { describe, it, beforeEach, afterEach } from 'mocha';
 import UtenteController from '../src/Controller/UtenteController';
 import ServiziUtenteImpl from '../src/account/service/ServiziUtenteImpl';
 
-describe('LoginIMP', () => {
+describe('Testing unità per UtenteController.loginIMP()', () => {
   let sandbox: SinonSandbox;
   let req: any;
   let res: any;
@@ -22,7 +22,7 @@ describe('LoginIMP', () => {
     sandbox.restore();
   });
 
-  it("Dovrebbe restituire true se l'autenticazione va a buon fine", async () => {
+  it('Caso di successo, email:ok - password:ok', async () => {
     req = {
       body: {
         email: 'test@example.com',
@@ -56,7 +56,7 @@ describe('LoginIMP', () => {
     });
   });
 
-  it("Dovrebbe restituire falso se l'email è errata", async () => {
+  it('Caso di errore, email:errore - password:ok', async () => {
     req = {
       body: {
         email: 'nonexist@mail.it',
@@ -89,7 +89,7 @@ describe('LoginIMP', () => {
     });
   });
 
-  it('Dovrebbe restituire falso se la password è errata', async () => {
+  it('Caso di errore, email:ok - password:errore', async () => {
     req = {
       body: {
         email: 'test@example.com',

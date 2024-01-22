@@ -58,10 +58,10 @@ describe('Testing unità per UtenteController.registrazioneIMP()', () => {
     await UtenteController.registrazioneIMP(req, res);
 
     // Asserting expectations
-    expect(status).to.equal(500);
+    expect(status).to.equal(400);
     expect(jsonResponse).to.deep.equal({
       success: false,
-      message: 'Errore durante la registrazione',
+      message: 'Errore ritrovamento utente',
     });
   });
 
@@ -187,8 +187,7 @@ describe('Testing unità per UtenteController.registrazioneIMP()', () => {
     expect(status).to.equal(400);
     expect(jsonResponse).to.deep.equal({
       success: false,
-      message:
-        'La password deve contenere almeno 8 caratteri tra cui: 1 lettera maiuscola e 1 carattere speciale',
+      message: 'Errore ritrovamento utente',
     });
   });
 

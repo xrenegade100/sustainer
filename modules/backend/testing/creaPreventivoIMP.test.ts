@@ -4,7 +4,7 @@ import { describe, it } from 'mocha';
 import PreventivoController from '../src/Controller/PreventivoController';
 import ServiziPreventivoImpl from '../src/preventivo/service/ServiziPreventivoImpl';
 
-describe('Test unitari per creaPreventivoIMP', () => {
+describe('Testing unità per PreventivoController.creaPreventivoIMP()', () => {
   let sandbox: SinonSandbox;
   let request: any;
   let response: any;
@@ -18,7 +18,7 @@ describe('Test unitari per creaPreventivoIMP', () => {
     sandbox.restore();
   });
 
-  it('L’acquisto del piano Enterprise non va a buon fine se il numero di addestramenti è troppo grande', async () => {
+  it('Caso di errore, numero di addestramenti:errore - numero di salvataggi:ok', async () => {
     request = {
       body: {
         limitiAddestramenti: 25,
@@ -36,13 +36,15 @@ describe('Test unitari per creaPreventivoIMP', () => {
       json: () => {},
     };
 
-    const addStub = sinon.stub(ServiziPreventivoImpl, 'creaPreventivo').returns(1);
+    const addStub = sinon
+      .stub(ServiziPreventivoImpl, 'creaPreventivo')
+      .returns(1);
     await PreventivoController.creaPreventivoIMP(request, response);
     addStub.restore();
     expect(status).to.equal(403);
   });
 
-  it('L’acquisto del piano Enterprise non va a buon fine se il numero di salvataggi è troppo grande', async () => {
+  it('Caso di errore, numero di addestramenti:ok - numero di salvataggi:errore', async () => {
     request = {
       body: {
         limitiAddestramenti: 10,
@@ -60,13 +62,15 @@ describe('Test unitari per creaPreventivoIMP', () => {
       json: () => {},
     };
 
-    const addStub = sinon.stub(ServiziPreventivoImpl, 'creaPreventivo').returns(1);
+    const addStub = sinon
+      .stub(ServiziPreventivoImpl, 'creaPreventivo')
+      .returns(1);
     await PreventivoController.creaPreventivoIMP(request, response);
     addStub.restore();
     expect(status).to.equal(403);
   });
 
-  it('L’acquisto del piano Enterprise va a buon fine', async () => {
+  it('Caso di successo, numero di addestramenti:ok - numero di salvataggi:ok', async () => {
     request = {
       body: {
         limitiAddestramenti: 15,
@@ -84,7 +88,9 @@ describe('Test unitari per creaPreventivoIMP', () => {
       },
       json: () => {},
     };
-    const addStub = sinon.stub(ServiziPreventivoImpl, 'creaPreventivo').returns(1);
+    const addStub = sinon
+      .stub(ServiziPreventivoImpl, 'creaPreventivo')
+      .returns(1);
     await PreventivoController.creaPreventivoIMP(request, response);
     addStub.restore();
     expect(status).to.equal(200);

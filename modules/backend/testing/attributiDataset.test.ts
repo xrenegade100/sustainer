@@ -1,15 +1,12 @@
 import { describe, it } from 'mocha';
 import { expect } from 'chai';
 import { Request, Response } from 'express';
-import AddestramentoController from '../src/Controller/AddestramentoController';
 import sinon from 'sinon';
+import AddestramentoController from '../src/Controller/AddestramentoController';
 
-describe('Selezione gruppo privilegiato', () => {
-  it('Sbagliato', async () => {
+describe('Testing unità per AddestramentoController.attributiDataset()', () => {
+  it('Caso di errore, sessione:errore', async () => {
     let status: number | undefined;
-    let jsonResponse: any;
-    let addStub: any;
-    let findStub: any;
 
     const req = {
       session: {
@@ -22,16 +19,14 @@ describe('Selezione gruppo privilegiato', () => {
         status = s;
         return res;
       },
-      json: (data: any) => {
-        jsonResponse = data;
-      },
+      json: () => {},
     } as Response;
 
-    addStub = sinon
+    const addStub = sinon
       .stub(AddestramentoController, 'leggiNomiColonneCSV')
       .returns(['Survived', 'Sex', 'Age', 'Fare', 'Embarked', 'Pclass']);
 
-    findStub = sinon.stub(Array.prototype, 'find').returns(undefined);
+    const findStub = sinon.stub(Array.prototype, 'find').returns(undefined);
 
     // Chiamata al metodo e attesa dell'esecuzione asincrona
     await AddestramentoController.attributiDataset(req, res);
@@ -39,16 +34,11 @@ describe('Selezione gruppo privilegiato', () => {
     addStub.restore();
     findStub.restore();
 
-    //console.log('jsonResponse:', jsonResponse);
-
     // Verifica delle asserzioni
     expect(status).to.equal(403);
   });
-  it('Corretto', async () => {
+  it('Caso di successo, sessione:ok', async () => {
     let status: number | undefined;
-    let jsonResponse: any;
-    let addStub: any;
-    let findStub: any;
 
     const req = {
       session: {
@@ -61,24 +51,20 @@ describe('Selezione gruppo privilegiato', () => {
         status = s;
         return res;
       },
-      json: (data: any) => {
-        jsonResponse = data;
-      },
+      json: () => {},
     } as Response;
 
-    addStub = sinon
+    const addStub = sinon
       .stub(AddestramentoController, 'leggiNomiColonneCSV')
       .returns(['Survived', 'Sex', 'Age', 'Fare', 'Embarked', 'Pclass']);
 
-    findStub = sinon.stub(Array.prototype, 'find').returns('1.csv');
+    const findStub = sinon.stub(Array.prototype, 'find').returns('1.csv');
 
     // Chiamata al metodo e attesa dell'esecuzione asincrona
     await AddestramentoController.attributiDataset(req, res);
 
     addStub.restore();
     findStub.restore();
-
-    //console.log('jsonResponse:', jsonResponse);
 
     // Verifica delle asserzioni
     expect(status).to.equal(200);

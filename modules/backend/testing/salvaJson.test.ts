@@ -1,9 +1,10 @@
 import { describe, it } from 'mocha';
 import { expect } from 'chai';
+import * as fs from 'fs';
 import sinon from 'sinon';
 import AddestramentoController from '../src/Controller/AddestramentoController';
 
-describe('Verifica parametri di addestramento', () => {
+describe('Testing unità per AddestramentoController.salvaJson()', () => {
   let req: any;
   let res: any;
   let status: number | undefined;
@@ -34,7 +35,7 @@ describe('Verifica parametri di addestramento', () => {
     findStub.restore();
   });
 
-  it('errore tipoModello', async () => {
+  it('Caso di errore, tipoModello:errore - decisionTreeCriterioDiSuddivisione:ok - decisionTreeProfondita:ok - decisionTreeCampioniFoglia:ok - target:ok', async () => {
     req = {
       body: {
         contenuto:
@@ -52,7 +53,7 @@ describe('Verifica parametri di addestramento', () => {
     expect(status).to.equal(422);
   });
 
-  it('errore decisionTreeCriterioDiSuddivisione', async () => {
+  it('Caso di errore, tipoModello:ok - decisionTreeCriterioDiSuddivisione:errore - decisionTreeProfondita:ok - decisionTreeCampioniFoglia:ok - target:ok', async () => {
     req = {
       body: {
         contenuto:
@@ -70,7 +71,7 @@ describe('Verifica parametri di addestramento', () => {
     expect(status).to.equal(422);
   });
 
-  it('errore decisionTreeProfondita', async () => {
+  it('Caso di errore, tipoModello:ok - decisionTreeCriterioDiSuddivisione:ok - decisionTreeProfondita:errore - decisionTreeCampioniFoglia:ok - target:ok', async () => {
     req = {
       body: {
         contenuto:
@@ -88,7 +89,7 @@ describe('Verifica parametri di addestramento', () => {
     expect(status).to.equal(422);
   });
 
-  it('errore decisionTreeCampioniFoglia', async () => {
+  it('Caso di errore, tipoModello:ok - decisionTreeCriterioDiSuddivisione:ok - decisionTreeProfondita:ok - decisionTreeCampioniFoglia:errore - target:ok', async () => {
     req = {
       body: {
         contenuto:
@@ -106,7 +107,7 @@ describe('Verifica parametri di addestramento', () => {
     expect(status).to.equal(422);
   });
 
-  it('errore target - decisiontree', async () => {
+  it('Caso di errore, tipoModello:ok - decisionTreeCriterioDiSuddivisione:ok - decisionTreeProfondita:ok - decisionTreeCampioniFoglia:ok - target:errore', async () => {
     req = {
       body: {
         contenuto:
@@ -124,7 +125,7 @@ describe('Verifica parametri di addestramento', () => {
     expect(status).to.equal(422);
   });
 
-  it('errore naiveBayesDistribuzione', async () => {
+  it('Caso di errore, tipoModello:ok - naiveBayesDistribuzione:errore - naiveBayesSmoothing:ok - target:ok', async () => {
     req = {
       body: {
         contenuto:
@@ -142,7 +143,7 @@ describe('Verifica parametri di addestramento', () => {
     expect(status).to.equal(422);
   });
 
-  it('errore naiveBayesSmoothing', async () => {
+  it('Caso di errore, tipoModello:ok - naiveBayesDistribuzione:ok - naiveBayesSmoothing:errore - target:ok', async () => {
     req = {
       body: {
         contenuto:
@@ -160,7 +161,7 @@ describe('Verifica parametri di addestramento', () => {
     expect(status).to.equal(422);
   });
 
-  it('errore target - naivebayes', async () => {
+  it('Caso di errore, tipoModello:ok - naiveBayesDistribuzione:ok - naiveBayesSmoothing:ok - target:errore', async () => {
     req = {
       body: {
         contenuto:
@@ -178,7 +179,7 @@ describe('Verifica parametri di addestramento', () => {
     expect(status).to.equal(422);
   });
 
-  it('verifica correttezza', async () => {
+  it('Caso di successo, tipoModello:ok - decisionTreeCriterioDiSuddivisione:ok - decisionTreeProfondita:ok - decisionTreeCampioniFoglia:ok - target:ok', async () => {
     req = {
       body: {
         contenuto:
@@ -188,7 +189,6 @@ describe('Verifica parametri di addestramento', () => {
         idUser: 14,
       },
     };
-
     // Chiamata al metodo e attesa dell'esecuzione asincrona
     await AddestramentoController.salvaJson(req, res);
 
@@ -196,6 +196,13 @@ describe('Verifica parametri di addestramento', () => {
     expect(status).to.equal(200);
     expect(jsonResponse).to.deep.equal({
       success: 'File salvato correttamente',
+    });
+
+    fs.unlink('src/Dataset/14.json', (err) => {
+      if (err) {
+        // eslint-disable-next-line no-console
+        console.error('Errore durante la cancellazione del file:', err);
+      }
     });
   });
 });
