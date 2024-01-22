@@ -1,0 +1,31 @@
+name: sustainer-backend 🚀 [20.x]
+
+on:
+  pull_request:
+    branches:
+      - main
+      - dev
+
+defaults:
+  run:
+    working-directory: ./modules/backend
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [20.x]
+    steps:
+      - uses: actions/checkout@v2
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v2
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: "npm"
+          cache-dependency-path: modules/backend/package-lock.json
+      - run: npm ci
+      - run: npm run lint
+      - run: npm run test
+      - run: npm run testing
+      - run: npm run build
