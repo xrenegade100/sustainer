@@ -177,7 +177,9 @@ class AddestramentoController {
       const nomeFileCSV = files.find((file) => file.endsWith(nome));
 
       if (!nomeFileCSV) {
-        throw new Error('Nessun file CSV trovato nella directory.');
+        return res
+          .status(403)
+          .json({ error: 'Nessun file CSV trovato nella directory.' });
       }
 
       // Specifica il percorso completo del file CSV
