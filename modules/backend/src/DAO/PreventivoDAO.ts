@@ -1,6 +1,6 @@
 import { RowDataPacket } from 'mysql2';
 import db from '../db/PoolDB';
-import Preventivo from '../preventivo/domain/Preventivo';
+import Preventivo from '../piano/domain/Preventivo';
 
 class PreventivoDAO {
   // funzione asincrona che ritorna tutti i preventivi
