@@ -3,8 +3,10 @@ import * as fs from 'fs';
 import * as path from 'path';
 import csv from 'csv-parser';
 import serviziModelloImpl from '../modello/service/ServiziModelloImpl';
+import multer from 'multer';
 
 class AddestramentoController {
+  upload = multer();
   private static pathModello: string;
 
   static AddestramentoIMP = async (req: Request, res: Response) => {
@@ -172,6 +174,78 @@ class AddestramentoController {
           reject(errore);
         });
     });
+
+  private static verificaSeparatoreCSV(
+    filePath: string,
+    separatoreDesiderato: string,
+  ): Promise<boolean> {
+    return new Promise((resolve) => {
+      fs.createReadStream(filePath)
+        .pipe(csv({ separator: separatoreDesiderato }))
+        .on('headers', (headers) => {
+          // I nomi delle colonne sono disponibili in questo evento
+          if (headers.length >= 2) {
+            resolve(true);
+          } else {
+            resolve(false);
+          }
+          // Interrompi la lettura dopo aver ottenuto i nomi delle colonne
+        });
+    });
+  }
+
+  static caricaFileIMP = async (req: Request, res: Response) => {
+    const file: Express.Multer.File | undefined = req.file;
+
+    // Controlla che sia stato caricato un file
+    if (!file) {
+      console.log('Nessun file caricato.');
+      return res.status(400).send('Nessun file caricato.');
+    }
+
+    // Controlla che il file abbia estensione .csv
+    const esensioneFilePermesse = ['csv'];
+    const estensioneFile = file.originalname.slice(
+      ((file.originalname.lastIndexOf('.') - 1) >>> 0) + 2,
+    );
+
+    if (!esensioneFilePermesse.includes(estensioneFile.toLowerCase())) {
+      return res.status(501).send('Il file deve avere estensione .csv.');
+    }
+
+    // Salva il file nella directory 'src/Dataset'
+    fs.writeFile(
+      `src/Dataset/${req.session!.idUser}.csv`,
+      file.buffer,
+      'utf-8',
+      (err) => {
+        if (err) {
+          console.error('Errore durante il salvataggio del file:', err);
+        }
+      },
+    );
+
+    const separator = ',';
+
+    await AddestramentoController.verificaSeparatoreCSV(
+      `src/Dataset/${req.session!.idUser}.csv`,
+      separator,
+    )
+      .then((separatoreTrovato) => {
+        if (separatoreTrovato) {
+          console.log(`Il file CSV utilizza la virgola come separatore.`);
+          return res.status(200).json({
+            success: 'Il file CSV utilizza la virgola come separatore.',
+          });
+        } else {
+          console.log(`Il file CSV non utilizza la virgola come separatore.`);
+          return res.status(400);
+        }
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  };
 }
 
 export default AddestramentoController;
