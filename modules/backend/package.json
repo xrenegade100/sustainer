@@ -4,7 +4,8 @@
   "description": "",
   "main": "src/Index.ts",
   "scripts": {
-    "dev": "nodemon --ignore src/Dataset src/Index.ts"
+    "dev": "nodemon --ignore src/Dataset src/Index.ts",
+    "lint": "eslint --ext .ts src"
   },
   "keywords": [],
   "author": "",
