@@ -82,11 +82,23 @@ class UtenteController {
       await serviziUtenteImpl.register(nome, cognome, emailr, passwordr);
 
       // richiamo il metodo getIdUtente per prendermi id dell'utente appena registrato
-      const idUtente = await serviziUtenteImpl.getIdUtente(emailr);
+      let idUtente;
+      try {
+        idUtente = await serviziUtenteImpl.getIdUtente(emailr);
+      } catch (error) {
+        return res.status(400).json({
+          success: false,
+          message: 'Errore ritrovamento utente',
+        });
+      }
 
       // devo usare pianoController per fare l'acquisto del piano free
       // richiamo il metodo AcquistoPianoFreeIMP del PianoController
-      await PianoController.AcquistoPianoFreeIMP(idUtente);
+      try {
+        await PianoController.AcquistoPianoFreeIMP(idUtente);
+      } catch (error) {
+        console.log(error);
+      }
 
       return res.status(200).json({
         // ritorno un json con success = true e un messaggio di successo
@@ -94,6 +106,7 @@ class UtenteController {
         message: 'Registrazione effettuata con successo',
       });
     } catch (error) {
+      console.log(error);
       // altrimenti ritorno un json con success = false e un messaggio di errore
       return res
         .status(500)
@@ -108,9 +121,11 @@ class UtenteController {
       req.session!.destroy(() => {});
       return res.status(200).redirect('/homepage');
     } catch (error) {
-      return res
-        .status(500)
-        .json({ success: false, message: 'Errore durante il logout' });
+      return res.status(500).json({
+        success: false,
+        message:
+          'La password deve contenere almeno 8 caratteri tra cui: 1 lettera maiuscola e 1 carattere speciale',
+      });
     }
   };
 

@@ -4,7 +4,7 @@ import { describe, it } from 'mocha';
 import PreventivoController from '../src/Controller/PreventivoController';
 import ServiziPreventivoImpl from '../src/preventivo/service/ServiziPreventivoImpl';
 
-describe('ModificaPreventivoIMP', () => {
+describe('Testing unità per PreventivoController.ModificaPreventivoIMP()', () => {
   let sandbox: SinonSandbox;
   let req: any;
   let res: any;
@@ -19,7 +19,7 @@ describe('ModificaPreventivoIMP', () => {
     sandbox.restore();
   });
 
-  it('should handle ModificaPreventivo error, stato:error - prezzo:ok - currentpreventivo:ok', async () => {
+  it('Caso di errore, stato:errore - prezzo:ok - currentpreventivo:ok', async () => {
     req = {
       body: {
         stato: 'Preso in Lavorazione',
@@ -46,7 +46,7 @@ describe('ModificaPreventivoIMP', () => {
     expect(status).to.equal(403);
   });
 
-  it('should handle ModificaPreventivo error, stato:ok - prezzo:error - currentpreventivo:ok', async () => {
+  it('Caso di errore, stato:ok - prezzo:errore - currentpreventivo:ok', async () => {
     req = {
       body: {
         stato: 'Accettato',
@@ -73,7 +73,7 @@ describe('ModificaPreventivoIMP', () => {
     expect(status).to.equal(403);
   });
 
-  it('should handle ModificaPreventivo error, stato:ok - prezzo:ok - currentpreventivo:error', async () => {
+  it('Caso di errore, stato:ok - prezzo:ok - currentpreventivo:errore', async () => {
     req = {
       body: {
         stato: 'Accettato',
@@ -100,7 +100,7 @@ describe('ModificaPreventivoIMP', () => {
     expect(status).to.equal(403);
   });
 
-  it('should handle ModificaPreventivo successfully, stato:ok - prezzo:ok - currentpreventivo:ok', async () => {
+  it('Caso di successo, stato:ok - prezzo:ok - currentpreventivo:ok', async () => {
     req = {
       body: {
         stato: 'In lavorazione',
