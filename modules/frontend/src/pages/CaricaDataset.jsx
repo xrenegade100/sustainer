@@ -99,11 +99,11 @@ const CaricaDataset = () => {
           setSnackbarMessage('File caricato con successo');
           setFileUploaded(true);
           setShowSnackbar(true);
-        } else if (response.status === 400 && fakeProgress === 100) {
+        } else if (response.status === 408 && fakeProgress === 100) {
           setSnackbarMessage('Errore: il contenuto del file non è valido');
           setFileUploaded(false);
           setShowSnackbar(true);
-        } else if (response.status === 500) {
+        } else if (response.status === 501) {
           setSnackbarMessage('Errore: puoi caricare solo file .csv');
           setShowSnackbar(true);
           setFileUploaded(false);

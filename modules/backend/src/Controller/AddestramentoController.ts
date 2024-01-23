@@ -177,11 +177,18 @@ class AddestramentoController {
     });
 
   private static estraiRighe = async (filePath: string): Promise<any[]> => {
-    return new Promise((resolve) => {
+    return new Promise((resolve, reject) => {
       let results: any[] = [];
 
       fs.createReadStream(filePath)
-        .pipe(csv())
+        .on('data', (data) => {
+          const righe = data.toString().split('\n');
+          let flag = false;
+          if (righe[0].split(',').length <= 1) {
+            reject(new Error('Il file non è valido'));
+          }
+        })
+        .pipe(csv({ separator: ',' }))
         .on('data', (data) => results.push(data))
         .on('end', () => {
           resolve(results);
@@ -204,14 +211,19 @@ class AddestramentoController {
     });
   };
 
-  private static async verificaSeparatoreCSV(
+  private static async verificaCSV(
     filePath: string,
     separatoreDesiderato: string,
   ) {
-    const results: any[] = await AddestramentoController.estraiRighe(filePath);
-    const colonne = Object.keys(results);
-    console.log(results);
-    return colonne.length >= 2;
+    try {
+      const results: any[] = await AddestramentoController.estraiRighe(
+        filePath,
+      );
+      const colonne = Object.keys(results[0]);
+      return colonne.length >= 2;
+    } catch (err) {
+      return 500;
+    }
   }
 
   static caricaFileIMP = async (req: Request, res: Response) => {
@@ -241,20 +253,22 @@ class AddestramentoController {
 
     const separator = ',';
 
-    const result = await AddestramentoController.verificaSeparatoreCSV(
+    const result = await AddestramentoController.verificaCSV(
       `src/Dataset/${req.session!.idUser}.csv`,
       separator,
     );
 
-    if (result) {
-      console.log(`Il file CSV utilizza la virgola come separatore.`);
-      return res.status(200).json({
-        success: 'Il file CSV utilizza la virgola come separatore.',
+    if (result === 500) {
+      return res.status(408).json({
+        success: 'Il file CSV non utilizza la virgola come separatore.',
+      });
+    } else if (!result) {
+      return res.status(408).json({
+        success: 'Il file CSV non ci sono almeno 2 colonne.',
       });
     } else {
-      console.log(`Il file CSV non utilizza la virgola come separatore.`);
-      return res.status(400).json({
-        success: 'Il file CSV non utilizza la virgola come separatore.',
+      return res.status(200).json({
+        success: 'File caricato con successo',
       });
     }
   };
