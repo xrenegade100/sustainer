@@ -10,6 +10,7 @@ class PreventivoDAO {
     const preventivi = rows as RowDataPacket[]; // assegno a preventivi i risultati della query
     return preventivi.map(
       (preventivo) =>
+        // eslint-disable-next-line implicit-arrow-linebreak
         new Preventivo(
           preventivo.id_preventivo,
           preventivo.id_utente,
