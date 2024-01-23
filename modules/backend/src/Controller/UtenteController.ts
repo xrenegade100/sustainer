@@ -21,12 +21,11 @@ class UtenteController {
     try {
       const { email, password } = req.body; // prendo email e password dalla richiesta
       const user = await serviziUtenteImpl.login(email, password);
-
       if (user) {
         // se l'utente esiste
         req.session!.authenticated = user.getEmail(); // setto la sessione con l'email dell'utente
         req.session!.idUser = user.getIdUtente();
-        req.session!.save(() => {}); // salvo la sessione
+        // req.session!.save(() => {}); // salvo la sessione
         return res // ritorno un json con success = true e l'utente loggato
           .status(200)
           .json({ success: true, user: req.session!.authenticated });
@@ -48,16 +47,58 @@ class UtenteController {
       // eslint-disable-next-line object-curly-newline
       const { nome, cognome, emailr, passwordr } = req.body;
 
+      // Validazione del nome
+      const nomeRegex = /^[a-zA-ZÀ-ÖØ-öø-ÿ\s']{1,100}$/;
+      if (!nomeRegex.test(nome)) {
+        return res.status(400).json({
+          success: false,
+          message:
+            'Il nome deve contenere solo lettere, non deve essere vuoto e non deve superare i 100 caratteri',
+        });
+      }
+
+      // Validazione del cognome
+      const cognomeRegex = /^[a-zA-ZÀ-ÖØ-öø-ÿ\s']{1,100}$/;
+      if (!cognomeRegex.test(cognome)) {
+        return res.status(400).json({
+          success: false,
+          message:
+            'Il cognome deve contenere solo lettere, non deve essere vuoto e non deve superare i 100 caratteri',
+        });
+      }
+
+      // Validazione dell'email
+      const emailRegex = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,319}$/;
+      if (!emailRegex.test(emailr)) {
+        return res.status(400).json({
+          success: false,
+          message:
+            'Email non rispetta il formato corretto (es. mario@rossi.it)',
+        });
+      }
+
       // richiamo il metodo register del serviziUtenteImpl
 
       await serviziUtenteImpl.register(nome, cognome, emailr, passwordr);
 
       // richiamo il metodo getIdUtente per prendermi id dell'utente appena registrato
-      const idUtente = await serviziUtenteImpl.getIdUtente(emailr);
+      let idUtente;
+      try {
+        idUtente = await serviziUtenteImpl.getIdUtente(emailr);
+      } catch (error) {
+        return res.status(400).json({
+          success: false,
+          message: 'Errore ritrovamento utente',
+        });
+      }
 
       // devo usare pianoController per fare l'acquisto del piano free
       // richiamo il metodo AcquistoPianoFreeIMP del PianoController
-      await PianoController.AcquistoPianoFreeIMP(idUtente);
+      try {
+        await PianoController.AcquistoPianoFreeIMP(idUtente);
+      } catch (error) {
+        console.log(error);
+      }
 
       return res.status(200).json({
         // ritorno un json con success = true e un messaggio di successo
@@ -65,6 +106,7 @@ class UtenteController {
         message: 'Registrazione effettuata con successo',
       });
     } catch (error) {
+      console.log(error);
       // altrimenti ritorno un json con success = false e un messaggio di errore
       return res
         .status(500)
@@ -79,9 +121,11 @@ class UtenteController {
       req.session!.destroy(() => {});
       return res.status(200).redirect('/homepage');
     } catch (error) {
-      return res
-        .status(500)
-        .json({ success: false, message: 'Errore durante il logout' });
+      return res.status(500).json({
+        success: false,
+        message:
+          'La password deve contenere almeno 8 caratteri tra cui: 1 lettera maiuscola e 1 carattere speciale',
+      });
     }
   };
 

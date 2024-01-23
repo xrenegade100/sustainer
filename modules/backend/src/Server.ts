@@ -125,10 +125,7 @@ server.use('/salvaJson', async (req, res) => {
   await AddestramentoController.salvaJson(req, res);
 });
 server.use('/leggiCSV', async (req, res) => {
-  await AddestramentoController.leggiCSV(req, res);
-});
-server.use('/leggiCSV', async (req, res) => {
-  await AddestramentoController.leggiCSV(req, res);
+  await AddestramentoController.attributiDataset(req, res);
 });
 
 server.use('/upload', upload.single('file'), async (req, res) => {
@@ -140,7 +137,7 @@ server.use('/testPython', async (req, res) => {
 });
 
 server.use('/gruppoPrivilegiato', async (req, res) => {
-  await AddestramentoController.leggiCSV(req, res);
+  await AddestramentoController.attributiDataset(req, res);
 });
 
 server.use('/avvioAddestramento', async (req, res) => {
