@@ -3,14 +3,15 @@ import session from 'express-session';
 import morgan from 'morgan';
 import helmet from 'helmet';
 import cors from 'cors';
-import { upload, handleFileUpload } from './Dataset/DatasetMenage';
+import multer, { Multer } from 'multer';
 import PianoController from './Controller/PianoController';
 import UtenteController from './Controller/UtenteController';
 import AmministratoreController from './Controller/AmministratoreController';
-import ModelloController from './Controller/ModelloController';
+import AddestramentoController from './Controller/AddestramentoController';
 import PreventivoController from './Controller/PreventivoController';
 
 const server = express();
+const upload: Multer = multer();
 
 const key = 'keyboard cat';
 server.use(morgan('dev', { skip: () => process.env.NODE_ENV === 'test' })); // skip request logging during tests
@@ -32,7 +33,9 @@ server.use(
 server.use('/login', (req, res) => {
   UtenteController.loginIMP(req, res);
 });
-server.use('/logout', UtenteController.logout);
+server.use('/logout', (req, res) => {
+  UtenteController.logout(req, res);
+});
 server.use('/verificaLogin', (req, res) => {
   UtenteController.verificaLogin(req, res);
 });
@@ -117,44 +120,33 @@ server.use('/verificaLoginAm', (req, res) => {
 });
 // fineAmministratore
 
+// addestramento
 server.use('/salvaJson', (req, res) => {
-  ModelloController.salvaJson(req, res);
+  AddestramentoController.salvaJson(req, res);
 });
 server.use('/leggiCSV', (req, res) => {
-  ModelloController.leggiCSV(req, res);
-});
-server.use('/leggiCSV', (req, res) => {
-  ModelloController.leggiCSV(req, res);
+  AddestramentoController.attributiDataset(req, res);
 });
 
-// eslint-disable-next-line consistent-return
-server.use(
-  '/upload',
-  upload.single('file'),
-  handleFileUpload,
-  async (req, res) => {
-    try {
-      return res.status(200).json();
-    } catch (error) {
-      return res.status(500).json();
-    }
-  },
-);
+server.use('/upload', upload.single('file'), async (req, res) => {
+  await AddestramentoController.caricaFileIMP(req, res);
+});
 
 server.use('/testPython', (req, res) => {
-  ModelloController.AddestramentoIMP(req, res);
+  AddestramentoController.AddestramentoIMP(req, res);
 });
 
 server.use('/gruppoPrivilegiato', (req, res) => {
-  ModelloController.leggiCSV(req, res);
+  AddestramentoController.attributiDataset(req, res);
 });
 
 server.use('/avvioAddestramento', (req, res) => {
-  ModelloController.AddestramentoIMP(req, res);
+  AddestramentoController.AddestramentoIMP(req, res);
 });
 server.use('/downloadModello', (req, res) => {
-  ModelloController.downloadIMP(req, res);
+  AddestramentoController.downloadIMP(req, res);
 });
+// fine addestramento
 
 export default server;
 export { key };

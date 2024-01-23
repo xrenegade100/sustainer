@@ -1,7 +1,6 @@
-import serviziPreventivo from './ServiziPreventivo';
 import PreventivoDAO from '../../DAO/PreventivoDAO';
 
-class ServiziPreventivoImpl implements serviziPreventivo {
+class ServiziPreventivoImpl {
   static async TuttiPreventivi() {
     // richiamo il metodo TuttiPreventivi del PreventivoDAO
     const preventivi = await PreventivoDAO.getPreventivi();
@@ -117,6 +116,11 @@ class ServiziPreventivoImpl implements serviziPreventivo {
       return preventivo;
     }
     return null;
+  }
+
+  static async eliminaPreventivoById(idPreventivo: number) {
+    // richiamo il metodo elminiaPreventivo del PreventivoDAO
+    await PreventivoDAO.eliminaPreventivoById(idPreventivo);
   }
 
   // metodo che mi consente di modificare un preventivo

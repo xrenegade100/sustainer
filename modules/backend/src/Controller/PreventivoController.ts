@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import ServiziPreventivoImpl from '../preventivo/service/ServiziPreventivoImpl';
+import ServiziPreventivoImpl from '../piano/service/ServiziPreventivoImpl';
 
 class PreventivoController {
   static TuttiPreventiviIMP = async (req: Request, res: Response) => {
@@ -12,14 +12,19 @@ class PreventivoController {
 
   static creaPreventivoIMP = async (req: Request, res: Response) => {
     if (req.body.limitiAddestramenti && req.body.limitiSalvataggi) {
-      const { limitiAddestramenti, limitiSalvataggi } = req.body;
-      const preventivo = await ServiziPreventivoImpl.creaPreventivo(
-        req.session!.idUser,
-        limitiAddestramenti,
-        limitiSalvataggi,
-      );
-      if (preventivo) {
-        return res.status(200).json(preventivo);
+      if (req.body.limitiAddestramenti && req.body.limitiSalvataggi) {
+        const { limitiAddestramenti, limitiSalvataggi } = req.body;
+        if ((limitiAddestramenti > 4 && limitiAddestramenti <= 20)
+        && (limitiSalvataggi > 10 && limitiSalvataggi <= 50)) {
+          const preventivo = await ServiziPreventivoImpl.creaPreventivo(
+            req.session!.idUser,
+            limitiAddestramenti,
+            limitiSalvataggi,
+          );
+          if (preventivo) {
+            return res.status(200).json(preventivo);
+          }
+        }
       }
     }
     return res.status(403).json({ message: 'preventivo non creato' });
@@ -137,18 +142,44 @@ class PreventivoController {
     return res.status(403).json({ message: 'preventivo non aggiornato' });
   };
 
+  static eliminaPreventivoByIdIMP = async (req: Request) => {
+    const { currentPreventivo } = req.body;
+    await ServiziPreventivoImpl.eliminaPreventivoById(
+      currentPreventivo.idPreventivo,
+    );
+  };
+
   static ModificaPreventivoIMP = async (req: Request, res: Response) => {
     const { stato, prezzo, currentPreventivo } = req.body;
+    let defaultStato = stato;
+    let updatedPrezzo = prezzo;
+    if (!updatedPrezzo || updatedPrezzo < 0) {
+      updatedPrezzo = 0;
+    }
+    if (!defaultStato) {
+      defaultStato = 'In lavorazione';
+    }
+    if (defaultStato === 'In lavorazione') {
+      updatedPrezzo = 0;
+    }
+    if (defaultStato === 'Rifiutato') {
+      this.eliminaPreventivoByIdIMP(req);
+      // mock?? no Anto non lo faccio senza che fai perche non lo testo il rifiutato
+    }
+
     const preventivo = await ServiziPreventivoImpl.ModificaPreventivo(
-      stato,
-      prezzo,
+      defaultStato,
+      updatedPrezzo,
       currentPreventivo.idPreventivo,
     );
 
     if (preventivo) {
       return res.status(200).json(preventivo);
     }
-    return res.status(403).json({ message: 'preventivo non modificato' });
+
+    return res
+      .status(403)
+      .json({ message: 'preventivo non trovato per la modifica' });
   };
 }
 

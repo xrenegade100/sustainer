@@ -1,7 +1,6 @@
-import serviziUtente from './ServiziUtente';
 import UtenteDAO from '../../DAO/UtenteDAO';
 
-class ServiziUtenteImpl implements serviziUtente {
+class ServiziUtenteImpl {
   // metodo che uso per la login
   static async login(email: string, password: string) {
     // richiamo il metodo login del UtenteDAO
