@@ -32,6 +32,7 @@ const CaricaDataset = () => {
           navigate('/login');
         }
       } catch (error) {
+        // eslint-disable-next-line no-console
         console.error('Errore durante la verifica del login:', error);
       }
     }
@@ -94,16 +95,15 @@ const CaricaDataset = () => {
         });
 
         // Gestisci la risposta dal server come necessario
-        console.log(response.status);
         if (response.ok && fakeProgress === 100) {
           setSnackbarMessage('File caricato con successo');
           setFileUploaded(true);
           setShowSnackbar(true);
-        } else if (response.status === 400 && fakeProgress === 100) {
+        } else if (response.status === 408 && fakeProgress === 100) {
           setSnackbarMessage('Errore: il contenuto del file non è valido');
           setFileUploaded(false);
           setShowSnackbar(true);
-        } else if (response.status === 500) {
+        } else if (response.status === 501) {
           setSnackbarMessage('Errore: puoi caricare solo file .csv');
           setShowSnackbar(true);
           setFileUploaded(false);
@@ -231,9 +231,8 @@ const CaricaDataset = () => {
                   setFileUploaded(false);
                   setUploadedFile(null); // Cancella le informazioni sul file caricato
                 }}
-                onDrop={(acceptedFiles, rejectedFiles) => {
+                onDrop={(acceptedFiles) => {
                   // gestisci il caricamento del file...
-                  console.log(acceptedFiles, rejectedFiles);
                   startFakeProgress();
                   setUploadedFile(acceptedFiles[0]); // Salva le informazioni sul file caricato
                 }}

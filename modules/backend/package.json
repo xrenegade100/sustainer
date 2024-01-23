@@ -5,6 +5,7 @@
   "main": "src/Index.ts",
   "scripts": {
     "dev": "nodemon --ignore src/Dataset src/Index.ts",
+    "testing": "cypress open",
     "test": "mocha --require tsx testing/**/*.test.ts"
   },
   "keywords": [],
@@ -47,6 +48,7 @@
     "@types/sinon": "^17.0.3",
     "@typescript-eslint/eslint-plugin": "^6.15.0",
     "@typescript-eslint/parser": "^6.15.0",
+    "cypress": "^13.6.3",
     "chai": "^5.0.0",
     "eslint": "^8.56.0",
     "eslint-config-airbnb": "^19.0.4",

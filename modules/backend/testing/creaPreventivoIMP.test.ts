@@ -2,7 +2,7 @@ import { expect } from 'chai';
 import sinon, { SinonSandbox } from 'sinon';
 import { describe, it } from 'mocha';
 import PreventivoController from '../src/Controller/PreventivoController';
-import ServiziPreventivoImpl from '../src/preventivo/service/ServiziPreventivoImpl';
+import ServiziPreventivoImpl from '../src/piano/service/ServiziPreventivoImpl';
 
 describe('Testing unità per PreventivoController.creaPreventivoIMP()', () => {
   let sandbox: SinonSandbox;

@@ -4,8 +4,11 @@ import * as fs from 'fs';
 import * as path from 'path';
 import csv from 'csv-parser';
 import serviziModelloImpl from '../modello/service/ServiziModelloImpl';
+import multer from 'multer';
+import stream from 'stream';
 
 class AddestramentoController {
+  upload = multer();
   private static pathModello: string;
 
   static AddestramentoIMP = async (req: Request, res: Response) => {
@@ -98,6 +101,7 @@ class AddestramentoController {
 
   static salvaJson = async (req: Request, res: Response) => {
     try {
+      console.log('ciao');
       const { contenuto } = req.body;
       let parametriCorretti = false;
       const jsonSenzaEscape = JSON.parse(contenuto);
@@ -121,6 +125,11 @@ class AddestramentoController {
       // Leggo attributi del file CSV
       const primaRigaCSV = await AddestramentoController.leggiNomiColonneCSV(
         percorsoCompletoCSV,
+      );
+
+      console.log(
+        jsonSenzaEscape['tipoModello'],
+        jsonSenzaEscape['decisionTreeCriterioDiSuddivisione'],
       );
 
       if (jsonSenzaEscape['tipoModello'] === 'decisiontree') {
@@ -227,6 +236,103 @@ class AddestramentoController {
           reject(errore);
         });
     });
+
+  private static estraiRighe = async (filePath: string): Promise<any[]> => {
+    return new Promise((resolve, reject) => {
+      let results: any[] = [];
+
+      fs.createReadStream(filePath)
+        .on('data', (data) => {
+          const righe = data.toString().split('\n');
+          let flag = false;
+          if (righe[0].split(',').length <= 1) {
+            reject(new Error('Il file non è valido'));
+          }
+        })
+        .pipe(csv({ separator: ',' }))
+        .on('data', (data) => results.push(data))
+        .on('end', () => {
+          resolve(results);
+        });
+    });
+  };
+
+  private static salvataggioFile = async (
+    filePath: string,
+    file: Buffer,
+  ): Promise<void> => {
+    return new Promise((resolve, reject) => {
+      fs.writeFile(filePath, file, (err: any) => {
+        if (err) {
+          console.error('Errore durante il salvataggio del file:', err);
+          reject(err);
+        }
+        resolve();
+      });
+    });
+  };
+
+  private static async verificaCSV(
+    filePath: string,
+    separatoreDesiderato: string,
+  ) {
+    try {
+      const results: any[] = await AddestramentoController.estraiRighe(
+        filePath,
+      );
+      const colonne = Object.keys(results[0]);
+      return colonne.length >= 2;
+    } catch (err) {
+      return 500;
+    }
+  }
+
+  static caricaFileIMP = async (req: Request, res: Response) => {
+    const file: Express.Multer.File | undefined = req.file;
+
+    // Controlla che sia stato caricato un file
+    if (!file) {
+      console.log('Nessun file caricato.');
+      return res.status(408).send('Nessun file caricato.');
+    }
+
+    // Controlla che il file abbia estensione .csv
+    const esensioneFilePermesse = ['csv'];
+    const estensioneFile = file.originalname.slice(
+      ((file.originalname.lastIndexOf('.') - 1) >>> 0) + 2,
+    );
+
+    if (!esensioneFilePermesse.includes(estensioneFile.toLowerCase())) {
+      return res.status(501).send('Il file deve avere estensione .csv.');
+    }
+
+    // Salva il file nella directory 'src/Dataset'
+    await AddestramentoController.salvataggioFile(
+      `src/Dataset/${req.session!.idUser}.csv`,
+      file.buffer,
+    );
+
+    const separator = ',';
+
+    const result = await AddestramentoController.verificaCSV(
+      `src/Dataset/${req.session!.idUser}.csv`,
+      separator,
+    );
+
+    if (result === 500) {
+      return res.status(408).json({
+        success: 'Il file CSV non utilizza la virgola come separatore.',
+      });
+    } else if (!result) {
+      return res.status(408).json({
+        success: 'Il file CSV non ci sono almeno 2 colonne.',
+      });
+    } else {
+      return res.status(200).json({
+        success: 'File caricato con successo',
+      });
+    }
+  };
 }
 
 export default AddestramentoController;

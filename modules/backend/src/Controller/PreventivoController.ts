@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import ServiziPreventivoImpl from '../preventivo/service/ServiziPreventivoImpl';
+import ServiziPreventivoImpl from '../piano/service/ServiziPreventivoImpl';
 
 class PreventivoController {
   static TuttiPreventiviIMP = async (req: Request, res: Response) => {
