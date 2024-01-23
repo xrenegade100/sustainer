@@ -102,7 +102,6 @@ class PianoDAO {
 
   static async annullaPiano(idUtente: number, idPiano: number) {
     const conn = await db();
-    console.log(idUtente, idPiano);
     const [rows] = await conn.query(
       'UPDATE susdb.acquisto SET attivo = 0 WHERE id_utente = ? AND id_piano = ?',
       [idUtente, idPiano],
@@ -114,16 +113,18 @@ class PianoDAO {
   }
 
   static async InserimentoPianoEnterprise(
-    limitiAddestramenti:number,
-    limitiSalvataggi:number,
-    prezzo:number,
+    limitiAddestramenti: number,
+    limitiSalvataggi: number,
+    prezzo: number,
   ) {
     const conn = await db();
     await conn.query(
       'INSERT INTO piano(tipo, prezzo, limite_salvataggi_modelli, limite_addestramenti_modelli) VALUES (?, ?, ?, ?)',
       ['Enterprise', prezzo, limitiSalvataggi, limitiAddestramenti],
     );
-    const [rows] = await conn.query('SELECT * FROM piano WHERE id_piano = LAST_INSERT_ID()');
+    const [rows] = await conn.query(
+      'SELECT * FROM piano WHERE id_piano = LAST_INSERT_ID()',
+    );
     const piano = (rows as RowDataPacket[])[0];
     return new Piano(
       piano.id_piano,

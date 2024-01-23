@@ -43,7 +43,6 @@ export async function handleFileUpload(req: any, res: any): Promise<void> {
       message: 'File caricato con successo',
     });
   } catch (error) {
-    console.error(error);
     return res.status(500).json({
       message: 'Errore interno del server',
     });
