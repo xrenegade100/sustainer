@@ -98,14 +98,9 @@ const InserimentoParametriForm = () => {
   }, [navigate]);
 
   const generaFileJSON = async () => {
-    alert('Genero il file JSON');
     let datiDaSalvare;
 
     if (tipoModello === 'decisiontree') {
-      alert(decisionTreeCriterioDiSuddivisione);
-      alert(decisionTreeProfondita);
-      alert(decisionTreeCampioniFoglia);
-      alert(target);
       datiDaSalvare = {
         tipoModello,
         decisionTreeCriterioDiSuddivisione,
@@ -371,7 +366,6 @@ const InserimentoParametriForm = () => {
                   naiveBayesSmoothing === null ||
                   target === '')
               ) {
-                // Se una delle variabili è null, mostra un alert
                 setShowSnackbar(true);
               } else if (!tipoModello) {
                 setShowSnackbarModello(true);

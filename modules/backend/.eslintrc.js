@@ -4,7 +4,7 @@ module.exports = {
     node: true,
     mocha: true,
   },
-  extends: ['plugin:react/recommended', 'airbnb', 'plugin:cypress/recommended'],
+  extends: ['plugin:react/recommended', 'airbnb'],
   parser: '@typescript-eslint/parser',
   parserOptions: {
     ecmaVersion: 2020,
