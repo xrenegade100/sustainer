@@ -110,4 +110,16 @@ describe('Selezione parametri di addestramento', () => {
 
     cy.contains('Compila tutti i campi obbligatori').should('exist');
   });
+
+  it('TC 3.1-9', () => {
+    cy.contains('button', 'Naive Bayes').click();
+
+    cy.get(':nth-child(1) > .custom-select').select('multinomial');
+    cy.get(':nth-child(2) > .inputTxt').type('0.8');
+    cy.get(':nth-child(3) > .custom-select').select('Survived');
+
+    cy.get('.buttonA').click();
+
+    cy.url().should('eq', 'http://localhost:5173/fairness');
+  });
 });
