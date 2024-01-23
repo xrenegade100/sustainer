@@ -98,9 +98,14 @@ const InserimentoParametriForm = () => {
   }, [navigate]);
 
   const generaFileJSON = async () => {
+    alert('Genero il file JSON');
     let datiDaSalvare;
 
     if (tipoModello === 'decisiontree') {
+      alert(decisionTreeCriterioDiSuddivisione);
+      alert(decisionTreeProfondita);
+      alert(decisionTreeCampioniFoglia);
+      alert(target);
       datiDaSalvare = {
         tipoModello,
         decisionTreeCriterioDiSuddivisione,

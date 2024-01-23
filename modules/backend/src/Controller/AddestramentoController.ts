@@ -101,6 +101,7 @@ class AddestramentoController {
 
   static salvaJson = async (req: Request, res: Response) => {
     try {
+      console.log('ciao');
       const { contenuto } = req.body;
       let parametriCorretti = false;
       const jsonSenzaEscape = JSON.parse(contenuto);
@@ -124,6 +125,11 @@ class AddestramentoController {
       // Leggo attributi del file CSV
       const primaRigaCSV = await AddestramentoController.leggiNomiColonneCSV(
         percorsoCompletoCSV,
+      );
+
+      console.log(
+        jsonSenzaEscape['tipoModello'],
+        jsonSenzaEscape['decisionTreeCriterioDiSuddivisione'],
       );
 
       if (jsonSenzaEscape['tipoModello'] === 'decisiontree') {
