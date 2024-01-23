@@ -85,25 +85,56 @@ $  cd sustainer
 <!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
 <!-- prettier-ignore-start -->
 <!-- markdownlint-disable -->
+
+## Team Members
 <table>
   <tbody>
     <tr>
-      <td align="center" valign="top" width="14.28%"><a href="https://github.com/Fatted"><img src="https://avatars.githubusercontent.com/u/83971069?v=4" width="100px;"/><br /><sub><b>Antonio D'Amato</b></td>
-      <td align="center" valign="top" width="14.28%"><a href="https://github.com/ldamato17"><img src="https://avatars.githubusercontent.com/u/83412928?v=4" width="100px;"/><br /><sub><b>Ludovica D'Amato</b></td>
-      <td align="center" valign="top" width="14.28%"><a href="https://github.com/MegaPepeMan"><img src="https://avatars.githubusercontent.com/u/83645460?v=4" width="100px;"/><br /><sub><b>Giuseppe Raiola Paduano</b></td>
-      <td align="center" valign="top" width="14.28%"><a href="https://github.com/raff002"><img src="https://avatars.githubusercontent.com/u/75092053?v=4" width="100px;"/><br /><sub><b>Raffaele Curcio</b></td>
-      <td align="center" valign="top" width="14.28%"><a href="https://github.com/GabrielMatteo"><img src="https://avatars.githubusercontent.com/u/132912844?v=4" width="100px;"/><br /><sub><b>Gabriel Matteo Balasa</b></td>
-      <td align="center" valign="top" width="14.28%"><a href="https://github.com/RaffyAS99"><img src="https://avatars.githubusercontent.com/u/114479230?v=4" width="100px;"/><br /><sub><b>Raffaele Vietri</b></td>
-      <td align="center" valign="top" width="14.28%"><a href="https://github.com/domenicod25"><img src="https://avatars.githubusercontent.com/u/137888029?v=4" width="100px;"/><br /><sub><b>Domenico D'Urso</b></td>
-    </tr>
-    <tr>
-      <td align="center" valign="top" width="14.28%"><a href="https://github.com/prosciutto"><img src="https://avatars.githubusercontent.com/u/9027274?v=4" width="100px;"/><br /><sub><b>Francesco Saporito</b></td>
-      <td align="center" valign="top" width="14.28%"><a href="https://github.com/alfcan"><img src="https://avatars.githubusercontent.com/u/64324979?v=4" width="100px;"/><br /><sub><b>Alfonso Cannavale</b></td>
-      <td align="center" valign="top" width="14.28%"><a href="https://github.com/antgioia"><img src="https://avatars.githubusercontent.com/u/63403031?v=4" width="100px;"/><br /><sub><b>Domenico Antonio Gioia</b></td>
-      <td align="center" valign="top" width="14.28%"><a href="https://github.com/xrenegade100"><img src="https://avatars.githubusercontent.com/u/11615441?v=4" width="100px;"/><br /><sub><b>Antonio Scognamiglio</b></td>
+      <td align="center" valign="top" width="11%">
+        <a href="https://github.com/Fatted"><img src="https://avatars.githubusercontent.com/u/83971069?v=4" width="100px;"/><br /><sub><b>Antonio D'Amato</b></sub></a>
+      </td>
+      <td align="center" valign="top" width="11%">
+        <a href="https://github.com/ldamato17"><img src="https://avatars.githubusercontent.com/u/83412928?v=4" width="100px;"/><br /><sub><b>Ludovica D'Amato</b></sub></a>
+      </td>
+      <td align="center" valign="top" width="11%">
+        <a href="https://github.com/MegaPepeMan"><img src="https://avatars.githubusercontent.com/u/83645460?v=4" width="100px;"/><br /><sub><b>Giuseppe Raiola Paduano</b></sub></a>
+      </td>
+      <td align="center" valign="top" width="11%">
+        <a href="https://github.com/raff002"><img src="https://avatars.githubusercontent.com/u/75092053?v=4" width="100px;"/><br /><sub><b>Raffaele Curcio</b></sub></a>
+      </td>
+      <td align="center" valign="top" width="11%">
+        <a href="https://github.com/GabrielMatteo"><img src="https://avatars.githubusercontent.com/u/132912844?v=4" width="100px;"/><br /><sub><b>Gabriel Matteo Balasa</b></sub></a>
+      </td>
+      <td align="center" valign="top" width="11%">
+        <a href="https://github.com/RaffyAS99"><img src="https://avatars.githubusercontent.com/u/114479230?v=4" width="100px;"/><br /><sub><b>Raffaele Vietri</b></sub></a>
+      </td>
+      <td align="center" valign="top" width="11%">
+        <a href="https://github.com/domenicod25"><img src="https://avatars.githubusercontent.com/u/137888029?v=4" width="100px;"/><br /><sub><b>Domenico D'Urso</b></sub></a>
+      </td>
+      <td align="center" valign="top" width="11%">
+        <a href="https://github.com/prosciutto"><img src="https://avatars.githubusercontent.com/u/9027274?v=4" width="100px;"/><br /><sub><b>Francesco Saporito</b></sub></a>
+      </td>
     </tr>
   </tbody>
 </table>
+
+## Project Managers
+<table>
+  <tbody>
+    <tr>
+      <td align="center" valign="top" width="14.28%">
+        <a href="https://github.com/alfcan"><img src="https://avatars.githubusercontent.com/u/64324979?v=4" width="100px;"/><br /><sub><b>Alfonso Cannavale</b></sub></a>
+      </td>
+      <td align="center" valign="top" width="14.28%">
+        <a href="https://github.com/antgioia"><img src="https://avatars.githubusercontent.com/u/63403031?v=4" width="100px;"/><br /><sub><b>Domenico Antonio Gioia</b></sub></a>
+      </td>
+      <td align="center" valign="top" width="14.28%">
+        <a href="https://github.com/xrenegade100"><img src="https://avatars.githubusercontent.com/u/11615441?v=4" width="100px;"/><br /><sub><b>Antonio Scognamiglio</b></sub></a>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
 <!-- markdownlint-restore -->
 <!-- prettier-ignore-end -->
 
