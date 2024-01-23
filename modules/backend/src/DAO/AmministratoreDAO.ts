@@ -2,12 +2,21 @@ import { RowDataPacket } from 'mysql2/promise';
 import db from '../db/PoolDB';
 import Amministratore from '../account/domain/Amministratore';
 
+/**
+ * @class AmministratoreDAO
+ * @classdesc Classe che gestisce le operazioni di accesso e manipolazione dei dati degli amministratori nel database.
+ */
 class AmministratoreDAO {
-  // creo il metodo per il login
+  /**
+   * Effettua il login di un amministratore.
+   * @param {string} email - L'email dell'amministratore.
+   * @param {string} password - La password dell'amministratore.
+   * @returns {Promise<Amministratore | null>} Restituisce un oggetto Amministratore in caso di successo, altrimenti null.
+   */
   static async login(
     email: string,
     password: string,
-  ): Promise<Amministratore | null> {
+  ){
     const conn = await db();
 
     const [rows] = await conn.query(
@@ -30,35 +39,18 @@ class AmministratoreDAO {
     return null;
   }
 
-  // creo il metodo per la visualizzazione di tutti gli utenti registrati
-  /* static async visualizzaUtenti(): Promise<Utente[]> {
-    const conn = await db();
-
-    const [rows] = await conn.query(
-      'SELECT * FROM utente',
-    );
-    const utenti = rows as RowDataPacket;
-    const utentiRegistrati: Utente[] = [];
-    utenti.forEach((utente: RowDataPacket) => {
-      const utenteRegistrato = new Utente(
-        utente.nome,
-        utente.cognome,
-        utente.email,
-        utente.password,
-      );
-      utenteRegistrato.setIdUtente(utente.idUtente);
-      utentiRegistrati.push(utenteRegistrato);
-    });
-    return utentiRegistrati;
-  } */
-
-  // creo il metodo per la modifica delle informazioni degli utenti registrati
-  // eslint-disable-next-line max-len
+  /**
+   * Modifica le informazioni di un utente registrato.
+   * @param {string} email - L'email dell'utente da modificare.
+   * @param {string} nuovoNome - Il nuovo nome da assegnare all'utente.
+   * @param {string} nuovoCognome - Il nuovo cognome da assegnare all'utente.
+   * @returns {Promise<void>} Una Promise che si risolve quando la modifica è completata.
+   */
   static async modificaInformazioniUtente(
     email: string,
     nuovoNome: string,
     nuovoCognome: string,
-  ): Promise<void> {
+  ) {
     const conn = await db();
 
     await conn.query(
@@ -67,20 +59,29 @@ class AmministratoreDAO {
     );
   }
 
-  // creo il metodo per la cancellazione di un utente registrato
-  static async cancellaUtente(email: string): Promise<void> {
+  /**
+   * Cancella un utente registrato.
+   * @param {string} email - L'email dell'utente da cancellare.
+   * @returns {Promise<void>} Una Promise che si risolve quando l'utente è stato cancellato.
+   */
+  static async cancellaUtente(email: string) {
     const conn = await db();
 
     await conn.query('DELETE FROM utente WHERE email = ?', [email]);
   }
 
-  // creo il metodo per inviare una comunicazione
-  // eslint-disable-next-line max-len
+  /**
+   * Invia una comunicazione a uno o più utenti.
+   * @param {number} idAmministratore - L'ID dell'amministratore che invia la comunicazione.
+   * @param {string[]} emails - Un array di indirizzi email dei destinatari.
+   * @param {string} messaggio - Il messaggio da inviare.
+   * @returns {Promise<void>} Una Promise che si risolve quando la comunicazione è stata inviata.
+   */
   static async inviaComunicazione(
     idAmministratore: number,
     emails: string[],
     messaggio: string,
-  ): Promise<void> {
+  ) {
     const conn = await db();
 
     await Promise.all(
@@ -93,4 +94,5 @@ class AmministratoreDAO {
     );
   }
 }
+
 export default AmministratoreDAO;

@@ -4,107 +4,101 @@ import Piano from '../piano/domain/Piano';
 import Acquisto from '../piano/domain/Acquisto';
 
 class PianoDAO {
-  // funzione asincrona che ritorna tutti i piani
+  // Ottiene tutti i piani dal database
   static async getAllPiani() {
-    const conn = await db(); // connessione al db
-    const [rows] = await conn.query('SELECT * FROM piano'); // query che ritorna tutti i piani
-    const piani = rows as RowDataPacket[]; // assegno a piani i risultati della query
+    const conn = await db();
+    const [rows] = await conn.query('SELECT * FROM piano');
+    const piani = rows as RowDataPacket[];
     return piani.map(
       (piano) =>
-        // eslint-disable-next-line implicit-arrow-linebreak
         new Piano(
           piano.id_piano,
           piano.tipo,
           piano.prezzo,
           piano.limite_salvataggi_modelli,
           piano.limite_addestramenti_modelli,
-        ),
-      // ritorno un oggetto mappato con tutti i piani
+        )
     );
   }
 
-  // funzione asincrona che ritorna un piano in base al suo id
+  // Ottiene i primi 4 tipi di piani dal database
   static async getTipiPiani() {
-    const conn = await db(); // connessione al db
-    const [rows] = await conn.query('SELECT * FROM piano LIMIT 0,4'); // query che ritorna i primi 4 tipi di piani
-    const piani = rows as RowDataPacket[]; // assegno a piani i risultati della query
+    const conn = await db();
+    const [rows] = await conn.query('SELECT * FROM piano LIMIT 0,4');
+    const piani = rows as RowDataPacket[];
     return piani.map(
       (piano) =>
-        // eslint-disable-next-line implicit-arrow-linebreak
         new Piano(
           piano.id_piano,
           piano.tipo,
           piano.prezzo,
           piano.limite_salvataggi_modelli,
           piano.limite_addestramenti_modelli,
-        ),
-      // ritorno un oggetto mappato con tutti i piani
+        )
     );
   }
 
-  // funzione che inserisce un acquisto nel db con id_utente
-  // e id_piano = free che viene usata solo per la registrazione
+  // Effettua l'acquisto del piano Free per un utente
   static async AcquistoPianoFree(idUtente: number) {
-    const conn = await db(); // connessione al db
+    const conn = await db();
     const idPiano = (await conn.query(
-      'SELECT id_piano FROM susdb.piano WHERE tipo = "Free"', // query che ritorna l'id del piano free
-    )) as RowDataPacket[]; // assegno a id_piano i risultati della query
+      'SELECT id_piano FROM susdb.piano WHERE tipo = "Free"'
+    )) as RowDataPacket[];
     await conn.query(
-      'INSERT INTO acquisto(id_utente, id_piano, data_acquisto, attivo) VALUES (?, ?, ?, ?)', // query che inserisce un acquisto nel db
-      [idUtente, idPiano[0][0].id_piano, new Date(), true], // parametri della query
+      'INSERT INTO acquisto(id_utente, id_piano, data_acquisto, attivo) VALUES (?, ?, ?, ?)',
+      [idUtente, idPiano[0][0].id_piano, new Date(), true]
     );
   }
 
-  // controllo nel db l'ultimo piano acquistato dall'utente
+  // Ottiene l'ultimo acquisto effettuato da un utente
   static async getUltimoAcquistoUtente(idUtente: string) {
     const conn = await db();
     const [rows] = await conn.query(
       'SELECT * FROM acquisto WHERE id_utente = ? ORDER BY data_acquisto DESC LIMIT 1',
-      idUtente,
+      idUtente
     );
     const acquisto = rows as RowDataPacket[];
     return new Acquisto(
       acquisto[0].id_utente,
       acquisto[0].id_piano,
       acquisto[0].data_acquisto,
-      acquisto[0].attivo,
+      acquisto[0].attivo
     );
   }
 
-  // funzione che ritorna il piano attivo dell'utente nella pagina profilo
+  // Ottiene le informazioni di un piano specifico
   static async getPianoUtente(idPiano: number) {
     const conn = await db();
-
     const [rows] = await conn.query(
       'SELECT * FROM piano WHERE id_piano = ?',
-      idPiano,
+      idPiano
     );
     const piano = rows as RowDataPacket[];
-
     return new Piano(
       piano[0].id_piano,
       piano[0].tipo,
       piano[0].prezzo,
       piano[0].limite_salvataggi_modelli,
-      piano[0].limite_addestramenti_modelli,
+      piano[0].limite_addestramenti_modelli
     );
   }
 
-  // funzione che permette all'utente di acquistare un piano diverso dal free
+  // Effettua l'acquisto di un piano diverso dal Free
   static async AcquistoPiano(idUtente: number, idPiano: number) {
-    const conn = await db(); // connessione al db
+    const conn = await db();
     const [rows] = await conn.query(
-      'INSERT INTO acquisto(id_utente, id_piano, data_acquisto, attivo) VALUES (?, ?, ?, ?)', // query che inserisce un acquisto nel db
-      [idUtente, idPiano, new Date(), true], // parametri della query
+      'INSERT INTO acquisto(id_utente, id_piano, data_acquisto, attivo) VALUES (?, ?, ?, ?)',
+      [idUtente, idPiano, new Date(), true]
     );
     return rows;
   }
 
+  // Annulla l'acquisto di un piano
   static async annullaPiano(idUtente: number, idPiano: number) {
     const conn = await db();
     const [rows] = await conn.query(
       'UPDATE susdb.acquisto SET attivo = 0 WHERE id_utente = ? AND id_piano = ?',
-      [idUtente, idPiano],
+      [idUtente, idPiano]
     );
     if (rows) {
       return true;
@@ -112,18 +106,19 @@ class PianoDAO {
     return false;
   }
 
+  // Inserisce un nuovo piano di tipo Enterprise nel database
   static async InserimentoPianoEnterprise(
     limitiAddestramenti: number,
     limitiSalvataggi: number,
-    prezzo: number,
+    prezzo: number
   ) {
     const conn = await db();
     await conn.query(
       'INSERT INTO piano(tipo, prezzo, limite_salvataggi_modelli, limite_addestramenti_modelli) VALUES (?, ?, ?, ?)',
-      ['Enterprise', prezzo, limitiSalvataggi, limitiAddestramenti],
+      ['Enterprise', prezzo, limitiSalvataggi, limitiAddestramenti]
     );
     const [rows] = await conn.query(
-      'SELECT * FROM piano WHERE id_piano = LAST_INSERT_ID()',
+      'SELECT * FROM piano WHERE id_piano = LAST_INSERT_ID()'
     );
     const piano = (rows as RowDataPacket[])[0];
     return new Piano(
@@ -131,7 +126,7 @@ class PianoDAO {
       piano.tipo,
       piano.prezzo,
       piano.limite_salvataggi_modelli,
-      piano.limite_addestramenti_modelli,
+      piano.limite_addestramenti_modelli
     );
   }
 }

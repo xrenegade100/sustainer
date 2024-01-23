@@ -1,49 +1,87 @@
 import UtenteDAO from '../../DAO/UtenteDAO';
 
 class ServiziUtenteImpl {
-  // metodo che uso per la login
+  /**
+   * Esegue l'accesso per un utente.
+   *
+   * @static
+   * @async
+   * @method login
+   * @param {string} email - L'indirizzo email dell'utente.
+   * @param {string} password - La password dell'utente.
+   * @returns {Promise<Utente | null>} - L'utente loggato o null se il login fallisce.
+   */
   static async login(email: string, password: string) {
-    // richiamo il metodo login del UtenteDAO
+    // Invoca il metodo di login di UtenteDAO
     const utenteLogin = await UtenteDAO.login(email, password);
 
     if (utenteLogin) {
-      // se l'utente esiste
-      return utenteLogin; // ritorno l'utente
+      // Se l'utente esiste
+      return utenteLogin; // Restituisci l'utente
     }
-    return null; // altrimenti ritorno null
+    return null; // Altrimenti, restituisci null
   }
 
-  // metodo che uso per la registrazione
+  /**
+   * Registra un nuovo utente.
+   *
+   * @static
+   * @async
+   * @method register
+   * @param {string} nome - Il nome dell'utente.
+   * @param {string} cognome - Il cognome dell'utente.
+   * @param {string} email - L'indirizzo email dell'utente.
+   * @param {string} password - La password dell'utente.
+   * @returns {Promise<void>} - Promise risolta dopo la registrazione dell'utente.
+   */
   static async register(
     nome: string,
     cognome: string,
     email: string,
     password: string,
-  ) {
-    // richiamo il metodo registrazione del UtenteDAO
+  ): Promise<void> {
+    // Invoca il metodo di registrazione di UtenteDAO
     await UtenteDAO.registrazione(nome, cognome, email, password);
   }
 
-  // metodo che uso per il ritorna id dell'utente in base all'email
+  /**
+   * Recupera l'ID di un utente in base all'indirizzo email.
+   *
+   * @static
+   * @async
+   * @method getIdUtente
+   * @param {string} email - L'indirizzo email dell'utente.
+   * @returns {Promise<number>} - L'ID dell'utente o 0 se non trovato.
+   */
   static async getIdUtente(email: string) {
-    // richiamo il metodo getIdUtente del UtenteDAO
+    // Invoca il metodo getIdUtente di UtenteDAO
     const idUtente = await UtenteDAO.getIdUtente(email);
-    // se l'id_utente esiste
+
+    // Se l'id_utente esiste
     if (idUtente) {
-      return idUtente; // ritorno l'id_utente
+      return idUtente; // Restituisci l'id_utente
     }
-    return 0;
+    return 0; // Altrimenti, restituisci 0
   }
 
-  // metodo che uso per ritornami un utente in base all'id_utente
+  /**
+   * Recupera un utente in base all'ID utente.
+   *
+   * @static
+   * @async
+   * @method getUtenteById
+   * @param {number} idUtente - L'ID dell'utente.
+   * @returns {Promise<Utente | null>} - L'utente o null se non trovato.
+   */
   static async getUtenteById(idUtente: number) {
-    // richiamo il metodo getUtente del UtenteDAO
+    // Invoca il metodo getUtente di UtenteDAO
     const utente = await UtenteDAO.getUtenteById(idUtente);
-    // se l'utente esiste
+
+    // Se l'utente esiste
     if (utente) {
-      return utente; // ritorno l'utente
+      return utente; // Restituisci l'utente
     }
-    return null;
+    return null; // Altrimenti, restituisci null
   }
 }
 

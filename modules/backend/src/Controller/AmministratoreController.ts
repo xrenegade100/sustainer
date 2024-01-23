@@ -2,6 +2,12 @@ import { Request, Response } from 'express';
 import serviziAmministratoreImpl from '../account/service/ServiziAmministratoreImpl';
 
 class AmministratoreController {
+  /**
+   * Verifica se l'amministratore è autenticato.
+   * @param req - Oggetto della richiesta HTTP.
+   * @param res - Oggetto della risposta HTTP.
+   * @returns Risposta JSON che indica lo stato dell'autenticazione.
+   */
   static verificaLoginAm = async (req: Request, res: Response) => {
     if (req.session!.authenticated) {
       return res.status(200).json({
@@ -12,7 +18,12 @@ class AmministratoreController {
     return res.status(403).json({ success: false });
   };
 
-  // login
+  /**
+   * Gestisce la richiesta di login dell'amministratore.
+   * @param req - Oggetto della richiesta HTTP.
+   * @param res - Oggetto della risposta HTTP.
+   * @returns Risposta JSON che indica lo stato del login.
+   */
   static login = async (req: Request, res: Response) => {
     const { email, password } = req.body;
     const admin = await serviziAmministratoreImpl.loginIMP(email, password);
@@ -28,16 +39,12 @@ class AmministratoreController {
     return res.status(403).json({ message: 'amministratore non trovato' });
   };
 
-  // visualizza utenti
-  /* static visualizzaUtenti = async (req: Request, res: Response) => {
-    const utenti = await serviziAmministratoreImpl.visualizzaUtentiIMP();
-    if (utenti) {
-      return res.status(200).json({ utenti });
-    }
-    return res.status(403).json({ message: 'utenti non trovati' });
-  }; */
-
-  // modifica informazioni utente
+  /**
+   * Gestisce la richiesta di modifica delle informazioni di un utente.
+   * @param req - Oggetto della richiesta HTTP.
+   * @param res - Oggetto della risposta HTTP.
+   * @returns Risposta JSON che indica lo stato della modifica.
+   */
   static modificaInformazioniUtente = async (req: Request, res: Response) => {
     const { email, nuovoNome, nuovoCognome } = req.body;
     // eslint-disable-next-line max-len, operator-linebreak
@@ -53,7 +60,12 @@ class AmministratoreController {
     return res.status(403).json({ message: 'utente non modificato' });
   };
 
-  // cancella utente
+   /**
+   * Gestisce la richiesta di cancellazione di un utente.
+   * @param req - Oggetto della richiesta HTTP.
+   * @param res - Oggetto della risposta HTTP.
+   * @returns Risposta JSON che indica lo stato della cancellazione.
+   */
   static cancellaUtente = async (req: Request, res: Response) => {
     const { email } = req.body;
     const utenteCancellato = await serviziAmministratoreImpl.cancellaUtenteIMP(
@@ -65,7 +77,12 @@ class AmministratoreController {
     return res.status(403).json({ message: 'utente non cancellato' });
   };
 
-  // logout
+  /**
+   * Gestisce la richiesta di logout dell'amministratore.
+   * @param req - Oggetto della richiesta HTTP.
+   * @param res - Oggetto della risposta HTTP.
+   * @returns Risposta JSON che indica lo stato del logout.
+   */
   static logout = (req: Request, res: Response) => {
     try {
       // Distruggi la sessione

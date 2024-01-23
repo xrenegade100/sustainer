@@ -1,32 +1,64 @@
+/**
+ * @fileOverview
+ * @module UtenteDAO
+ * @description Fornisce metodi di accesso ai dati per interagire con la tabella 'utente' nel database.
+ * @requires RowDataPacket
+ * @requires mysql2/promise
+ * @requires ../db/PoolDB
+ * @requires ../account/domain/Utente
+ */
+
 /* eslint-disable camelcase */
 /* eslint-disable no-unused-vars */
+
 import { RowDataPacket } from 'mysql2/promise';
 import db from '../db/PoolDB';
 import Utente from '../account/domain/Utente';
 
+/**
+ * @class
+ * @classdesc Rappresenta un Oggetto di Accesso ai Dati (DAO) per gestire operazioni relative alla tabella 'utente'.
+ */
 class UtenteDAO {
-  // creo il metodo per la registrazione di un utente
+  /**
+   * Registra un nuovo utente nel database.
+   * @static
+   * @async
+   * @param {string} nome - Il nome dell'utente.
+   * @param {string} cognome - Il cognome dell'utente.
+   * @param {string} email - L'indirizzo email dell'utente.
+   * @param {string} password - La password dell'utente.
+   * @returns {Promise<void>} Una Promise che si risolve una volta completata la registrazione.
+   */
   static async registrazione(
     nome: string,
     cognome: string,
     email: string,
     password: string,
   ) {
-    const conn = await db(); // connessione al db
+    const conn = await db(); // Stabilisce una connessione al database
     await conn.query(
-      'INSERT INTO utente(nome, cognome, email, password) VALUES (?, ?, ?, ?)', // query che inserisce un utente nel db
-      [nome, cognome, email, password], // parametri della query
+      'INSERT INTO utente(nome, cognome, email, password) VALUES (?, ?, ?, ?)',
+      [nome, cognome, email, password],
     );
   }
 
-  // creo il metodo per il login
-  static async login(email: string, password: string): Promise<Utente | null> {
-    const conn = await db(); // connessione al db
+  /**
+   * Effettua il login di un utente verificando l'email e la password fornite.
+   * @static
+   * @async
+   * @param {string} email - L'indirizzo email dell'utente.
+   * @param {string} password - La password dell'utente.
+   * @returns {Promise<Utente | null>} Una Promise che si risolve con l'utente loggato o null se il login fallisce.
+   */
+  static async login(email: string, password: string) {
+    const conn = await db(); // Stabilisce una connessione al database
     const [rows] = await conn.query(
-      'SELECT * FROM utente WHERE email = ? and password = ?', // query che ritorna un utente in base all'email e alla password
-      [email, password], // parametri della query
+      'SELECT * FROM utente WHERE email = ? and password = ?',
+      [email, password],
     );
-    const utente = rows as RowDataPacket; // assegno a utente i risultati della query
+    const utente = rows as RowDataPacket[];
+
     if (utente.length > 0) {
       const utenteLoggato = new Utente(
         utente[0].nome,
@@ -35,45 +67,62 @@ class UtenteDAO {
         utente[0].password,
       );
       utenteLoggato.setIdUtente(utente[0].id_utente);
-      // setto l'id richiamando la funzione set_id_utente
-      return utenteLoggato; // ritorno l'utente
+      return utenteLoggato;
     }
+
     return null;
   }
 
-  // creo il metodo per il ritorno di tutti gli utenti
-  static async getAllUtenti(): Promise<Utente[]> {
-    const conn = await db(); // connessione al db
-    const [rows] = await conn.query('SELECT * FROM utente'); // query che ritorna tutti gli utenti
-    const utenti = rows as RowDataPacket[]; // assegno a utenti i risultati della query
-    // ritorno un oggetto mappato con tutti gli utenti
+  /**
+   * Recupera tutti gli utenti dalla tabella 'utente'.
+   * @static
+   * @async
+   * @returns {Promise<Utente[]>} Una Promise che si risolve con un array di oggetti Utente.
+   */
+  static async getAllUtenti() {
+    const conn = await db(); // Stabilisce una connessione al database
+    const [rows] = await conn.query('SELECT * FROM utente');
+    const utenti = rows as RowDataPacket[];
+
     return utenti.map(
       (utente) =>
-        // eslint-disable-next-line implicit-arrow-linebreak
         new Utente(utente.nome, utente.cognome, utente.email, utente.password),
     );
   }
 
-  // creo il metodo per il ritorno di un id_utente in base all'email
-  static async getIdUtente(email: string): Promise<number> {
-    const conn = await db(); // connessione al db
+  /**
+   * Recupera l'ID utente basato sull'email fornita.
+   * @static
+   * @async
+   * @param {string} email - L'indirizzo email dell'utente.
+   * @returns {Promise<number>} Una Promise che si risolve con l'ID utente.
+   */
+  static async getIdUtente(email: string) {
+    const conn = await db(); // Stabilisce una connessione al database
     const [rows] = await conn.query(
-      'SELECT id_utente FROM utente WHERE email = ?', // query che ritorna l'id_utente in base all'email
-      [email], // ricordiamo che l'email è univoca
+      'SELECT id_utente FROM utente WHERE email = ?',
+      [email],
     );
-    const utente = rows as RowDataPacket[]; // assegno a utente i risultati della query
-    return utente[0].id_utente; // ritorno l'id_utente
+    const utente = rows as RowDataPacket[];
+
+    return utente[0].id_utente;
   }
 
-  // creo il metodo per il ritorno di un utente in base all'id_utente
-  static async getUtenteById(idUtente: number): Promise<Utente> {
-    const conn = await db(); // connessione al db
+  /**
+   * Recupera un utente basato sull'ID utente fornito.
+   * @static
+   * @async
+   * @param {number} idUtente - L'ID dell'utente.
+   * @returns {Promise<Utente>} Una Promise che si risolve con l'oggetto Utente.
+   */
+  static async getUtenteById(idUtente: number) {
+    const conn = await db(); // Stabilisce una connessione al database
     const [rows] = await conn.query(
-      'SELECT * FROM utente WHERE id_utente = ?', // query che ritorna un utente in base all'id_utente
-      [idUtente], // parametri della query
+      'SELECT * FROM utente WHERE id_utente = ?',
+      [idUtente],
     );
-    const utente = rows as RowDataPacket[]; // assegno a utente i risultati della query
-    // ritorno un oggetto mappato con l'utente
+    const utente = rows as RowDataPacket[];
+
     return new Utente(
       utente[0].nome,
       utente[0].cognome,

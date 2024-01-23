@@ -11,6 +11,12 @@ class AddestramentoController {
   upload = multer();
   private static pathModello: string;
 
+  /**
+ * Implementazione del processo di addestramento del modello.
+ * @param req - Oggetto della richiesta HTTP.
+ * @param res - Oggetto della risposta HTTP.
+ * @returns Risposta JSON che indica lo stato dell'addestramento.
+ */
   static AddestramentoIMP = async (req: Request, res: Response) => {
     const { gruppoPrivilegiato } = req.body;
     let gruppoPrivilegiatoStringa: string = '';
@@ -88,7 +94,11 @@ class AddestramentoController {
       addestramento: false,
     });
   };
-
+  /**
+ * Implementazione del download del modello addestrato.
+ * @param req - Oggetto della richiesta HTTP.
+ * @param res - Oggetto della risposta HTTP.
+ */
   static downloadIMP = async (req: Request, res: Response) => {
     res.download(this.pathModello, 'modelloAddestrato.pkl', (err) => {
       if (err) {
@@ -98,7 +108,12 @@ class AddestramentoController {
       }
     });
   };
-
+  /**
+ * Salva il contenuto di un file JSON.
+ * @param req - Oggetto della richiesta HTTP.
+ * @param res - Oggetto della risposta HTTP.
+ * @returns Risposta JSON che indica lo stato del salvataggio.
+ */
   static salvaJson = async (req: Request, res: Response) => {
     try {
       console.log('ciao');
@@ -173,7 +188,12 @@ class AddestramentoController {
     }
     return res.status(422).json({ error: 'Parametri errati' });
   };
-
+  /**
+   * Gestisce la richiesta di ottenere gli attributi del dataset CSV.
+   * @param req - Oggetto della richiesta HTTP.
+   * @param res - Oggetto della risposta HTTP.
+   * @returns Risposta JSON con gli attributi del dataset.
+   */
   static attributiDataset = async (req: Request, res: Response) => {
     try {
       // Specifica la directory in cui cercare i file CSV
@@ -210,7 +230,12 @@ class AddestramentoController {
     }
   };
 
-  // Metodo per leggere la prima riga di un file CSV
+  /**
+   * Legge i nomi delle colonne da un file CSV.
+   * @param percorsoFileCSV - Percorso del file CSV.
+   * @returns Promise che restituisce un array di stringhe con i nomi delle colonne.
+   *          Null se il file è vuoto.
+   */
   private static leggiNomiColonneCSV = async (
     percorsoFileCSV: string,
   ): Promise<string[] | null> =>
@@ -236,7 +261,11 @@ class AddestramentoController {
           reject(errore);
         });
     });
-
+    /**
+   * Esegue l'estrazione delle righe da un file CSV.
+   * @param filePath - Percorso del file CSV.
+   * @returns Promise che restituisce un array di oggetti rappresentanti le righe del CSV.
+   */
   private static estraiRighe = async (filePath: string): Promise<any[]> => {
     return new Promise((resolve, reject) => {
       let results: any[] = [];
@@ -257,6 +286,12 @@ class AddestramentoController {
     });
   };
 
+  /**
+   * Salva un file nel percorso specificato.
+   * @param filePath - Percorso completo del file.
+   * @param file - Contenuto del file da salvare.
+   * @returns Promise che indica il completamento del salvataggio.
+   */
   private static salvataggioFile = async (
     filePath: string,
     file: Buffer,
@@ -271,7 +306,13 @@ class AddestramentoController {
       });
     });
   };
-
+ /**
+   * Verifica se un file CSV utilizza il separatore desiderato e contiene almeno 2 colonne.
+   * @param filePath - Percorso del file CSV.
+   * @param separatoreDesiderato - Separatore desiderato (es. ',').
+   * @returns Promise che restituisce true se il file è valido, false se non contiene almeno 2 colonne,
+   *          oppure restituisce 500 se si verifica un errore durante l'estrazione delle righe.
+   */
   private static async verificaCSV(
     filePath: string,
     separatoreDesiderato: string,
@@ -286,7 +327,12 @@ class AddestramentoController {
       return 500;
     }
   }
-
+/**
+   * Gestisce la richiesta di caricamento di un file CSV.
+   * @param req - Oggetto della richiesta HTTP.
+   * @param res - Oggetto della risposta HTTP.
+   * @returns Risposta JSON che indica lo stato del caricamento del file CSV.
+   */
   static caricaFileIMP = async (req: Request, res: Response) => {
     const file: Express.Multer.File | undefined = req.file;
 

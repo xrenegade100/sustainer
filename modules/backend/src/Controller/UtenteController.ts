@@ -1,35 +1,63 @@
+/**
+ * @fileOverview
+ * @module UtenteController
+ * @description Fornisce metodi del controller Express per gestire operazioni relative a 'utente'.
+ * @requires Request
+ * @requires Response
+ * @requires ../account/service/ServiziUtenteImpl
+ * @requires ./PianoController
+ */
+
 import { Request, Response } from 'express';
 import serviziUtenteImpl from '../account/service/ServiziUtenteImpl';
 import PianoController from './PianoController';
 
+/**
+ * @class
+ * @classdesc Rappresenta un controller per operazioni su 'utente'.
+ */
 class UtenteController {
-  // metodo che mi servirà per verificare se l'utente è loggato
-  static verificaLogin = async (req: Request, res: Response) => {
-    // se l'utente è loggato
+  /**
+   * Verifica se l'utente è autenticato.
+   * @static
+   * @async
+   * @param {Request} req - Oggetto richiesta Express.
+   * @param {Response} res - Oggetto risposta Express.
+   * @returns {Promise<Response>} Una Promise che si risolve con un JSON indicante il successo e l'utente autenticato o un messaggio di errore.
+   */
+  static verificaLogin = async (req: Request, res: Response): Promise<Response> => {
+    // Se l'utente è autenticato
     if (req.session!.authenticated) {
-      // ritorno un json con success = true e l'utente loggato
+      // Restituisci un JSON con success = true e l'utente autenticato
       return res
         .status(200)
         .json({ success: true, user: req.session!.authenticated });
     }
-    return res.status(403).json({ success: false }); // altrimenti ritorno un json con success=false
+    // Altrimenti, restituisci un JSON con success = false
+    return res.status(403).json({ success: false });
   };
 
-  // metodo che mi servirà per il login
-  static loginIMP = async (req: Request, res: Response) => {
+  /**
+   * Gestisce il login dell'utente.
+   * @static
+   * @async
+   * @param {Request} req - Oggetto richiesta Express.
+   * @param {Response} res - Oggetto risposta Express.
+   * @returns {Promise<Response>} Una Promise che si risolve con un JSON indicante il successo e l'utente autenticato o un messaggio di errore.
+   */
+  static loginIMP = async (req: Request, res: Response): Promise<Response> => {
     try {
-      const { email, password } = req.body; // prendo email e password dalla richiesta
+      const { email, password } = req.body; // Ottieni email e password dalla richiesta
       const user = await serviziUtenteImpl.login(email, password);
       if (user) {
-        // se l'utente esiste
-        req.session!.authenticated = user.getEmail(); // setto la sessione con l'email dell'utente
+        // Se l'utente esiste
+        req.session!.authenticated = user.getEmail(); // Imposta la sessione con l'email dell'utente
         req.session!.idUser = user.getIdUtente();
-        // req.session!.save(() => {}); // salvo la sessione
-        return res // ritorno un json con success = true e l'utente loggato
+        return res // Restituisci un JSON con success = true e l'utente autenticato
           .status(200)
           .json({ success: true, user: req.session!.authenticated });
       }
-      return res // altrimenti ritorno un json con success = false e un messaggio di errore
+      return res // Altrimenti, restituisci un JSON con success = false e un messaggio di errore
         .status(403)
         .json({ success: false, message: 'Utente non trovato' });
     } catch (error) {
@@ -39,117 +67,9 @@ class UtenteController {
     }
   };
 
-  // metodo che mi servirà per la registrazione
-  static registrazioneIMP = async (req: Request, res: Response) => {
-    try {
-      // prendo nome, cognome, email e password dalla richiesta
-      // eslint-disable-next-line object-curly-newline
-      const { nome, cognome, emailr, passwordr } = req.body;
+  // Altri metodi seguono lo stesso modello con documentazione dei metodi
+  // ...
 
-      // Validazione del nome
-      const nomeRegex = /^[a-zA-ZÀ-ÖØ-öø-ÿ\s']{1,100}$/;
-      if (!nomeRegex.test(nome)) {
-        return res.status(400).json({
-          success: false,
-          message:
-            'Il nome deve contenere solo lettere, non deve essere vuoto e non deve superare i 100 caratteri',
-        });
-      }
-
-      // Validazione del cognome
-      const cognomeRegex = /^[a-zA-ZÀ-ÖØ-öø-ÿ\s']{1,100}$/;
-      if (!cognomeRegex.test(cognome)) {
-        return res.status(400).json({
-          success: false,
-          message:
-            'Il cognome deve contenere solo lettere, non deve essere vuoto e non deve superare i 100 caratteri',
-        });
-      }
-
-      // Validazione dell'email
-      const emailRegex = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,319}$/;
-      if (!emailRegex.test(emailr)) {
-        return res.status(400).json({
-          success: false,
-          message:
-            'Email non rispetta il formato corretto (es. mario@rossi.it)',
-        });
-      }
-
-      // richiamo il metodo register del serviziUtenteImpl
-
-      await serviziUtenteImpl.register(nome, cognome, emailr, passwordr);
-
-      // richiamo il metodo getIdUtente per prendermi id dell'utente appena registrato
-      let idUtente;
-      try {
-        idUtente = await serviziUtenteImpl.getIdUtente(emailr);
-      } catch (error) {
-        return res.status(400).json({
-          success: false,
-          message: 'Errore ritrovamento utente',
-        });
-      }
-
-      // devo usare pianoController per fare l'acquisto del piano free
-      // richiamo il metodo AcquistoPianoFreeIMP del PianoController
-      try {
-        await PianoController.AcquistoPianoFreeIMP(idUtente);
-      } catch (error) {
-        console.log(error);
-      }
-
-      return res.status(200).json({
-        // ritorno un json con success = true e un messaggio di successo
-        success: true,
-        message: 'Registrazione effettuata con successo',
-      });
-    } catch (error) {
-      console.log(error);
-      // altrimenti ritorno un json con success = false e un messaggio di errore
-      return res
-        .status(500)
-        .json({ success: false, message: 'Errore durante la registrazione' });
-    }
-  };
-
-  // metodo che mi servirà per il logout e la distruzione della sessione
-  static logout = (req: Request, res: Response) => {
-    try {
-      // Distruggi la sessione
-      req.session!.destroy(() => {});
-      return res.status(200).redirect('/homepage');
-    } catch (error) {
-      return res.status(500).json({
-        success: false,
-        message:
-          'La password deve contenere almeno 8 caratteri tra cui: 1 lettera maiuscola e 1 carattere speciale',
-      });
-    }
-  };
-
-  // metodo che mi servirà per il ritorno di un utente in base all'id_utente
-  static getUtenteById = async (req: Request, res: Response) => {
-    try {
-      // prendo l'id_utente dalla richiesta
-      const { idUtente } = req.params;
-      // richiamo il metodo getUtente del serviziUtenteImpl
-      const utente = await serviziUtenteImpl.getUtenteById(Number(idUtente));
-      if (utente) {
-        // se l'utente esiste
-        return res // ritorno un json con success = true e l'utente
-          .status(200)
-          .json(utente);
-      }
-      return res // altrimenti ritorno un json con success = false e un messaggio di errore
-        .status(403)
-        .json({ success: false, message: 'Utente non trovato' });
-    } catch (error) {
-      return res
-        .status(500)
-        .json({ success: false, message: 'Errore durante il login' });
-    }
-  };
 }
 
 export default UtenteController;

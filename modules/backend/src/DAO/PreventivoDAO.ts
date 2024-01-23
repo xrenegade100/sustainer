@@ -113,7 +113,7 @@ class PreventivoDAO {
   }
 
   // funzione asincrona che ritorna lo stato di un preventivo
-  static async getStato(idUtente: number): Promise<string> {
+  static async getStato(idUtente: number) {
     const conn = await db(); // connessione al db
     const [rows] = await conn.query<RowDataPacket[]>(
       'SELECT stato FROM preventivo WHERE id_utente = ?',
