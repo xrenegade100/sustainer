@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "nodemon --ignore src/Dataset src/Index.ts",
     "testing": "cypress open",
-    "test": "mocha --require tsx testing/**/*.test.ts"
+    "test": "mocha --require tsx testing/**/*.test.ts",
+    "lint": "eslint --ext .ts src"
   },
   "keywords": [],
   "author": "",
