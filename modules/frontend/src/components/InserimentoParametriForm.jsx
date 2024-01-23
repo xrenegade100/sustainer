@@ -1,3 +1,4 @@
+/* eslint-disable operator-linebreak */
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { SnackbarElement } from 'baseui/snackbar';
@@ -5,20 +6,22 @@ import { Tabs, Tab, FILL } from 'baseui/tabs-motion';
 
 const InserimentoParametriForm = () => {
   const [csv, setCsv] = useState([]);
-  const [tipoModello, setTipoModello] = useState('decisiontree');
+  const [tipoModello, setTipoModello] = useState('');
   const [
     decisionTreeCriterioDiSuddivisione,
     setDecisionTreeCriterioDiSuddivisione,
   ] = useState('');
-  const [decisionTreeProfondita, setDecisionTreeProfondita] = useState('');
+  const [decisionTreeProfondita, setDecisionTreeProfondita] = useState(null);
   // eslint-disable-next-line operator-linebreak
   const [decisionTreeCampioniFoglia, setDecisionTreeCampioniFoglia] =
-    useState('');
+    useState(null);
   const [naiveBayesDistribuzione, setNaiveBayesDistribuzione] = useState('');
-  const [naiveBayesSmoothing, setNaiveBayesSmoothing] = useState('');
+  const [naiveBayesSmoothing, setNaiveBayesSmoothing] = useState(null);
   const [target, setTarget] = useState('');
-  const [activeKey, setActiveKey] = useState('0');
+  const [activeKey, setActiveKey] = useState('');
   const [showSnackbar, setShowSnackbar] = useState(false);
+  const [showSnackbarModello, setShowSnackbarModello] = useState(false);
+  const [showSnackbarFomato, setShowSnackbarFormato] = useState(false);
   const navigate = useNavigate();
 
   const handleChange1 = (event) => {
@@ -27,7 +30,7 @@ const InserimentoParametriForm = () => {
     // Verifica se l'input è un numero compreso tra 1 e 999
     if (
       // eslint-disable-next-line operator-linebreak
-      (/^\d+$/.test(inputValue) && inputValue >= 1 && inputValue <= 999) ||
+      /^\d+$/.test(inputValue) ||
       isBackspace
     ) {
       setDecisionTreeCampioniFoglia(inputValue);
@@ -38,11 +41,7 @@ const InserimentoParametriForm = () => {
     const inputValue = event.target.value;
     const isBackspace = event.nativeEvent.inputType === 'deleteContentBackward';
     // Verifica se l'input è un numero compreso tra 1 e 999
-    if (
-      // eslint-disable-next-line operator-linebreak
-      (/^\d+$/.test(inputValue) && inputValue >= 0 && inputValue <= 99) ||
-      isBackspace
-    ) {
+    if (/^[-+]?\d+$/.test(inputValue) || isBackspace) {
       setDecisionTreeProfondita(inputValue);
     }
   };
@@ -52,15 +51,7 @@ const InserimentoParametriForm = () => {
     const isBackspace = event.nativeEvent.inputType === 'deleteContentBackward';
 
     // Verifica se l'input è un numero compreso tra 0 e 1 o se è un Backspace
-    if (
-      // eslint-disable-next-line operator-linebreak
-      (/^\d*\.?\d*$/.test(inputValue) &&
-        // eslint-disable-next-line operator-linebreak
-        parseFloat(inputValue) >= 0 &&
-        // eslint-disable-next-line operator-linebreak
-        parseFloat(inputValue) <= 1) ||
-      isBackspace
-    ) {
+    if (/^\d*\.?\d*$/.test(inputValue) || isBackspace) {
       setNaiveBayesSmoothing(inputValue);
     }
   };
@@ -172,7 +163,10 @@ const InserimentoParametriForm = () => {
                 title="Decision Tree"
                 className="fomtClass"
                 valie={tipoModello}
-                onClick={() => setTipoModello('decisiontree')}
+                onClick={() => {
+                  setTipoModello('decisiontree');
+                  setShowSnackbarModello(false);
+                }}
               >
                 <div className="divone">
                   <h3 className="h3">Criterio di Suddivisione</h3>
@@ -196,7 +190,7 @@ const InserimentoParametriForm = () => {
                   </select>
                 </div>
                 <div className="divone">
-                  <h3 className="h3">Profondità massima del albero</h3>
+                  <h3 className="h3">Profondità massima dell&apos;albero</h3>
                   <input
                     className="inputTxt"
                     type="text"
@@ -241,7 +235,10 @@ const InserimentoParametriForm = () => {
                 title="Naive Bayes"
                 className="fomtClass"
                 valie={tipoModello}
-                onClick={() => setTipoModello('naviebayes')}
+                onClick={() => {
+                  setTipoModello('naivebayes');
+                  setShowSnackbarModello(false);
+                }}
               >
                 <div className="divone">
                   <h3 className="h3">Distribuzione</h3>
@@ -309,6 +306,32 @@ const InserimentoParametriForm = () => {
               />
             </div>
           )}
+          {showSnackbarModello && (
+            <div className="compilaCampi">
+              <SnackbarElement
+                message={
+                  // eslint-disable-next-line react/jsx-wrap-multilines
+                  <div className="testoSnack">
+                    Seleziona tipo di addestramento
+                  </div>
+                }
+                focus={false}
+              />
+            </div>
+          )}
+          {showSnackbarFomato && (
+            <div className="compilaCampi">
+              <SnackbarElement
+                message={
+                  // eslint-disable-next-line react/jsx-wrap-multilines
+                  <div className="testoSnack">
+                    Formato dei dati non corretto
+                  </div>
+                }
+                focus={false}
+              />
+            </div>
+          )}
         </div>
         <div className="bottoni">
           <button
@@ -322,27 +345,59 @@ const InserimentoParametriForm = () => {
             type="button"
             className="buttonA"
             onClick={() => {
+              setShowSnackbar(false);
+              setShowSnackbarFormato(false);
+              setShowSnackbarModello(false);
+
               if (
+                // eslint-disable-next-line operator-linebreak
+                tipoModello &&
                 // eslint-disable-next-line operator-linebreak
                 (decisionTreeCriterioDiSuddivisione === '' ||
                   // eslint-disable-next-line operator-linebreak
-                  decisionTreeProfondita === 0 ||
+                  decisionTreeProfondita === null ||
                   // eslint-disable-next-line operator-linebreak
-                  decisionTreeCampioniFoglia === 0 ||
+                  decisionTreeCampioniFoglia === null ||
                   // eslint-disable-next-line operator-linebreak
                   target === '') &&
                 // eslint-disable-next-line operator-linebreak
                 (naiveBayesDistribuzione === '' ||
                   // eslint-disable-next-line operator-linebreak
-                  naiveBayesSmoothing === 0 ||
+                  naiveBayesSmoothing === null ||
                   target === '')
               ) {
                 // Se una delle variabili è null, mostra un alert
                 setShowSnackbar(true);
+              } else if (!tipoModello) {
+                setShowSnackbarModello(true);
               } else {
-                // Altrimenti, esegui la tua logica
-                generaFileJSON();
-                navigate('/fairness');
+                setShowSnackbar(false);
+                // eslint-disable-next-line no-lonely-if
+
+                if (tipoModello === 'decisiontree') {
+                  if (
+                    decisionTreeCampioniFoglia > 999 ||
+                    decisionTreeCampioniFoglia < 1 ||
+                    decisionTreeProfondita > 99 ||
+                    decisionTreeProfondita < 0
+                  ) {
+                    setShowSnackbarFormato(true);
+                  } else {
+                    setShowSnackbar(false);
+                    generaFileJSON();
+                    navigate('/fairness');
+                  }
+                } else {
+                  // eslint-disable-next-line no-lonely-if
+                  if (naiveBayesSmoothing > 1 || naiveBayesSmoothing < 0) {
+                    setShowSnackbarFormato(true);
+                  } else {
+                    setShowSnackbar(false);
+                    generaFileJSON();
+                    navigate('/fairness');
+                  }
+                }
+                // eslint-disable-next-line no-lonely-if
               }
             }}
           >

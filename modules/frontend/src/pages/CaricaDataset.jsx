@@ -14,9 +14,6 @@ const CaricaDataset = () => {
   const [fileUploaded, setFileUploaded] = useState(false);
   const [uploadedFile, setUploadedFile] = useState(null);
   const [showSnackbar, setShowSnackbar] = useState(false);
-  const [caricamentoDataset, setCaricamentoDataset] = useState(false);
-  const [stateError, setStateError] = useState(0);
-  const [fakeProgress, setFakeProgress] = React.useState(0);
   const [snackbarMessage, setSnackbarMessage] = useState('');
   const navigate = useNavigate();
   useEffect(() => {
@@ -35,6 +32,7 @@ const CaricaDataset = () => {
           navigate('/login');
         }
       } catch (error) {
+        // eslint-disable-next-line no-console
         console.error('Errore durante la verifica del login:', error);
       }
     }
@@ -70,11 +68,11 @@ const CaricaDataset = () => {
   };
   const handleDeleteFile = () => {
     setFileUploaded(false);
-    setCaricamentoDataset(false);
     setUploadedFile(null);
   };
 
   const useFakeProgress = () => {
+    const [fakeProgress, setFakeProgress] = React.useState(0);
     const [isActive, setIsActive] = React.useState(false);
 
     const stopFakeProgress = () => {
@@ -85,14 +83,45 @@ const CaricaDataset = () => {
     const startFakeProgress = () => {
       setIsActive(true);
     };
+    const handleUploadFile = async () => {
+      try {
+        const formData = new FormData();
+        formData.append('file', uploadedFile);
+
+        const response = await fetch('http://localhost:5000/upload', {
+          method: 'POST',
+          credentials: 'include',
+          body: formData,
+        });
+
+        // Gestisci la risposta dal server come necessario
+        if (response.ok && fakeProgress === 100) {
+          setSnackbarMessage('File caricato con successo');
+          setFileUploaded(true);
+          setShowSnackbar(true);
+        } else if (response.status === 400 && fakeProgress === 100) {
+          setSnackbarMessage('Errore: il contenuto del file non è valido');
+          setFileUploaded(false);
+          setShowSnackbar(true);
+        } else if (response.status === 500) {
+          setSnackbarMessage('Errore: puoi caricare solo file .csv');
+          setShowSnackbar(true);
+          setFileUploaded(false);
+        }
+      } catch (error) {
+        setSnackbarMessage(
+          'Errore durante la richiesta di caricamento del file',
+          error,
+        );
+        setShowSnackbar(true);
+      }
+    };
 
     useInterval(
       () => {
         if (fakeProgress >= 100) {
+          handleUploadFile();
           stopFakeProgress();
-          if (stateError === 200) {
-            showSnackbar(true);
-          }
         } else {
           setFakeProgress(fakeProgress + 10);
         }
@@ -105,45 +134,6 @@ const CaricaDataset = () => {
   // eslint-disable-next-line operator-linebreak
   const [progressAmount, startFakeProgress, stopFakeProgress] =
     useFakeProgress();
-  const handleUploadFile = async (file) => {
-    try {
-      const formData = new FormData();
-      formData.append('file', file);
-      setUploadedFile(file.name);
-
-      const response = await fetch('http://localhost:5000/upload', {
-        method: 'POST',
-        credentials: 'include',
-        body: formData,
-      });
-
-      // Gestisci la risposta dal server come necessario
-
-      if (response.ok) {
-        setSnackbarMessage('File caricato con successo');
-        setFileUploaded(true);
-        setCaricamentoDataset(true);
-        setStateError(200);
-      } else if (response.status === 400) {
-        setSnackbarMessage('Errore: il contenuto del file non è valido');
-        setFileUploaded(false);
-        setCaricamentoDataset(false);
-        setStateError(400);
-      } else if (response.status === 501) {
-        setSnackbarMessage('Errore: puoi caricare solo file .csv');
-        setFileUploaded(false);
-        setCaricamentoDataset(false);
-        setStateError(501);
-      }
-    } catch (error) {
-      setSnackbarMessage(
-        'Errore durante la richiesta di caricamento del file',
-        error,
-      );
-      setShowSnackbar(true);
-    }
-  };
-
   return (
     <>
       <div className="header">
@@ -239,14 +229,12 @@ const CaricaDataset = () => {
                 onCancel={() => {
                   stopFakeProgress();
                   setFileUploaded(false);
-
-                  //setUploadedFile(null); // Cancella le informazioni sul file caricato
+                  setUploadedFile(null); // Cancella le informazioni sul file caricato
                 }}
                 onDrop={(acceptedFiles) => {
                   // gestisci il caricamento del file...
                   startFakeProgress();
                   setUploadedFile(acceptedFiles[0]); // Salva le informazioni sul file caricato
-                  handleUploadFile(acceptedFiles[0]);
                 }}
                 progressAmount={progressAmount}
                 progressMessage={

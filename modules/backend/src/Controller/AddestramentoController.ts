@@ -4,6 +4,7 @@ import * as path from 'path';
 import csv from 'csv-parser';
 import serviziModelloImpl from '../modello/service/ServiziModelloImpl';
 import multer from 'multer';
+import stream from 'stream';
 
 class AddestramentoController {
   upload = multer();
@@ -175,23 +176,42 @@ class AddestramentoController {
         });
     });
 
-  private static verificaSeparatoreCSV(
-    filePath: string,
-    separatoreDesiderato: string,
-  ): Promise<boolean> {
+  private static estraiRighe = async (filePath: string): Promise<any[]> => {
     return new Promise((resolve) => {
+      let results: any[] = [];
+
       fs.createReadStream(filePath)
-        .pipe(csv({ separator: separatoreDesiderato }))
-        .on('headers', (headers) => {
-          // I nomi delle colonne sono disponibili in questo evento
-          if (headers.length >= 2) {
-            resolve(true);
-          } else {
-            resolve(false);
-          }
-          // Interrompi la lettura dopo aver ottenuto i nomi delle colonne
+        .pipe(csv())
+        .on('data', (data) => results.push(data))
+        .on('end', () => {
+          resolve(results);
         });
     });
+  };
+
+  private static salvataggioFile = async (
+    filePath: string,
+    file: Buffer,
+  ): Promise<void> => {
+    return new Promise((resolve, reject) => {
+      fs.writeFile(filePath, file, (err: any) => {
+        if (err) {
+          console.error('Errore durante il salvataggio del file:', err);
+          reject(err);
+        }
+        resolve();
+      });
+    });
+  };
+
+  private static async verificaSeparatoreCSV(
+    filePath: string,
+    separatoreDesiderato: string,
+  ) {
+    const results: any[] = await AddestramentoController.estraiRighe(filePath);
+    const colonne = Object.keys(results);
+    console.log(results);
+    return colonne.length >= 2;
   }
 
   static caricaFileIMP = async (req: Request, res: Response) => {
@@ -200,7 +220,7 @@ class AddestramentoController {
     // Controlla che sia stato caricato un file
     if (!file) {
       console.log('Nessun file caricato.');
-      return res.status(400).send('Nessun file caricato.');
+      return res.status(408).send('Nessun file caricato.');
     }
 
     // Controlla che il file abbia estensione .csv
@@ -214,37 +234,29 @@ class AddestramentoController {
     }
 
     // Salva il file nella directory 'src/Dataset'
-    fs.writeFile(
+    await AddestramentoController.salvataggioFile(
       `src/Dataset/${req.session!.idUser}.csv`,
       file.buffer,
-      'utf-8',
-      (err) => {
-        if (err) {
-          console.error('Errore durante il salvataggio del file:', err);
-        }
-      },
     );
 
     const separator = ',';
 
-    await AddestramentoController.verificaSeparatoreCSV(
+    const result = await AddestramentoController.verificaSeparatoreCSV(
       `src/Dataset/${req.session!.idUser}.csv`,
       separator,
-    )
-      .then((separatoreTrovato) => {
-        if (separatoreTrovato) {
-          console.log(`Il file CSV utilizza la virgola come separatore.`);
-          return res.status(200).json({
-            success: 'Il file CSV utilizza la virgola come separatore.',
-          });
-        } else {
-          console.log(`Il file CSV non utilizza la virgola come separatore.`);
-          return res.status(400);
-        }
-      })
-      .catch((error) => {
-        console.error(error);
+    );
+
+    if (result) {
+      console.log(`Il file CSV utilizza la virgola come separatore.`);
+      return res.status(200).json({
+        success: 'Il file CSV utilizza la virgola come separatore.',
       });
+    } else {
+      console.log(`Il file CSV non utilizza la virgola come separatore.`);
+      return res.status(400).json({
+        success: 'Il file CSV non utilizza la virgola come separatore.',
+      });
+    }
   };
 }
 

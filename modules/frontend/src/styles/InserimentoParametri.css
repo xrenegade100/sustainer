@@ -21,6 +21,11 @@
   padding-bottom: 2%;
 }
 
+.form-bodey {
+  padding: 2%;
+  font-size: large;
+}
+
 .formsen {
   padding-bottom: 5%;
 }
@@ -44,6 +49,7 @@
 }
 
 .bottoni {
+  margin-top: 200px;
   display: flex;
   justify-content: center;
   flex-direction: row;
