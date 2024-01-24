@@ -54,6 +54,7 @@ class Modello {
   public getIdModello(): number {
     return this.idModello;
   }
+
   /**
    * Restituisce l'identificativo dell'utente associato al modello.
    * @returns L'identificativo dell'utente.
@@ -61,6 +62,7 @@ class Modello {
   public getIdUtente(): number {
     return this.idUtente;
   }
+
   /**
    * Restituisce il gruppo privilegiato associato al modello.
    * @returns Il gruppo privilegiato.
@@ -68,6 +70,7 @@ class Modello {
   public getGruppoPrivilegiato(): [string] {
     return this.gruppoPrivilegiato;
   }
+
   /**
    * Restituisce lo stato di memorizzazione del modello.
    * @returns `true` se il modello è memorizzato, `false` altrimenti.
@@ -75,6 +78,7 @@ class Modello {
   public getMemorizzato(): boolean {
     return this.memorizzato;
   }
+
   /**
    * Restituisce il valore di recall associato al modello.
    * @returns Il valore di recall.
@@ -82,6 +86,7 @@ class Modello {
   public getRecall(): number {
     return this.recall;
   }
+
   /**
    * Restituisce il valore di precision associato al modello.
    * @returns Il valore di precision.
@@ -89,6 +94,7 @@ class Modello {
   public getPrecision(): number {
     return this.precision;
   }
+
   /**
    * Restituisce il valore di accuracy associato al modello.
    * @returns Il valore di accuracy.
@@ -96,13 +102,15 @@ class Modello {
   public getAccuracy(): number {
     return this.accuracy;
   }
-   /**
+
+  /**
    * Restituisce il valore di sostenibilità associato al modello.
    * @returns Il valore di sostenibilità.
    */
   public getSustainability(): number {
     return this.sustainability;
   }
+
   /**
    * Restituisce il valore di Disparate Impact associato al modello.
    * @returns Il valore di Disparate Impact.
@@ -110,6 +118,7 @@ class Modello {
   public getDisparateImpact(): number {
     return this.disparateImpact;
   }
+
   /**
    * Restituisce il tipo di modello addestrato.
    * @returns Il tipo di modello.
@@ -125,6 +134,7 @@ class Modello {
   public setIdModello(idModello: number) {
     this.idModello = idModello;
   }
+
   /**
    * Imposta l'identificativo dell'utente associato al modello.
    * @param idUtente - L'identificativo dell'utente.
@@ -132,34 +142,39 @@ class Modello {
   public setIdUtente(idUtente: number) {
     this.idUtente = idUtente;
   }
-/**
+
+  /**
    * Imposta il gruppo privilegiato associato al modello.
    * @param gruppoPrivilegiato - Il gruppo privilegiato.
    */
   public setGruppoPrivilegiato(gruppoPrivilegiato: [string]) {
     this.gruppoPrivilegiato = gruppoPrivilegiato;
   }
-/**
+
+  /**
    * Imposta lo stato di memorizzazione del modello.
    * @param memorizzato - `true` se il modello è memorizzato, `false` altrimenti.
    */
   public setMemorizzato(memorizzato: boolean) {
     this.memorizzato = memorizzato;
   }
-/**
+
+  /**
    * Imposta il valore di recall associato al modello.
    * @param recall - Il valore di recall.
    */
   public setRecall(recall: number) {
     this.recall = recall;
   }
-/**
+
+  /**
    * Imposta il valore di precision associato al modello.
    * @param precision - Il valore di precision.
    */
   public setPrecision(precision: number) {
     this.precision = precision;
   }
+
   /**
    * Imposta il valore di accuracy associato al modello.
    * @param accuracy - Il valore di accuracy.
@@ -167,21 +182,24 @@ class Modello {
   public setAccuracy(accuracy: number) {
     this.accuracy = accuracy;
   }
-/**
+
+  /**
    * Imposta il valore di sostenibilità associato al modello.
    * @param sustainability - Il valore di sostenibilità.
    */
   public setSustainability(sustainability: number) {
     this.sustainability = sustainability;
   }
-/**
+
+  /**
    * Imposta il valore di Disparate Impact associato al modello.
    * @param disparateImpact - Il valore di Disparate Impact.
    */
   public setDisparateImpact(disparateImpact: number) {
     this.disparateImpact = disparateImpact;
   }
-/**
+
+  /**
    * Imposta il tipo di modello addestrato.
    * @param tipoModello - Il tipo di modello.
    */
