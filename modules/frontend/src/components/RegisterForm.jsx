@@ -36,9 +36,8 @@ const RegisterForm = () => {
     const passwordRegex =
       /^(?=.*[A-Z])(?=.*[!@#$%^&*()_+{}\[\]:;<>,.?~\\/-])[A-Za-z0-9!@#$%^&*()_+{}\[\]:;<>,.?~\\/-]{8,64}$/;
     if (!passwordRegex.test(passwordr)) {
-      alert(
-        'La password deve contenere almeno 8 caratteri tra cui: \n1 lettera maisucola \n1 carattere speciale',
-      );
+      setSnackbarMessage('La password deve contenere almeno 8 caratteri');
+      setShowSnackbar(true);
       setIsLoading(false);
       return;
     }

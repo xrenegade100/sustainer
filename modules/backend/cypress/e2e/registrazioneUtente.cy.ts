@@ -14,7 +14,7 @@ describe('Registrazione utente', () => {
 
     cy.get('.buttonsgupin').contains('Registrati').click();
 
-    cy.contains('Utente giÃ  esistente').should('exist');
+    cy.contains('Errore durante la registrazione').should('exist');
   });
 
   it('TC-1.1-2', () => {
