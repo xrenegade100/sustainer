@@ -21,11 +21,11 @@ class Utente {
 
   private password: string;
 
-   /**
+  /**
    * Ottiene l'identificatore dell'utente.
    * @returns L'identificatore dell'utente.
    */
-   public getIdUtente(): number {
+  public getIdUtente(): number {
     return this.idUtente;
   }
 

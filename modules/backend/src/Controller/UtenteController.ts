@@ -96,6 +96,7 @@ class UtenteController {
       try {
         await PianoController.AcquistoPianoFreeIMP(idUtente);
       } catch (error) {
+        // eslint-disable-next-line no-console
         console.log(error);
       }
 
@@ -105,6 +106,7 @@ class UtenteController {
         message: 'Registrazione effettuata con successo',
       });
     } catch (error) {
+      // eslint-disable-next-line no-console
       console.log(error);
       // altrimenti ritorno un json con success = false e un messaggio di errore
       return res
