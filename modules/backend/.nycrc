@@ -1,0 +1,8 @@
+{
+  "include": [
+    "src/**/AmministratoreController.ts",
+    "src/**/AddestramentoController.ts",
+    "src/**/PreventivoController.ts",
+    "src/**/UtenteController.ts"
+  ]
+}
