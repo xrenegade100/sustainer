@@ -15,6 +15,7 @@
 
 -   [Prerequisiti](#prerequisiti)
 -   [Installazione](#installazione)
+-   [Documentazione](#documentazione)
 -   [Come contribuire](#come-contribuire)
 -   [Licenza](#licenza)
 -   [Team](#team)
@@ -53,7 +54,7 @@ $  cd sustainer
 
 5. **(opzionale)** Per eseguire le pipeline di allenamento<br>
    <quote>
-   Fare riferimento alla repository [modulo_FIA]
+   Fare riferimento alla repository contenente il [modulo Python per le pipeline](https://github.com/MegaPepeMan/sustainer_moduloFIA)
    </quote>
 
 6. Esegui i moduli backend e frontend
@@ -72,13 +73,17 @@ $  cd sustainer
 
 7. Apri il browser e vai su http://localhost:5173/Homepage
 
+# Documentazione
+- **Documenti di prodotto**: 
+- **Documenti di management**:
+- **Codice Sorgente backend**: https://xrenegade100.github.io/sustainer/
+
 # Come contribuire
 
 **Importante: leggi [CONTRUTING](docs/CONTRIBUTING.md)**
 
 # Licenza
-
-:wip: WIP
+**[LICENSE](LICENSE)**
 
 # Team
 
